@@ -4,9 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import cn.easybike.dao.BaseDao;
+import cn.easybike.dao.ResourceDao;
 import cn.easybike.service.BaseService;
 
 /**
@@ -41,36 +43,10 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		baseField.set(this,clazzField.get(this));
 	}
 	//×¢Èëdao
-	/*@Resource(name="craftDao")
-	protected CraftDao craftDao;
-	@Resource(name="departmentDao")
-	protected DepartmentDao departmentDao;
-	@Resource(name="departmentTypeDao")
-	protected DepartmentTypeDao departmentTypeDao;
-	@Resource(name="districtDao")
-	protected DistrictDao districtDao;
-	@Resource(name="employeeDao")
-	protected EmployeeDao employeeDao;
-	@Resource(name="employeeQuestionDao")
-	protected EmployeeQuestionDao employeeQuestionDao;
-	@Resource(name="employeeQuestionIdDao")
-	protected EmployeeQuestionIdDao employeeQuestionIdDao;
-	@Resource(name="employeeQuestionOptionDao")
-	protected EmployeeQuestionOptionDao employeeQuestionOptionDao;
-	@Resource(name="employeeQuestionOptionIdDao")
-	protected EmployeeQuestionOptionIdDao employeeQuestionOptionIdDao;
-	@Resource(name="industryDao")
-	protected IndustryDao industryDao;
-	@Resource(name="majorDao")
-	protected MajorDao majorDao;
-	@Resource(name="questionDao")
-	protected QuestionDao questionDao;
-	@Resource(name="questionOptionDao")
-	protected QuestionOptionDao questionOptionDao;
+	
 	@Resource(name="resourceDao")
 	protected ResourceDao resourceDao;
-	@Resource(name="roleDao")
-	protected RoleDao roleDao;*/
+
 	/**
 	* getByID
 	* @param id

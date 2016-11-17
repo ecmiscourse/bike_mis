@@ -29,7 +29,7 @@ public class Resource implements java.io.Serializable{
 	private Resource parent;//父级
 	private String resourceSn;//编号
 	private String resourceName;//资源名
-	private String resourceType;//资源类型（页面，按钮）
+	private String resourceType;//资源类型（页面menu，按钮button）
 	private String url;//链接
 	private int showSequence;//显示循序
 	private Set<Resource> children=new HashSet<Resource>(0);

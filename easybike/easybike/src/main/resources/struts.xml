@@ -19,6 +19,8 @@
 	<!-- 权限资源 -->
 	<include file="struts-config/struts-reource.xml"></include>
 	<package name="easybike" namespace="/" extends="easybike-struts" strict-method-invocation="false">
-		
+		<action name="*">
+			<result>/WEB-INF/view/{1}.jsp</result>			
+		</action>
 	</package>
 </struts>

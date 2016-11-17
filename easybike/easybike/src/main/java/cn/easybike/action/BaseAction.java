@@ -2,11 +2,13 @@ package cn.easybike.action;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
 import org.apache.struts2.interceptor.ApplicationAware;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import cn.easybike.service.ResourceService;
 
 public class BaseAction<T> extends ActionSupport implements RequestAware,
 SessionAware,ApplicationAware,ModelDriven<T>{
@@ -29,36 +31,10 @@ SessionAware,ApplicationAware,ModelDriven<T>{
 	//用于封装application
 	protected Map<String, Object> application;
 	//Service注入
-	/*@Resource(name="craftService")
-	protected CraftService craftService;
-	@Resource(name="departmentService")
-	protected DepartmentService departmentService;
-	@Resource(name="departmentTypeService")
-	protected DepartmentTypeService departmentTypeService;
-	@Resource(name="districtService")
-	protected DistrictService districtService;
-	@Resource(name="employeeService")
-	protected EmployeeService employeeService;
-	@Resource(name="employeeQuestionService")
-	protected EmployeeQuestionService employeeQuestionService;
-	@Resource(name="employeeQuestionIdService")
-	protected EmployeeQuestionIdService employeeQuestionIdService;
-	@Resource(name="employeeQuestionOptionService")
-	protected EmployeeQuestionOptionService employeeQuestionOptionService;
-	@Resource(name="employeeQuestionOptionIdService")
-	protected EmployeeQuestionOptionIdService employeeQuestionOptionIdService;
-	@Resource(name="industryService")
-	protected IndustryService industryService;
-	@Resource(name="majorService")
-	protected MajorService majorService;
-	@Resource(name="questionService")
-	protected QuestionService questionService;
-	@Resource(name="questionOptionService")
-	protected QuestionOptionService questionOptionService;
+	
 	@Resource(name="resourceService")
 	protected ResourceService resourceService;
-	@Resource(name="roleService")
-	protected RoleService roleService;*/
+	
 	@Override
 	public T getModel() {
 		return entity;
