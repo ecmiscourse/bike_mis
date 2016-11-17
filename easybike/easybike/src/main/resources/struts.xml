@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />  
+	<package name="easybike-struts" namespace="/" extends="json-default" strict-method-invocation="false">	
+		
+		<!-- 定义全局Result -->
+		<global-results>
+			<!-- 当返回login视图名时，转入登录页面login.jsp -->
+			<result name="login">/WEB-INF/view/login.jsp</result>
+			<result name="error">/WEB-INF/view/error.jsp</result>
+			<result name="mpwd">/WEB-INF/view/base/modifypwd.jsp</result>
+		</global-results>
+	</package>
+	<!-- 导入其它struts配置文件 -->
+	<!-- 权限资源 -->
+	<include file="struts-config/struts-reource.xml"></include>
+	<package name="easybike" namespace="/" extends="easybike-struts" strict-method-invocation="false">
+		
+	</package>
+</struts>
