@@ -20,21 +20,23 @@
                 </div>
                 <div id="headerMenu" class="headerMenu">
                     <ul>
-                        <li><a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="exit()">安全退出</a></li>
-                        <li><a href="#" class="easyui-menubutton" data-options="menu:'#mm2'"><div id="toDoList">我的操作</div></a></li>
-                        <li><a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="addNewTab('系统使用视频教程', 'BulletinBoard.html')" >系统使用视频教程</a></li>
-                        <li><a  class="easyui-linkbutton" data-options="plain:true" >您好，主人</a></li>
+                        <li><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-power'" onclick="exit()">安全退出</a></li>
+                        <li><a href="#" class="easyui-menubutton" data-options="menu:'#mm',iconCls:'icon-man'"><div id="toDoList">关于我</div></a></li>
+                        <li><a  class="easyui-linkbutton" data-options="plain:true" >您好，<s:property value="#session.personName"/></a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-    
+    <div id="mm">
+        <div onclick="addNewTab('我的信息', '${pageContext.request.contextPath}/jj');"><a id="mm21">我的信息</a></div>
+        <div data-options="iconCls:'icon-edit'" onclick="addNewTab('修改密码', '${pageContext.request.contextPath}/ss');"><a id="mm22">修改密码</a></div>
+    </div>
+    <script type="text/javascript">    
 		function exit(){
 			$.messager.confirm('确认','您确认想要安全退出吗？',function(r){    
 			    if (r){
-					var url ='${pageContext.request.contextPath}/exitAction_exit.action';
+					var url ='${pageContext.request.contextPath}/exit.action';
 					  $('<form method="post" action="' + url + '"></form>').appendTo('body').submit().remove();
 			    	//$.post("${pageContext.request.contextPath}/hazard/exitAction_exit.action");
 			    }    

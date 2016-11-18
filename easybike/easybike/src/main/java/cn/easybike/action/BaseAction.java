@@ -8,6 +8,8 @@ import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+
+import cn.easybike.service.PersonService;
 import cn.easybike.service.ResourceService;
 
 public class BaseAction<T> extends ActionSupport implements RequestAware,
@@ -34,6 +36,8 @@ SessionAware,ApplicationAware,ModelDriven<T>{
 	
 	@Resource(name="resourceService")
 	protected ResourceService resourceService;
+	@Resource(name="personService")
+	protected PersonService personService;
 	
 	@Override
 	public T getModel() {

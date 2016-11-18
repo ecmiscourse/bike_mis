@@ -42,6 +42,7 @@
 				<value>cn.easybike.entity.Person</value>
 				<value>cn.easybike.entity.Resource</value>
 				<value>cn.easybike.entity.Role</value>
+				<value>cn.easybike.entity.Bike</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

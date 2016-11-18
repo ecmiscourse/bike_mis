@@ -6,7 +6,19 @@
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />  
 	<package name="easybike-struts" namespace="/" extends="json-default" strict-method-invocation="false">	
-		
+		<!-- 定义拦截器、拦截器栈 -->
+		<interceptors>
+			<interceptor name="loginInterceptor" class="cn.easybike.Interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="loginInterceptorStack">
+				<interceptor-ref name="defaultStack">
+    			</interceptor-ref>
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 默认拦截器 -->		
+		<default-interceptor-ref name="loginInterceptorStack"></default-interceptor-ref>
+		<!-- 配置Action的默认处理类 -->
+		<default-class-ref class="cn.easybike.action.DefaultAction"/>
 		<!-- 定义全局Result -->
 		<global-results>
 			<!-- 当返回login视图名时，转入登录页面login.jsp -->
@@ -16,9 +28,18 @@
 		</global-results>
 	</package>
 	<!-- 导入其它struts配置文件 -->
-	<!-- 权限资源 -->
-	<include file="struts-config/struts-reource.xml"></include>
+	<!-- 基础管理 -->
+	<include file="struts-config/struts-base.xml"></include>
+	<!-- 日常管理 -->
+	<include file="struts-config/struts-daily.xml"></include>
+	<!-- 我的操作 -->
+	<include file="struts-config/struts-myop.xml"></include>
+	<!-- 车辆借还 -->
+	<include file="struts-config/struts-circulate.xml"></include>
 	<package name="easybike" namespace="/" extends="easybike-struts" strict-method-invocation="false">
+		<action name="exit" class="cn.easybike.action.PersonAction" method="exit">
+			<result>/WEB-INF/view/login.jsp</result>
+		</action>
 		<action name="*">
 			<result>/WEB-INF/view/{1}.jsp</result>			
 		</action>

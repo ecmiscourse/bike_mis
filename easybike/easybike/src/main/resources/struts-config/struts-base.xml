@@ -6,7 +6,7 @@
 	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />   
-    <package name="resource" namespace="/resource" extends="easybike-struts" strict-method-invocation="false">
+    <package name="base" namespace="/base" extends="easybike-struts" strict-method-invocation="false">
     	<action name="resourceAction_*"  class="cn.easybike.action.ResourceAction" method="{1}">
 			<!-- 配置类型的json的Result -->
 			<result name="jsonArray" type="json">
@@ -16,6 +16,17 @@
 				<!-- 设置只序列Action的map属性 -->
 				<param name="root">jsonArray</param>
 			</result>			
+		</action>		
+		<action name="personAction_*"  class="cn.easybike.action.PersonAction" method="{1}">
+			<!-- 配置类型的json的Result -->
+			<result name="jsonObject" type="json">
+				<!-- 为该Result指定参数 -->
+				<param name="noCache">true</param>
+				<param name="contentType">text/html</param>
+				<!-- 设置只序列Action的map属性 -->
+				<param name="root">jsonObject</param>
+			</result>			
 		</action>  
+		 
 	</package>
 </struts>

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import cn.easybike.dao.BaseDao;
+import cn.easybike.dao.PersonDao;
 import cn.easybike.dao.ResourceDao;
 import cn.easybike.service.BaseService;
 
@@ -46,7 +47,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	
 	@Resource(name="resourceDao")
 	protected ResourceDao resourceDao;
-
+	@Resource(name="personDao")
+	protected PersonDao personDao;
 	/**
 	* getByID
 	* @param id

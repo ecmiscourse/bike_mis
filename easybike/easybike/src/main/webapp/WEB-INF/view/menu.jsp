@@ -13,11 +13,11 @@
 		$(function() {
 			$("#menu").tree(
 							{
-								url : '${pageContext.request.contextPath}/resource/resourceAction_getMenu.action',
+								url : '${pageContext.request.contextPath}/base/resourceAction_getMenu.action',
 								onClick : function(node) {
 									if ($('#menu').tree('isLeaf', node.target)) {//判断是否是叶子节点
 										if($('#menu').tree('getParent', node.target)!=null)
-											addNewTab($('#menu').tree('getParent', node.target).text+"-"+node.text,'${pageContext.request.contextPath}'+ node.url);
+											addNewTab(node.text,'${pageContext.request.contextPath}'+ node.url);
 										else
 											addNewTab(node.text,'${pageContext.request.contextPath}'+ node.url);
 									}else{
