@@ -3,11 +3,11 @@ package cn.easybike.dao;
 import cn.easybike.entity.Person;
 
 /**
-* ¼¼¸ÄÏîÄ¿ÒµÎñ´ú±íÊµÏÖÀà.ÊµÏÖĞÂÔöÏîÄ¿,É¾³ıÏîÄ¿µÈ·½·¨£¬<br>
-* Ìá¹©¶Ô±íÏÖ²ãµÄ½Ó¿Ú.
-* @author  Âí»Ô
+* æŠ€æ”¹é¡¹ç›®ä¸šåŠ¡ä»£è¡¨å®ç°ç±».å®ç°æ–°å¢é¡¹ç›®,åˆ é™¤é¡¹ç›®ç­‰æ–¹æ³•ï¼Œ<br>
+* æä¾›å¯¹è¡¨ç°å±‚çš„æ¥å£.
+* @author  é©¬è¾‰
 * @since   JDK1.8
-* @history 2016Äê11ÔÂ18ÈÕÏÂÎç5:48:18 Âí»Ô ĞÂ½¨
+* @history 2016å¹´11æœˆ18æ—¥ä¸‹åˆ9:48:25 é©¬è¾‰ æ–°å»º
 */
 public interface PersonDao extends BaseDao<Person> {
 	//getBySn

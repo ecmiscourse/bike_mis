@@ -18,21 +18,21 @@ SessionAware,ApplicationAware,ModelDriven<T>{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//泛型实体备用
+	//娉涘瀷瀹炰綋澶囩敤
 	protected T entity;
-	//可以传送多个id给该字段 形式以逗号隔开
+	//鍙互浼犻�佸涓猧d缁欒瀛楁 褰㈠紡浠ラ�楀彿闅斿紑
 	protected String ids;
-	//page用于接收客户端传递的页码
+	//page鐢ㄤ簬鎺ユ敹瀹㈡埛绔紶閫掔殑椤电爜
 	protected Integer page;
-	//rows用于接收客户端传递的每页行数
+	//rows鐢ㄤ簬鎺ユ敹瀹㈡埛绔紶閫掔殑姣忛〉琛屾暟
 	protected Integer rows;
-	//用于封装请求request
+	//鐢ㄤ簬灏佽璇锋眰request
 	protected Map<String, Object> request;
-	//用于封装会话session
+	//鐢ㄤ簬灏佽浼氳瘽session
 	protected Map<String, Object> session;
-	//用于封装application
+	//鐢ㄤ簬灏佽application
 	protected Map<String, Object> application;
-	//Service注入
+	//Service娉ㄥ叆
 	
 	@Resource(name="resourceService")
 	protected ResourceService resourceService;

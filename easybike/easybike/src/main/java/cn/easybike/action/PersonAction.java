@@ -6,11 +6,11 @@ import cn.easybike.entity.Person;
 import net.sf.json.JSONObject;
 
 /**
-* ¼¼¸ÄÏîÄ¿ÒµÎñ´ú±íÊµÏÖÀà.ÊµÏÖĞÂÔöÏîÄ¿,É¾³ıÏîÄ¿µÈ·½·¨£¬<br>
-* Ìá¹©¶Ô±íÏÖ²ãµÄ½Ó¿Ú.
-* @author  Âí»Ô
+* æŠ€æ”¹é¡¹ç›®ä¸šåŠ¡ä»£è¡¨å®ç°ç±».å®ç°æ–°å¢é¡¹ç›®,åˆ é™¤é¡¹ç›®ç­‰æ–¹æ³•ï¼Œ<br>
+* æä¾›å¯¹è¡¨ç°å±‚çš„æ¥å£.
+* @author  é©¬è¾‰
 * @since   JDK1.8
-* @history 2016Äê11ÔÂ18ÈÕÏÂÎç5:48:21 Âí»Ô ĞÂ½¨
+* @history 2016å¹´11æœˆ18æ—¥ä¸‹åˆ9:50:23 é©¬è¾‰ æ–°å»º
 */
 public class PersonAction extends BaseAction<Person> {
 
@@ -23,7 +23,7 @@ public class PersonAction extends BaseAction<Person> {
 	private JSONObject jsonObject=new JSONObject();
 	
 	
-	//µÇÂ¼
+	//ï¿½ï¿½Â¼
 	public String login() {
 		Person person=personService.getByPersonSn(personSn);
 		Boolean right=false;
@@ -43,7 +43,7 @@ public class PersonAction extends BaseAction<Person> {
 		}
 		return "jsonObject";
 	}
-	//°²È«ÍË³ö
+	//ï¿½ï¿½È«ï¿½Ë³ï¿½
 	public String exit(){
 		session.clear();
 		ServletActionContext.getRequest().getSession().invalidate();

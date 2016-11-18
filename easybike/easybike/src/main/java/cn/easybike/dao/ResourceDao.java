@@ -6,13 +6,13 @@ import cn.easybike.entity.Resource;
 import net.sf.json.JSONArray;
 
 /**
-* È¨ÏŞ<br>
-* Ìá¹©¶Ô±íÏÖ²ãµÄ½Ó¿Ú.
-* @author  Âí»Ô
+* æŠ€æ”¹é¡¹ç›®ä¸šåŠ¡ä»£è¡¨å®ç°ç±».å®ç°æ–°å¢é¡¹ç›®,åˆ é™¤é¡¹ç›®ç­‰æ–¹æ³•ï¼Œ<br>
+* æä¾›å¯¹è¡¨ç°å±‚çš„æ¥å£.
+* @author  é©¬è¾‰
 * @since   JDK1.8
-* @history 2016Äê11ÔÂ17ÈÕÏÂÎç8:55:30 Âí»Ô ĞÂ½¨
+* @history 2016å¹´11æœˆ18æ—¥ä¸‹åˆ9:48:35 é©¬è¾‰ æ–°å»º
 */
 public interface ResourceDao extends BaseDao<Resource> {
-	//»ñÈ¡µ¼º½²Ëµ¥
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½
 	public JSONArray getMenu(String personSn, String parentResourceSn);
 }

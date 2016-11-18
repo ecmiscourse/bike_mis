@@ -25,12 +25,12 @@ public class Person implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;//ÈËÔ±id
-	private String personSn;//ÈËÔ±±àºÅ£¨Ñ§ºÅ£©
-	private String personName;//ÈËÔ±ĞÕÃû
-	private String password;//ÃÜÂë
-	private Byte sex;//ĞÔ±ğ
-	private String cellphoneNumber;//ÒÆ¶¯µç»°
+	private Integer id;
+	private String personSn;//å­¦å·
+	private String personName;//å§“å
+	private String password;//å¯†ç 
+	private Byte sex;//æ€§åˆ«
+	private String cellphoneNumber;//æ‰‹æœºå·
 	private Set<Role> roles=new HashSet<Role>();
 	
 	@Id

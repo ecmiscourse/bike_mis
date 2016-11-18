@@ -11,20 +11,18 @@ import org.springframework.stereotype.Repository;
 
 import cn.easybike.dao.BaseDao;
 
-
 /**
-* baseDaoImplÏîÄ¿ÒµÎñ´ú±íÊµÏÖÀà.ÊµÏÖĞÂÔöÏîÄ¿,É¾³ıÏîÄ¿µÈ·½·¨£¬<br>
-* Ìá¹©¶Ô±íÏÖ²ãµÄ½Ó¿Ú.
-* @author  Âí»Ô
+* æŠ€æ”¹é¡¹ç›®ä¸šåŠ¡ä»£è¡¨å®ç°ç±».å®ç°æ–°å¢é¡¹ç›®,åˆ é™¤é¡¹ç›®ç­‰æ–¹æ³•ï¼Œ<br>
+* æä¾›å¯¹è¡¨ç°å±‚çš„æ¥å£.
+* @author  é©¬è¾‰
 * @since   JDK1.8
-* @history 2016Äê11ÔÂ17ÈÕÏÂÎç3:30:01 Âí»Ô ĞÂ½¨
+* @history 2016å¹´11æœˆ18æ—¥ä¸‹åˆ9:50:58 é©¬è¾‰ æ–°å»º
 */
 @Repository("baseDao")
 @SuppressWarnings("unchecked")
 @Lazy(true)
 public class BaseDaoImpl<T> implements BaseDao<T> {
-	private Class clazz; // clazzÖĞ´æ´¢ÁË×ÓÀàµ±Ç°²Ù×÷ÊµÌåÀàĞÍ
-	//»ñÈ¡Á¬½Ó
+	private Class clazz; 
 	@Resource(name="sessionFactory")
 	protected SessionFactory sessionFactory;
 	
@@ -45,7 +43,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	/**
 	* getByID
 	* @param id
-	* @return ·µ»ØÊµÌå
+	* @return 
 	*/
 	
 	@Override
@@ -53,9 +51,8 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		return(T)getSession().get(clazz, id);
 	}
 	/**
-	* ±£´æÊµÌåĞÅÏ¢
 	* @param entity
-	* @return ÎŞ·µ»ØÖµ
+	* @return Öµ
 	*/
 	@Override
 	public void save(T entity) {
@@ -63,9 +60,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	/**
-	* ĞŞ¸ÄÊµÌå
+	* 
 	* @param entity
-	* @return ÎŞ·µ»ØÖµ
+	* @returnÖµ
 	*/
 	@Override
 	public void update(T entity) {
@@ -73,9 +70,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	/**
-	* É¾³ıÊµÌå
+	* 
 	* @param entity
-	* @return ÎŞ·µ»ØÖµ
+	* @return Öµ
 	*/
 	@Override
 	public void delete(T entity) {
@@ -83,9 +80,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	/**
-	* ¸ù¾İIDÉ¾³ıÊµÌå
+	* 
 	* @param id
-	* @return ÎŞ·µ»ØÖµ
+	* @return Öµ
 	*/
 	@Override
 	public void delete(int id) {
@@ -97,9 +94,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	/**
-	* »ñÈ¡ËùÓĞÊµÌå
+	* 
 	* @param 
-	* @return ·µ»ØÊµÌålist¼¯ºÏ
+	* @return
 	*/
 	
 	@Override
@@ -111,25 +108,25 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	/**
-	* ¸ù¾İ·ÖÒ³»ñÈ¡Êı¾İ
-	* @param hqlÓï¾ä
-	* @param pageNo µ±Ç°Ò³
-	* @param pageSize Ò»Ò³ÏÔÊ¾ĞĞÊı
-	* @return ·µ»ØÊµÌålist¼¯ºÏ
+	*
+	* @param hql
+	* @param pageNo
+	* @param pageSize 
+	* @return
 	*/
 	@Override
 	public List<T> queryByPage(String hql, int pageNo, int pageSize) {
 		return getSession()
 				.createQuery(hql)
-				.setFirstResult((pageNo - 1) * pageSize)//ÉèÖÃÃ¿Ò³ÆğÊ¼µÄ¼ÇÂ¼±àºÅ
-				.setMaxResults(pageSize)//ÉèÖÃĞèÒª²éÑ¯µÄ×î´ó½á¹û¼¯
+				.setFirstResult((pageNo - 1) * pageSize)//ï¿½ï¿½ï¿½ï¿½Ã¿Ò³ï¿½ï¿½Ê¼ï¿½Ä¼ï¿½Â¼ï¿½ï¿½ï¿½
+				.setMaxResults(pageSize)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				.list();
 	}
 
 	/**
-	* »ñÈ¡ÊµÌå×ÜÊı
+	* 
 	* @param entityClazz
-	* @return ·µ»Ølong
+	* @return long
 	*/
 	@Override
 	public long countAll() {
@@ -143,9 +140,10 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	/**
-	* ¸ù¾İÌõ¼ş²éÑ¯¼ÇÂ¼Êı
-	* @param hqlÓï¾ä
-	* @return ·µ»Ølong
+	* 
+	* @param hql
+	* 
+	* @return 
 	*/
 	@Override
 	public long countByHql(String hql) {

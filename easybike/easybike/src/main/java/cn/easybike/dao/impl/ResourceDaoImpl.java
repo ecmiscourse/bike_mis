@@ -9,16 +9,16 @@ import cn.easybike.dao.ResourceDao;
 import cn.easybike.entity.Resource;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
 /**
-* È¨ÏŞDaoÊµÏÖ<br>
-* Ìá¹©¶Ô±íÏÖ²ãµÄ½Ó¿Ú.
-* @author  Âí»Ô
+* æŠ€æ”¹é¡¹ç›®ä¸šåŠ¡ä»£è¡¨å®ç°ç±».å®ç°æ–°å¢é¡¹ç›®,åˆ é™¤é¡¹ç›®ç­‰æ–¹æ³•ï¼Œ<br>
+* æä¾›å¯¹è¡¨ç°å±‚çš„æ¥å£.
+* @author  é©¬è¾‰
 * @since   JDK1.8
-* @history 2016Äê11ÔÂ17ÈÕÏÂÎç8:58:14 Âí»Ô ĞÂ½¨
+* @history 2016å¹´11æœˆ18æ—¥ä¸‹åˆ9:51:55 é©¬è¾‰ æ–°å»º
 */
 @Repository("resourceDao")
 public class ResourceDaoImpl extends BaseDaoImpl<Resource> implements ResourceDao{
-	//»ñÈ¡µ¼º½²Ëµ¥
 	@SuppressWarnings("unchecked")
 	public JSONArray getMenu(String personSn, String parentResourceSn){
 		String hql="";

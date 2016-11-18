@@ -2,72 +2,34 @@ package cn.easybike.service;
 
 import java.util.List;
 
+
 /**
-* ¼¼¸ÄÏîÄ¿·şÎñ²ãÀà.ÊµÏÖĞÂÔöÏîÄ¿,É¾³ıÏîÄ¿µÈ·½·¨£¬<br>
-* Ìá¹©¶Ô±íÏÖ²ãµÄ½Ó¿Ú.
-* @author  Âí»Ô
+* æŠ€æ”¹é¡¹ç›®ä¸šåŠ¡ä»£è¡¨å®ç°ç±».å®ç°æ–°å¢é¡¹ç›®,åˆ é™¤é¡¹ç›®ç­‰æ–¹æ³•ï¼Œ<br>
+* æä¾›å¯¹è¡¨ç°å±‚çš„æ¥å£.
+* @author  é©¬è¾‰
 * @since   JDK1.8
-* @history 2016Äê11ÔÂ17ÈÕÏÂÎç3:39:17 Âí»Ô ĞÂ½¨
+* @history 2016å¹´11æœˆ18æ—¥ä¸‹åˆ9:55:40 é©¬è¾‰ æ–°å»º
 */
 public interface BaseService<T> {
-	/**
-	* getByID
-	* @param id
-	* @return ·µ»ØÊµÌå
-	*/
+	
 	T get(int id);
-	/**
-	* ±£´æÊµÌåĞÅÏ¢
-	* @param entity
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	void save(T entity);
 	
-	/**
-	* ĞŞ¸ÄÊµÌå
-	* @param entity
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	void update(T entity);
 	
-	/**
-	* É¾³ıÊµÌå
-	* @param entity
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	void delete(T entity);
 	
-	/**
-	* ¸ù¾İIDÉ¾³ıÊµÌå
-	* @param id
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	void delete(int id);
-	/**
-	* »ñÈ¡ËùÓĞÊµÌå
-	* @param entityClazzÊµÌå
-	* @return ·µ»ØÊµÌålist¼¯ºÏ
-	*/
+	
 	List<T> queryAll();
-	/**
-	* ¸ù¾İ·ÖÒ³»ñÈ¡Êı¾İ
-	* @param hqlÓï¾ä
-	* @param pageNo µ±Ç°Ò³
-	* @param pageSize Ò»Ò³ÏÔÊ¾ĞĞÊı
-	* @return ·µ»ØÊµÌålist¼¯ºÏ
-	*/
+	
 	List<T> queryByPage(String hql , int pageNo, int pageSize);
-	/**
-	* »ñÈ¡ÊµÌå×ÜÊı
-	* @param entityClazz
-	* @return ·µ»Ølong
-	*/
+	
 	long countAll();
 	
-	/**
-	* ¸ù¾İÌõ¼ş²éÑ¯¼ÇÂ¼Êı
-	* @param hqlÓï¾ä
-	* @return ·µ»Ølong
-	*/
 	long countByHql(String hql);
 }

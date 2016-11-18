@@ -26,8 +26,8 @@ public class Role implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String roleSn;//½ÇÉ«±àºÅ
-	private String roleName;//½ÇÉ«Ãû³Æ
+	private String roleSn;//è§’è‰²ç¼–å·
+	private String roleName;//åç§°
 	private Set<Person> persons=new HashSet<Person>(0);
 	private Set<Resource> resources=new HashSet<Resource>(0);
 	

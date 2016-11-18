@@ -13,129 +13,92 @@ import cn.easybike.dao.ResourceDao;
 import cn.easybike.service.BaseService;
 
 /**
-* ¼¼¸ÄÏîÄ¿ÒµÎñ´ú±íÊµÏÖÀà.ÊµÏÖĞÂÔöÏîÄ¿,É¾³ıÏîÄ¿µÈ·½·¨£¬<br>
-* Ìá¹©¶Ô±íÏÖ²ãµÄ½Ó¿Ú.
-* @author  Âí»Ô
+* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Òµï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½.Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿,É¾ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½<br>
+* ï¿½á¹©ï¿½Ô±ï¿½ï¿½Ö²ï¿½Ä½Ó¿ï¿½.
+* @author  ï¿½ï¿½ï¿½
 * @since   JDK1.8
-* @history 2016Äê11ÔÂ17ÈÕÏÂÎç3:43:09 Âí»Ô ĞÂ½¨
+* @history 2016ï¿½ï¿½11ï¿½ï¿½17ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3:43:09 ï¿½ï¿½ï¿½ ï¿½Â½ï¿½
 */
 @SuppressWarnings("unchecked")
 @Service("baseService")
 @Lazy(true)
 public class BaseServiceImpl<T> implements BaseService<T> {
-	private Class clazz; // clazzÖĞ´æ´¢ÁË×ÓÀàµ±Ç°²Ù×÷ÊµÌåÀàĞÍ
+	private Class clazz; //
 	public BaseServiceImpl() {
-		// Èç¹û×ÓÀàµ÷ÓÃµ±Ç°¹¹Ôì·½·¨,this´ú±íµÄÊÇ×ÓÀà¶ÔÏó
+		
 		ParameterizedType type = (ParameterizedType) this.getClass()
 				.getGenericSuperclass();
 		clazz = (Class) type.getActualTypeArguments()[0];
 	}
 	protected BaseDao baseDao; 
 	
-	@PostConstruct   // init·½·¨ÊÇÔÚ¹¹Ôì·½·¨Óëset×¢ÈëÖ®ºóÖ´ĞĞ, Ò²¾ÍÊÇXMLµÄ: init-method=""
+	@PostConstruct   
 	public void init() throws Exception{
-		// 1: ¸ù¾İ¾ßÌåµÄ·ºĞÍ, »ñÈ¡ÏàÓ¦µÄField×Ö¶Î
+		
 		String clazzName=clazz.getSimpleName();
 		String clazzDaoName=clazzName.substring(0,1).toLowerCase() + clazzName.substring(1) + "Dao";
 		Field clazzField=this.getClass().getSuperclass().getDeclaredField(clazzDaoName);
-		// 2: »ñÈ¡baseDao Filed×Ö¶Î
+		
 		Field baseField=this.getClass().getSuperclass().getDeclaredField("baseDao");
-		// 3: °ÑcategoryDaoµÄÖµ¸³Öµ¸øbaseDao
+		
 		baseField.set(this,clazzField.get(this));
 	}
-	//×¢Èëdao
+	//æ³¨å…¥dao
 	
 	@Resource(name="resourceDao")
 	protected ResourceDao resourceDao;
 	@Resource(name="personDao")
 	protected PersonDao personDao;
-	/**
-	* getByID
-	* @param id
-	* @return ·µ»ØÊµÌå
-	*/
+	
+	
 	@Override
 	public T get(int id) {
 		return (T) baseDao.get(id);
 	}
 
-	/**
-	* ±£´æÊµÌåĞÅÏ¢
-	* @param entity
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	@Override
 	public void save(T entity) {
 		baseDao.save(entity);
 	}
 
-	/**
-	* ĞŞ¸ÄÊµÌå
-	* @param entity
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	@Override
 	public void update(T entity) {
 		baseDao.update(entity);
 	}
 
-	/**
-	* É¾³ıÊµÌå
-	* @param entity
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	@Override
 	public void delete(T entity) {
 		baseDao.delete(entity);
 	}
 
-	/**
-	* ¸ù¾İIDÉ¾³ıÊµÌå
-	* @param id
-	* @return ÎŞ·µ»ØÖµ
-	*/
+	
 	@Override
 	public void delete(int id) {
 		baseDao.delete(id);
 	}
-	/**
-	* »ñÈ¡ËùÓĞÊµÌå
-	* @param entityClazzÊµÌå
-	* @return ·µ»ØÊµÌålist¼¯ºÏ
-	*/
+	
 
 	@Override
 	public List<T> queryAll() {
 		return baseDao.queryAll();
 	}
 
-	/**
-	* ¸ù¾İ·ÖÒ³»ñÈ¡Êı¾İ
-	* @param hqlÓï¾ä
-	* @param pageNo µ±Ç°Ò³
-	* @param pageSize Ò»Ò³ÏÔÊ¾ĞĞÊı
-	* @return ·µ»ØÊµÌålist¼¯ºÏ
-	*/
+	
 	@Override
 	public List<T> queryByPage(String hql, int pageNo, int pageSize) {
 		return baseDao.queryByPage(hql, pageNo, pageSize);
 	}
 
-	/**
-	* »ñÈ¡ÊµÌå×ÜÊı
-	* @param entityClazz
-	* @return ·µ»Ølong
-	*/
+	
 	@Override
 	public long countAll() {
 		return baseDao.countAll();
 	}
 
-	/**
-	* ¸ù¾İÌõ¼ş²éÑ¯¼ÇÂ¼Êı
-	* @param hqlÓï¾ä
-	* @return ·µ»Ølong
-	*/
+	
 	@Override
 	public long countByHql(String hql) {
 		return baseDao.countByHql(hql);

@@ -26,12 +26,12 @@ public class Resource implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private Resource parent;//¸¸¼¶
-	private String resourceSn;//±àºÅ
-	private String resourceName;//×ÊÔ´Ãû
-	private String resourceType;//×ÊÔ´ÀàĞÍ£¨Ò³Ãæmenu£¬°´Å¥button£©
-	private String url;//Á´½Ó
-	private int showSequence;//ÏÔÊ¾Ñ­Ğò
+	private Resource parent;//çˆ¶çº§
+	private String resourceSn;//èµ„æºç¼–å·
+	private String resourceName;//å
+	private String resourceType;//ç±»å‹ menuå’Œbutton
+	private String url;
+	private int showSequence;//æ˜¾ç¤ºé¡ºåº
 	private Set<Resource> children=new HashSet<Resource>(0);
 	private Set<Role> roles=new HashSet<Role>(0);
 	

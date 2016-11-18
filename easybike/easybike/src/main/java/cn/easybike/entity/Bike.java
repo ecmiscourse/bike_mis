@@ -21,8 +21,8 @@ public class Bike implements java.io.Serializable{
 	
 	private Integer id;
 	private String bikeSn;
-	private Date startDate;//Í¶ÈëÊ¹ÓÃÈÕÆÚ
-	private Byte status;//×´Ì¬£¨0£º¿É½è£¬1£º½è³ö£¬2£º±¨·Ï£©
+	private Date startDate;//å¼€å§‹ä½¿ç”¨æ—¥æœŸ
+	private Byte status;//çŠ¶æ€ 0ï¼šå¯å€Ÿ 1ï¼šå€Ÿå‡ºï¼Œ2ï¼šæŠ¥åºŸ
 	
 	@Id
 	@GeneratedValue(strategy=IDENTITY)

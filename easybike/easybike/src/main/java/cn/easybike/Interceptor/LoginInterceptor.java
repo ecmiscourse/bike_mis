@@ -26,11 +26,11 @@ public class LoginInterceptor extends AbstractInterceptor {
 		String path=request.getRequestURI();
 		String contextPath=ServletActionContext.getServletContext().getContextPath();
 		String actionUrl=path.replace(contextPath, "");
-		// 因为要把这个拦截器设置成默认拦截器，所以如果是登陆的action则跳过。
+		
 		if (PersonAction.class == invocation.getAction().getClass()&&invocation.getProxy().getActionName().equals("personAction_login")) {
 			return invocation.invoke();
 		}
-		//取session中的person，如果等于null则没有登陆，返回login跳转到登陆页面
+		
 		if (ServletActionContext.getRequest().getSession().getAttribute("personSn") == null) {
 			return "login";
 		}
