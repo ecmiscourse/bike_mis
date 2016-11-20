@@ -44,6 +44,8 @@
 				<value>cn.easybike.entity.Role</value>
 				<value>cn.easybike.entity.Bike</value>
 				<value>cn.easybike.entity.Station</value>
+				<value>cn.easybike.entity.LendAndReturnRecord</value>
+				<value>cn.easybike.entity.Maintenance</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
