@@ -5,7 +5,7 @@
 <head>
 <title>校园公共自行车管理系统</title>
 <%@include file="/public/head.jspf"%>
-
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 	body{ background:#0066A8;}
 	.tit{ margin:auto; margin-top:170px; text-align:center; width:350px; padding-bottom:20px;}
