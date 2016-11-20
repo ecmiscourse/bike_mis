@@ -26,6 +26,7 @@ public class Bike implements java.io.Serializable{
 	private String bikeSn;
 	private Date startDate;//开始使用日期
 	private Byte status;//状态 0：可借 ，1：借出，2，维修中，3：报废
+	private Date endDate;//报废时间
 	private Station station;//所在站点
 	
 	
@@ -60,6 +61,14 @@ public class Bike implements java.io.Serializable{
 	}
 	public void setStatus(Byte status) {
 		this.status = status;
+	}
+	
+	@Column(name="end_date",length = 19)
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	
 	@ManyToOne(targetEntity=Station.class,cascade=CascadeType.ALL)
