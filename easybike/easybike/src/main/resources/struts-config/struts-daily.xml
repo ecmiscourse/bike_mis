@@ -7,6 +7,11 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />   
     <package name="daily" namespace="/daily" extends="easybike-struts" strict-method-invocation="false">  
-		 
+		<action name="maint" class="cn.easybike.action.DailyAction" method="maint">
+			<result>/WEB-INF/view/daily/maintenance.jsp</result>
+		</action>
+		<action name="*">
+			<result>/WEB-INF/view/{1}.jsp</result>			
+		</action>
 	</package>
 </struts>
