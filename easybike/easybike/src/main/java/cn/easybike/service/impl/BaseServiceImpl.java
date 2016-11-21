@@ -12,13 +12,7 @@ import cn.easybike.dao.PersonDao;
 import cn.easybike.dao.ResourceDao;
 import cn.easybike.service.BaseService;
 
-/**
-* ������Ŀҵ�����ʵ����.ʵ��������Ŀ,ɾ����Ŀ�ȷ�����<br>
-* �ṩ�Ա��ֲ�Ľӿ�.
-* @author  ���
-* @since   JDK1.8
-* @history 2016��11��17������3:43:09 ��� �½�
-*/
+
 @SuppressWarnings("unchecked")
 @Service("baseService")
 @Lazy(true)
