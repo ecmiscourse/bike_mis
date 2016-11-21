@@ -12,7 +12,7 @@
 		    url:'',    
 		    columns:[[    
 		        {field:'',title:'',width:100},    
-		        {field:'name',title:'Name',width:100},    
+		        {field:'bike_sn',title:'Name',width:100},    
 		        {field:'price',title:'Price',width:100,align:'right'},
 		        {field:'price',title:'Price',width:100,align:'right'},
 		        {field:'price',title:'Price',width:100,align:'right'}
