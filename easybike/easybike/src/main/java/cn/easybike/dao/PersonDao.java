@@ -12,4 +12,6 @@ import cn.easybike.entity.Person;
 public interface PersonDao extends BaseDao<Person> {
 	//getBySn
 	public Person getByPersonSn(String personSn);
+	//根据编号删除人员
+	public void deleteBySn(String personSn);
 }

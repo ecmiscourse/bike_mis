@@ -13,4 +13,10 @@ public class PersonServiceImpl extends BaseServiceImpl<Person> implements Person
 		return personDao.getByPersonSn(personSn);
 	}
 
+	//根据编号删除人员
+	@Override
+	public void deleteBySn(String personSn) {
+		personDao.deleteBySn(personSn);
+	}
+
 }

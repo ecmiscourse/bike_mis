@@ -37,6 +37,9 @@
 .icon-print{
 	background:url('icons/print.png') no-repeat center center;
 }
+.icon-excel{
+	background:url('icons/excel.png') no-repeat center center;
+}
 .icon-help{
 	background:url('icons/help.png') no-repeat center center;
 }

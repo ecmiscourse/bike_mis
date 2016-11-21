@@ -19,5 +19,12 @@ public class PersonDaoImpl extends BaseDaoImpl<Person> implements PersonDao {
 	public Person getByPersonSn(String personSn) {
 		String hql="select p from Person p Where p.personSn=:personSn";
 		return (Person) getSession().createQuery(hql).setString("personSn", personSn).uniqueResult();
+	}
+
+	//根据编号删除人员
+	@Override
+	public void deleteBySn(String personSn) {
+		String hql="delete Person p where p.personSn=:personSn";
+		getSession().createQuery(hql).setString("personSn", personSn).executeUpdate();
 	}		
 }

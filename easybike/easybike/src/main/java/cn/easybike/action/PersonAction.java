@@ -21,7 +21,12 @@ public class PersonAction extends BaseAction<Person> {
 	private static final long serialVersionUID = 1L;
 	private String personSn;
 	private String password;
+	private String oldPersonSn;
 	private JSONObject jsonObject=new JSONObject();
+	private Byte sex;
+	private String cellphoneNumber;
+	private String personName;
+	
 	
 	//分页查询
 	public String queryByPage(){
@@ -37,6 +42,61 @@ public class PersonAction extends BaseAction<Person> {
 		}
 		jsonObject.put("total", personService.countByHql("select count(p) from Person p"));
 		jsonObject.put("rows",array);
+		return "jsonObject";
+	}
+	
+	//添加人员
+	public String save(){
+		jsonObject.put("status", "ok");
+		Person person=new Person();
+		try{
+			person.setPersonSn(personSn);
+			person.setCellphoneNumber(cellphoneNumber);
+			person.setPersonName(personName);
+			person.setPassword("123456");
+			person.setSex(sex);
+			personService.save(person);
+		}catch(Exception e){
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
+	//修改人员信息
+	public String update(){
+		jsonObject.put("status", "ok");
+		Person person=personService.getByPersonSn(oldPersonSn);
+		if(person!=null){
+			try{
+				person.setPersonSn(personSn);
+				person.setCellphoneNumber(cellphoneNumber);
+				person.setPersonName(personName);
+				person.setSex(sex);
+				personService.update(person);
+			}catch(Exception e){
+				jsonObject.put("status", "nook");
+			}
+		}else{
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
+	//删除人员
+	public String delete(){
+		jsonObject.put("status", "ok");
+		try{
+			personService.deleteBySn(personSn);
+		}catch(Exception e){
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
+	//验证学号是否存在
+	public String isExist(){
+		if(personService.getByPersonSn(personSn)!=null){
+			jsonObject.put("isExist", true);
+		}else{
+			jsonObject.put("isExist", false);
+		}
 		return "jsonObject";
 	}
 	//登录
@@ -82,5 +142,30 @@ public class PersonAction extends BaseAction<Person> {
 	}
 	public void setJsonObject(JSONObject jsonObject) {
 		this.jsonObject = jsonObject;
+	}
+	public String getPersonName() {
+		return personName;
+	}
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+	public Byte getSex() {
+		return sex;
+	}
+	public void setSex(Byte sex) {
+		this.sex = sex;
+	}
+	public String getCellphoneNumber() {
+		return cellphoneNumber;
+	}
+	public void setCellphoneNumber(String cellphoneNumber) {
+		this.cellphoneNumber = cellphoneNumber;
+	}
+	public String getOldPersonSn() {
+		return oldPersonSn;
+	}
+
+	public void setOldPersonSn(String oldPersonSn) {
+		this.oldPersonSn = oldPersonSn;
 	}
 }
