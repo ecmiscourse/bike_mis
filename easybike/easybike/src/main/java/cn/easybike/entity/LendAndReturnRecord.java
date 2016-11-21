@@ -23,6 +23,7 @@ public class LendAndReturnRecord implements java.io.Serializable {
 	
 	private Integer id;
 	private String recordSn;//借还记录编号
+	private Bike bike;
 	private String studentId;//借车人学号
 	private String studentName;//借车人姓名
 	private String phoneNumber;//借车人联系方式
@@ -51,6 +52,15 @@ public class LendAndReturnRecord implements java.io.Serializable {
 	}
 	public void setRecordSn(String recordSn) {
 		this.recordSn = recordSn;
+	}
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="bike_sn",referencedColumnName="bike_sn")
+	public Bike getBike() {
+		return bike;
+	}
+	public void setBike(Bike bike) {
+		this.bike = bike;
 	}
 	
 	@Column(name="student_id",nullable=false,length=8)
