@@ -27,6 +27,8 @@
 				<param name="root">jsonObject</param>
 			</result>			
 		</action>  
-		 
+		<action name="*">
+			<result>/WEB-INF/view/base/{1}.jsp</result>			
+		</action> 
 	</package>
 </struts>

@@ -2,10 +2,13 @@ package cn.easybike.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -22,7 +25,10 @@ public class Bike implements java.io.Serializable{
 	private Integer id;
 	private String bikeSn;
 	private Date startDate;//开始使用日期
-	private Byte status;//状态 0：可借 1：借出，2：报废
+	private Byte status;//状态 0：可借 ，1：借出，2，维修中，3：报废
+	private Date endDate;//报废时间
+	private Station station;//所在站点
+	
 	
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
@@ -57,7 +63,22 @@ public class Bike implements java.io.Serializable{
 		this.status = status;
 	}
 	
+	@Column(name="end_date",length = 19)
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 	
+	@ManyToOne(targetEntity=Station.class,cascade=CascadeType.ALL)
+	@JoinColumn(name="station_sn",referencedColumnName="station_sn")
+	public Station getStation() {
+		return station;
+	}
+	public void setStation(Station station) {
+		this.station = station;
+	}
 	
 
 }

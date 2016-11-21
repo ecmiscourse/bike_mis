@@ -3,14 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>校园公共自行车管理系统</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/easyui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/easyui/themes/icon.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/easyui/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/easyui/locale/easyui-lang-zh_CN.js"></script>
-
+<%@include file="/public/head.jspf"%>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 	body{ background:#0066A8;}
 	.tit{ margin:auto; margin-top:170px; text-align:center; width:350px; padding-bottom:20px;}
