@@ -11,11 +11,30 @@
 
 	$(function(){
 		$('#dg').datagrid({    
-		    url:'',    
+		    url:'base/personAction_queryByPage.action',
+		    fitColumns:true,
+		    fit:true,
+		    striped:true,/*斑马线*/
+		    nowarp:true,/*数据同一行*/ 
+		    loadmsg:'请等待',
+		    rownumbers:true,
+		    singleSelect:false,
+		    /*分页*/
+			pagination:true,
+			pageNumber:1,
+			pageSize:15,
+			pageList:[15,30,50,100],   
 		    columns:[[    
-		        {field:'code',title:'代码',width:100},    
-		        {field:'name',title:'名称',width:100},    
-		        {field:'price',title:'价格',width:100,align:'right'}    
+		        {field:'personSn',title:'学号',width:'25%',align:'center'},    
+		        {field:'personName',title:'姓名',width:'25%',align:'center'},    
+		        {field:'sex',title:'性别',width:'25%',align:'center',formatter:function(value,row,index){
+					if(value==0){
+						return '男';
+					}else{
+						return '女';
+					}
+			    }},
+		        {field:'cellphoneNumber',title:'联系方式',width:'25%',align:'center'}   
 		    ]]    
 		}); 
 		

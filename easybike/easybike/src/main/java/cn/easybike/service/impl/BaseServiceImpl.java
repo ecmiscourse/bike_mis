@@ -8,16 +8,22 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import cn.easybike.dao.BaseDao;
+import cn.easybike.dao.BikeDao;
+import cn.easybike.dao.LendAndReturnRecordDao;
+import cn.easybike.dao.MaintenanceDao;
 import cn.easybike.dao.PersonDao;
 import cn.easybike.dao.ResourceDao;
+import cn.easybike.dao.RoleDao;
+import cn.easybike.dao.StationDao;
 import cn.easybike.service.BaseService;
 
+
 /**
-* ������Ŀҵ�����ʵ����.ʵ��������Ŀ,ɾ����Ŀ�ȷ�����<br>
-* �ṩ�Ա��ֲ�Ľӿ�.
-* @author  ���
+* 技改项目业务代表实现类.实现新增项目,删除项目等方法，<br>
+* 提供对表现层的接口.
+* @author  马辉
 * @since   JDK1.8
-* @history 2016��11��17������3:43:09 ��� �½�
+* @history 2016年11月21日下午3:07:12 马辉 新建
 */
 @SuppressWarnings("unchecked")
 @Service("baseService")
@@ -49,6 +55,16 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	protected ResourceDao resourceDao;
 	@Resource(name="personDao")
 	protected PersonDao personDao;
+	@Resource(name="bikeDao")
+	protected BikeDao bikeDao;
+	@Resource(name="lendAndReturnRecordDao")
+	protected LendAndReturnRecordDao lendAndReturnRecordDao;
+	@Resource(name="maintenanceDao")
+	protected MaintenanceDao maintenanceDao;
+	@Resource(name="roleDao")
+	protected RoleDao roleDao;
+	@Resource(name="stationDao")
+	protected StationDao stationDao;
 	
 	
 	@Override

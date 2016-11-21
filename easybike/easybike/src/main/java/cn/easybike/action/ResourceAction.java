@@ -2,6 +2,7 @@ package cn.easybike.action;
 
 import cn.easybike.entity.Resource;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
 * 技改项目业务代表实现类.实现新增项目,删除项目等方法，<br>
@@ -18,8 +19,6 @@ public class ResourceAction extends BaseAction<Resource> {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private JSONArray jsonArray=new JSONArray();
-	
-
 	public String getMenu(){
 		jsonArray=resourceService.getMenu("", id);
 		return "jsonArray";
