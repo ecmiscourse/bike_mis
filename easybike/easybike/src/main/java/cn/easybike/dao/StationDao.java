@@ -11,4 +11,8 @@ import cn.easybike.entity.Station;
 */
 public interface StationDao extends BaseDao<Station> {
 
+	//get BY　Sn
+	public Station getByStationSn(String stationSn);
+	//删除
+	public void deleteBySn(String stationSn);
 }

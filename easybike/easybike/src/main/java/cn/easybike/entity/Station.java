@@ -3,8 +3,15 @@ package cn.easybike.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.apache.struts2.json.annotations.JSON;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 /**
@@ -25,8 +32,10 @@ public class Station implements java.io.Serializable{
 	
 	private Integer id;
 	private String stationSn;//站点编号
-	private String sattionName;//站点名称
+	private String stationName;//站点名称
 	private String location;//站点位置
+	private Set<Bike> bikes=new HashSet<Bike>();//站点车辆
+	
 	
 	@Id
 	@GeneratedValue(strategy=IDENTITY)
@@ -47,11 +56,11 @@ public class Station implements java.io.Serializable{
 	}
 	
 	@Column(name="station_name",length=30)
-	public String getSattionName() {
-		return sattionName;
+	public String getStationName() {
+		return stationName;
 	}
-	public void setSattionName(String sattionName) {
-		this.sattionName = sattionName;
+	public void setStationName(String stationName) {
+		this.stationName = stationName;
 	}
 	
 	@Column(name="location",length=255)
@@ -62,9 +71,14 @@ public class Station implements java.io.Serializable{
 		this.location = location;
 	}
 	
-	
-	
+	@OneToMany(targetEntity=Bike.class,mappedBy="station")
+	@JSON(serialize=false)
+	public Set<Bike> getBikes() {
+		return bikes;
+	}
+	public void setBikes(Set<Bike> bikes) {
+		this.bikes = bikes;
+	}
 	
 
-	
 }

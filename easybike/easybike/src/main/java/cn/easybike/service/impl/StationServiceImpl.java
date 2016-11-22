@@ -14,4 +14,15 @@ import cn.easybike.service.StationService;
 @Service("stationService")
 public class StationServiceImpl extends BaseServiceImpl<Station> implements StationService {
 
+	@Override
+	public Station getByStationSn(String stationSn) {
+		return stationDao.getByStationSn(stationSn);
+	}
+
+	//删除
+	@Override
+	public void deleteBySn(String stationSn) {
+		stationDao.deleteBySn(stationSn);
+	}
+
 }

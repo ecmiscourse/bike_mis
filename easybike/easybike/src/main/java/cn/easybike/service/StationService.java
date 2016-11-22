@@ -10,5 +10,8 @@ import cn.easybike.entity.Station;
 * @history 2016年11月21日下午5:50:37 马辉 新建
 */
 public interface StationService extends BaseService<Station> {
-
+	//get BY　Sn
+	public Station getByStationSn(String stationSn);
+	//删除
+	public void deleteBySn(String stationSn);
 }

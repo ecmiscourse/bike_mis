@@ -15,5 +15,17 @@ import cn.easybike.entity.Station;
 @Repository("stationDao")
 public class StationDaoImpl extends BaseDaoImpl<Station> implements StationDao {
 
+	@Override
+	public Station getByStationSn(String stationSn) {
+		String hql="select s from Station s where s.stationSn=:stationSn";
+		return (Station) getSession().createQuery(hql).setString("stationSn", stationSn).uniqueResult();
+	}
+
+	//删除
+	@Override
+	public void deleteBySn(String stationSn) {
+		String hql="delete Station s where s.stationSn=:stationSn";
+		getSession().createQuery(hql).setString("stationSn", stationSn).executeUpdate();
+	}
 
 }
