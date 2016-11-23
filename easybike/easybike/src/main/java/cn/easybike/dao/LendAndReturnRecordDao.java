@@ -5,3 +5,4 @@ import cn.easybike.entity.LendAndReturnRecord;
 public interface LendAndReturnRecordDao extends BaseDao<LendAndReturnRecord> {
    public void deleteByRecordSn(String recordSn);
 }
+

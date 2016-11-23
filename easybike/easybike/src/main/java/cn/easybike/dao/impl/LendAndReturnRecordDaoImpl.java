@@ -23,4 +23,5 @@ public class LendAndReturnRecordDaoImpl extends BaseDaoImpl<LendAndReturnRecord>
 	}
 
 	
+	
 }
