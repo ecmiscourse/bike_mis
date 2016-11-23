@@ -10,5 +10,8 @@ import cn.easybike.entity.Bike;
 * @history 2016年11月21日下午5:15:58 马辉 新建
 */
 public interface BikeDao extends BaseDao<Bike> {
-
+	//get BY sn
+	public Bike getByBikeSn(String bikeSn);
+	//delete
+	public void deleteBySn(String bikeSn);
 }

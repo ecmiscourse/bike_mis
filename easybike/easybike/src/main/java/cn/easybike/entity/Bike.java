@@ -1,7 +1,6 @@
 package cn.easybike.entity;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +23,9 @@ public class Bike implements java.io.Serializable{
 	
 	private Integer id;
 	private String bikeSn;
-	private Date startDate;//开始使用日期
+	private LocalDate startDate;//开始使用日期
 	private Byte status;//状态 0：可借 ，1：借出，2，维修中，3：报废
-	private Date endDate;//报废时间
+	private LocalDate endDate;//报废时间
 	private Station station;//所在站点
 	
 	
@@ -48,11 +47,11 @@ public class Bike implements java.io.Serializable{
 		this.bikeSn = bikeSn;
 	}
 	
-	@Column(name="start_date",length = 19)
-	public Date getStartDate() {
+	@Column(name="start_date")
+	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 	@Column(name="status",nullable=false,length=1)
@@ -63,11 +62,11 @@ public class Bike implements java.io.Serializable{
 		this.status = status;
 	}
 	
-	@Column(name="end_date",length = 19)
-	public Date getEndDate() {
+	@Column(name="end_date")
+	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	

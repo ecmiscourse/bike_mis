@@ -7,8 +7,6 @@ body, html {
     /*'Lucida Grande' , Verdana, Tahoma, Arial, sans-serif,HelveticaNeue-Light, 'Helvetica Neue Light' , 'Helvetica Neue' , Helvetica, Arial, sans-serif;*/
     overflow: hidden;
     height: 70px;
-    background-image: url('../images/bg2.gif');
-    background-repeat: repeat-x;
 }
 
 .header2 {
