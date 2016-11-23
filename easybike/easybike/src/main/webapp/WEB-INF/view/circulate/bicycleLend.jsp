@@ -10,16 +10,22 @@
 $(function(){
   	$('#dg').datagrid({
   		url:'circulate/lendAndReturnRecordAction_queryByPage.action',
-  		title:'用户表',
-  		 pagination:true,
-    	    pageNumber:1,
-    	    pageSize:15,
-    	    pageList:[15,30,45],
-    	    striped:true,
-    	    loadMsg:'正在努力加载中...' ,
-    	    rownumbers:true,
+  		title:'借车记录表',
+  		fitColumns:true,
+	    fit:true,
+	    striped:true,/*斑马线*/
+	    nowarp:true,/*数据同一行*/ 
+	    loadmsg:'请等待',
+	    rownumbers:true,
+	    singleSelect:true,
+	    /*分页*/
+		pagination:true,
+		pageNumber:1,
+		pageSize:15,
+		pageList:[15,30,50,100], 
   		 columns:[[
 				{field:'id',title:'id',width:100,checkbox:true,editor:{type:'numberbox',options:{precision:1}}}, 
+				{field:'lendStation',title:'借车站点',width:100},
 				{field:'recordSn',title:'借还记录编号',width:100},   
 				{field:'bike',title:'借出车辆',width:100},
 				{field:'studentId',title:'借车人学号',width:100},
@@ -30,13 +36,69 @@ $(function(){
 				{field:'lendPerson',title:'借出人',width:100},	
   		     ]],
   		   toolbar: [{
-		    	text:'新增借车记录',
+  			   	id:'add',
+		    	text:'新增',
 				iconCls: 'icon-add',
 				handler: function(){
-					$('#dlg').dialog('open').dialog('setTitle','新借车记录');
+					$('#win').window({
+						width:380,
+		 				height:300,
+		 				title:'借车记录添加',
+		 				cache:false,
+		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_add" frameborder="0" width="100%" height="100%"/>'
+						
+						
+					});
 				}
-			}],
+			},{
+				id:'delete',
+				iconCls:'icon-remove',
+				text:'删除',
+				handler:function(){
+					var row=$("#dg").datagrid("getSelected");
+					if(row){
+						console.log(row);
+						if(row.recordSn==null){
+							$.messager.alert('我的提示','对不起，您无法删除自己！','warning');
+						}else{
+							$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
+								if (r){
+									$.ajax({
+										url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_delete.action',
+										method:'POST',
+										dataType:'json',
+										data:{'recordSn':row.recordSn},
+										success:function(data){
+											if(data.status=="ok"){
+												$.messager.alert('我的提示','删除成功！','info');
+												$("#dg").datagrid("reload");						
+											}else{
+												$.messager.alert('我的提示','删除失败！','error');
+											}
+										}
+									})
+								}
+							});	
+						}					
+					}else{
+						$.messager.show({
+							title:'我的提示',
+							msg:'请先选择一条记录！',
+							timeout:1000,
+							showType:'show',
+							style:{
+								right:'',
+								top:document.body.scrollTop+document.documentElement.scrollTop+200,
+								bottom:''
+							}
+						})
+					}
+				}
+			}
+			
+  		   ],
   	});
+  	
   	
   	
 });
@@ -45,5 +107,6 @@ $(function(){
 </head>
 <body>
 	<table id="dg" data-options="width:1000"></table>
+	 <div id="win" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div> 
 </body>
 </html>

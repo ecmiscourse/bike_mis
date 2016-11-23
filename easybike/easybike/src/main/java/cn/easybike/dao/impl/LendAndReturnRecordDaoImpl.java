@@ -16,5 +16,11 @@ import cn.easybike.entity.LendAndReturnRecord;
 @Repository("lendAndReturnRecordDao")
 public class LendAndReturnRecordDaoImpl extends BaseDaoImpl<LendAndReturnRecord> implements LendAndReturnRecordDao {
 
+	@Override
+	public void deleteByRecordSn(String recordSn) {
+		String hql="delete LendAndReturnRecord l where l.recordSn=:recordSn";
+		getSession().createQuery(hql).setString("recordSn", recordSn).executeUpdate();
+	}
+
 	
 }
