@@ -15,5 +15,15 @@ import cn.easybike.service.BikeService;
 @Service("bikeService")
 public class BikeServiceImpl extends BaseServiceImpl<Bike> implements BikeService {
 
+	@Override
+	public Bike getByBikeSn(String bikeSn) {
+		return bikeDao.getByBikeSn(bikeSn);
+	}
+
+	@Override
+	public void deleteBySn(String bikeSn) {
+		bikeDao.deleteBySn(bikeSn);
+	}
+
 
 }

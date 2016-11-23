@@ -11,7 +11,7 @@
 
 	$(function(){
 		$('#dg').datagrid({    
-		    url:'${pageContext.request.contextPath}/base/personAction_queryByPage.action',
+		    url:'${pageContext.request.contextPath}/base/bikeAction_queryByPage.action',
 		    fitColumns:true,
 		    fit:true,
 		    striped:true,/*斑马线*/
@@ -30,13 +30,7 @@
 				iconCls:'icon-add',
 				text:'添加',
 				handler:function(){
-					$('#win').window({
-		 				width:330,
-		 				height:250,
-		 				title:'人员添加',
-		 				cache:false,
-		 				content:'<iframe src="${pageContext.request.contextPath}/base/person_add" frameborder="0" width="100%" height="100%"/>'
-		 			});
+					$('#dd1').dialog('open');
 				}
 			},{
 				id:'delete',
@@ -45,28 +39,24 @@
 				handler:function(){
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
-						if(row.personSn=="${sessionScope['personSn']}"){
-							$.messager.alert('我的提示','对不起，您无法删除自己！','warning');
-						}else{
-							$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
-								if (r){
-									$.ajax({
-										url:'${pageContext.request.contextPath}/base/personAction_delete.action',
-										method:'POST',
-										dataType:'json',
-										data:{'personSn':row.personSn},
-										success:function(data){
-											if(data.status=="ok"){
-												$.messager.alert('我的提示','删除成功！','info');
-												$("#dg").datagrid("reload");						
-											}else{
-												$.messager.alert('我的提示','删除失败！','error');
-											}
+						$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
+							if (r){
+								$.ajax({
+									url:'${pageContext.request.contextPath}/base/bikeAction_delete.action',
+									method:'POST',
+									dataType:'json',
+									data:{'bikeSn':row.bikeSn},
+									success:function(data){
+										if(data.status=="ok"){
+											$.messager.alert('我的提示','删除成功！','info');
+											$("#dg").datagrid("reload");						
+										}else{
+											$.messager.alert('我的提示','删除失败！','error');
 										}
-									})
-								}
-							});	
-						}					
+									}
+								})
+							}
+						});					
 					}else{
 						$.messager.show({
 							title:'我的提示',
@@ -88,13 +78,11 @@
 				handler:function(){
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
-						$('#win').window({
-			 				width:330,
-			 				height:250,
-			 				title:'人员修改',
-			 				cache:false,
-			 				content:'<iframe src="${pageContext.request.contextPath}/base/person_update" frameborder="0" width="100%" height="100%"/>'
-			 			});
+						$('#ff2').form('load',{
+							bikeSn:row.bikeSn,
+							startDate:row.startDate
+						});
+						$('#dd2').dialog('open');
 					}else{
 						$.messager.show({
 							title:'我的提示',
@@ -112,14 +100,14 @@
 			},{
 				id:'import',
 				iconCls:'icon-excel',
-				text:'导入',
+				text:'车辆导入',
 				handler:function(){
 					console.log('ok');
 				}
 			},{
 				id:'export',
 				iconCls:'icon-excel',
-				text:'导出',
+				text:'车辆导出',
 				handler:function(){
 					console.log('ok');
 				}
@@ -127,10 +115,124 @@
 		    columns:[[    
 		        {field:'bikeSn',title:'车辆编号',width:'25%',align:'center'},    
 		        {field:'startDate',title:'投入使用日期',width:'25%',align:'center'},    
-		        {field:'status',title:'当前状态',width:'25%',align:'center'},
-		        {field:'cellphoneNumber',title:'所在站点',width:'25%',align:'center'}   
+		        {field:'status',title:'当前状态',width:'25%',align:'center',formatter: function(value,row,index){
+					if (value==0){
+						return '可借';
+					} else if(value==1){
+						return '借出';
+					}else if(value==2){
+						return '维修中';
+					}else if(value==3){
+						return '已报废，报废时间：'+row.endDate;
+					}
+				}},
+		        {field:'station',title:'所在站点',width:'25%',align:'center'}   
 		    ]]    
 		}); 
+		
+		$("#ff1").form("disableValidation");
+		$("#ff2").form("disableValidation");
+		/*自定义验证*/
+		$.extend($.fn.validatebox.defaults.rules, {    
+		    length: {    
+		        validator: function(value, param){
+			        if(value.replace(/[^\d]/g,'').length == param[0] && value.replace(/[^\d]/g,'').length==value.length){
+						return true;
+				    }else{
+				    	return false;   
+					} 
+		        },    
+		        message: '数据非法 ！'   
+		    }    
+		}); 
+		//ajax添加时验证自行车编号是否存在
+		$("input",$("#bikeSn1").next("span")).blur(function(){
+			$('#bikeSn1').textbox('enableValidation')
+			if($('#bikeSn1').textbox('isValid')){
+				$.ajax({
+					url:'${pageContext.request.contextPath}/base/bikeAction_isExist.action',
+					method:'POST',
+					dataType:'json',
+					data:{'bikeSn':$('#bikeSn1').textbox('getValue')},
+					success:function(data){
+						if(data.isExist==true){
+							$.messager.alert('我的提示','该车辆编号已经存在！','warning');
+							$('#bikeSn1').textbox('clear');						
+						}
+					}
+				})
+			}
+		});
+
+		//ajax修改时验证自行车编号是否存在
+		$("input",$("#bikeSn2").next("span")).blur(function(){
+			$('#bikeSn2').textbox('enableValidation')
+			if($('#bikeSn2').textbox('isValid')&&$('#bikeSn2').textbox('getValue')!=$('#dg').datagrid('getSelected').bikeSn){
+				$.ajax({
+					url:'${pageContext.request.contextPath}/base/bikeAction_isExist.action',
+					method:'POST',
+					dataType:'json',
+					data:{'bikeSn':$('#bikeSn2').textbox('getValue')},
+					success:function(data){
+						if(data.isExist==true){
+							$.messager.alert('我的提示','该车辆编号已经存在！','warning');
+							$('#bikeSn1').textbox('clear');						
+						}
+					}
+				})
+			}
+		});
+
+		//重置
+		$("#reset1").click(function(){
+			$("#ff1").form("reset");
+		});
+		//提交 
+		$('#submit1').click(function(){
+			$("#ff1").form("enableValidation");
+			if($('#ff1').form('validate')){
+				$('#ff1').form('submit', {    
+				    url:'${pageContext.request.contextPath}/base/bikeAction_save.action',       
+				    success:function(data){
+				    	$("#ff1").form("disableValidation");    
+				    	var result = eval('(' + data + ')');
+				    	if(result.status=='ok'){
+				    		$.messager.alert("提示信息","添加成功！");
+							$("#ff1").form("reset");
+							//关闭窗体
+							$("#dd1").dialog("close");
+							//刷新dg
+							$("#dg").datagrid("reload");
+					   	}else{
+					   		$.messager.alert("提示信息","添加失败！",'error');
+						}
+				    }    
+				});
+			}
+		})
+		$('#submit2').click(function(){
+			$("#ff2").form("enableValidation");
+			if($('#ff2').form('validate')){
+				$('#ff2').form('submit', {    
+				    url:'${pageContext.request.contextPath}/base/bikeAction_update.action', 
+				    queryParams:{oldBikeSn:$('#dg').datagrid('getSelected').bikeSn},      
+				    success:function(data){
+				    	$("#ff2").form("disableValidation");    
+				    	var result = eval('(' + data + ')');
+				    	if(result.status=='ok'){
+				    		$.messager.alert("提示信息","修改成功！");
+							$("#ff2").form("reset");
+							//关闭窗体
+							$("#dd2").dialog("close");
+							//刷新dg
+							$("#dg").datagrid("reload");
+					   	}else{
+					   		$.messager.alert("提示信息","修改失败！",'error');
+						}
+				    }    
+				});
+			}
+		})
 		
 	})
 		
@@ -139,6 +241,43 @@
 </head>
 <body style="margin:1px;">
     <table id="dg"></table> 
-    <div id="win" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div> 
+    <div id="win" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div>
+    
+    <!-- 新增页面 -->
+    <div id="dd1" class="easyui-dialog" title="添加车辆" style="width:300px;height:200px;"   
+        data-options="closed:true,collapsible:false,minimizable:false,maximizable:false,modal:true">   
+   		<form id="ff1" method="post">   
+		    <div style="margin: 15px;">   
+		        <label for="bikeSn">车辆编号:</label>   
+		        <input id="bikeSn1" class="easyui-textbox" type="text" name="bikeSn" data-options="prompt:'请使用四位纯数字编号',required:true,validType:'length[4]'" />   
+		    </div>   
+		    <div style="margin: 15px;">   
+		        <label for="startDate">新增时间:</label>   
+		        <input class="easyui-datebox" type="text" name="startDate" data-options="required:true" />   
+		    </div>
+		    <div style="margin-top: 25px;text-align:center">
+		    	<a id="submit1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>  
+		    	<a id="reset1" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'">重置</a>  
+		    </div>      
+		</form>   
+	</div>
+	
+	<!-- 更新页面 -->
+	<div id="dd2" class="easyui-dialog" title="修改车辆" style="width:300px;height:200px;"   
+        data-options="closed:true,collapsible:false,minimizable:false,maximizable:false,modal:true">   
+   		<form id="ff2" method="post">   
+		    <div style="margin: 15px;">   
+		        <label for="bikeSn">车辆编号:</label>   
+		        <input id="bikeSn2" class="easyui-textbox" type="text" name="bikeSn" data-options="prompt:'请使用四位纯数字编号',required:true,validType:'length[4]'" />   
+		    </div>   
+		    <div style="margin: 15px;">   
+		        <label for="startDate">新增时间:</label>   
+		        <input class="easyui-datebox" type="text" name="startDate" data-options="required:true" />   
+		    </div>
+		    <div style="margin-top: 25px;text-align:center">
+		    	<a id="submit2" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">提交</a>  
+		    </div>      
+		</form>   
+	</div>
 </body>
 </html>

@@ -14,5 +14,17 @@ import cn.easybike.entity.Bike;
 @Repository("bikeDao")
 public class BikeDaoImpl extends BaseDaoImpl<Bike> implements BikeDao {
 
+	@Override
+	public Bike getByBikeSn(String bikeSn) {
+		String hql="select b from Bike b where b.bikeSn=:bikeSn";
+		return (Bike) getSession().createQuery(hql).setString("bikeSn", bikeSn).uniqueResult();
+	}
+
+	@Override
+	public void deleteBySn(String bikeSn) {
+		String hql="delete Bike b where b.bikeSn=:bikeSn";
+		getSession().createQuery(hql).setString("bikeSn", bikeSn).executeUpdate();		
+	}
+
 
 }
