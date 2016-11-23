@@ -112,16 +112,31 @@
 			},{
 				id:'import',
 				iconCls:'icon-excel',
-				text:'导入',
+				text:'人员导入',
 				handler:function(){
-					console.log('ok');
+					$("#win").window({
+						width:360,
+						height:150,
+						title:"Excel导入",
+						cache:false,
+						content:'<iframe src="${pageContext.request.contextPath}/base/excel" frameborder="0" width="100%" height="100%"/>'
+					});
 				}
 			},{
 				id:'export',
 				iconCls:'icon-excel',
-				text:'导出',
+				text:'人员导出',
 				handler:function(){
-					console.log('ok');
+					$.messager.confirm('导出确认','您确定要导出人员信息吗？',function(r){
+						var form=$("<form>");
+						form.attr("style","display:none");
+						form.attr("target","");
+						form.attr("method","post");
+						form.attr("action","base/personAction_export.action");
+						//将表单放入body
+						$("body").append(form);
+						form.submit();//提交表单
+					})
 				}
 			}],
 		    columns:[[    
@@ -144,6 +159,7 @@
 </script>
 </head>
 <body style="margin:1px;">
+	<input id="type" type="hidden" value="person"/>
     <table id="dg"></table> 
     <div id="win" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div> 
 </body>
