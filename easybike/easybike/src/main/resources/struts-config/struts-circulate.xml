@@ -7,6 +7,20 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />   
     <package name="circulate" namespace="/circulate" extends="easybike-struts" strict-method-invocation="false">  
+		  <action name="lendAndReturnRecordAction_*"  class="cn.easybike.action.LendAndReturnRecordAction" method="{1}">
+			<!-- 配置类型的json的Result -->
+			<result name="jsonObject" type="json">
+				<!-- 为该Result指定参数 -->
+				<param name="noCache">true</param>
+				<param name="contentType">text/html</param>
+				<!-- 设置只序列Action的map属性 -->
+				<param name="root">jsonObject</param>
+			</result>			
+		</action>  
 		 
+		 
+		 <action name="*">
+			<result>/WEB-INF/view/circulate/{1}.jsp</result>			
+		</action> 
 	</package>
 </struts>
