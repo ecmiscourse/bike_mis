@@ -24,10 +24,26 @@ $(function(){
 		pageSize:15,
 		pageList:[15,30,50,100], 
   		 columns:[[
-				{field:'id',title:'id',width:100,checkbox:true,editor:{type:'numberbox',options:{precision:1}}}, 
-				{field:'lendStation',title:'借车站点',width:100},
-				{field:'recordSn',title:'借还记录编号',width:100},   
-				{field:'bike',title:'借出车辆',width:100},
+				{field:'recordSn',title:'借还记录编号',width:100}, 
+				{field:'lendStation',title:'借车站点',width:100,formatter:function(value,row,index){
+					if(value==0){
+						return '站点X';
+					}else if(value==1){
+						return '站点Y';
+					}else{
+						return '站点Z';
+					}
+			    }},
+				{field:'bike',title:'借出车辆',width:100,formatter:function(value,row,index){
+					if(value==0){
+						return '自行车0';
+					}else if(value==1){
+						return '自行车1';
+					}else{
+						return '自行车2';
+					}
+					
+				}},
 				{field:'studentId',title:'借车人学号',width:100},
 				{field:'studentName',title:'借车人姓名',width:100},	
 				{field:'phoneNumber',title:'借车人联系方式',width:100},	
@@ -45,9 +61,8 @@ $(function(){
 		 				height:300,
 		 				title:'借车记录添加',
 		 				cache:false,
-		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_add" frameborder="0" width="100%" height="100%"/>'
-						
-						
+		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/bicycleLend_add" frameborder="0" width="100%" height="100%"/>'
+	
 					});
 				}
 			},{

@@ -24,10 +24,10 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    private String id;
+	private String id;
 	private JSONObject jsonObject = new JSONObject();
 	private String recordSn;
-    private Station lendStation;
+	private Station lendStation;
 	private Bike bike;
 	private String studentId;
 	private String phoneNumber;
@@ -103,6 +103,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	}
 
 	public Timestamp getLendDateTime() {
+
 		return lendDateTime;
 	}
 
@@ -165,7 +166,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		this.personSn = personSn;
 	}
 
-	// 分页查询
+	// 借车页面的分页查询
 	public String queryByPage() {
 		String hql = "select l from LendAndReturnRecord l";
 		JSONArray array = new JSONArray();
@@ -178,13 +179,13 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			jo.put("studentName", lendAndReturnRecord.getStudentName());
 			jo.put("phoneNumber", lendAndReturnRecord.getPhoneNumber());
 			Timestamp timestamp = lendAndReturnRecord.getLendDateTime();
-			if(timestamp!=null){
-				String timestamp2=timestamp.toString();
+			if (timestamp != null) {
+				String timestamp2 = timestamp.toString();
 				jo.put("lendDateTime", timestamp2);
-			}else{
+			} else {
 				jo.put("lendDateTime", "");
 			}
-			jo.put("isHasReturned", "false");
+			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
 			jo.put("lendPerson", session.get("personSn"));
 			array.add(jo);
 		}
@@ -192,30 +193,53 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		jsonObject.put("rows", array);
 		return "jsonObject";
 	}
-	public String delete(){
+
+	public String queryBypage2() {
+		String hql = "select l from LendAndReturnRecord l";
+		JSONArray array = new JSONArray();
+		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql, page, rows)) {
+			JSONObject jo = new JSONObject();
+			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
+			jo.put("lendStation", lendAndReturnRecord.getLendStation().getStationSn());
+			jo.put("bike", lendAndReturnRecord.getBike().getBikeSn());
+			jo.put("studentId", lendAndReturnRecord.getStudentId());
+			jo.put("studentName", lendAndReturnRecord.getStudentName());
+			jo.put("phoneNumber", lendAndReturnRecord.getPhoneNumber());
+			Timestamp timestamp = lendAndReturnRecord.getLendDateTime();
+			if (timestamp != null) {
+				String timestamp2 = timestamp.toString();
+				jo.put("lendDateTime", timestamp2);
+			} else {
+				jo.put("lendDateTime", "");
+			}
+			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
+			jo.put("lendPerson", session.get("personSn"));
+			array.add(jo);
+		}
+		jsonObject.put("total", lendAndReturnRecordService.countByHql("select count(l) from LendAndReturnRecord l"));
+		jsonObject.put("rows", array);
+		return "jsonObject";
+	}
+
+	public String delete() {
 		jsonObject.put("status", "ok");
-		try{
+		try {
 			lendAndReturnRecordService.deleteByRecordSn(recordSn);
-		}catch(Exception e){
+		} catch (Exception e) {
 			jsonObject.put("status", "nook");
 		}
 		System.out.println(id);
 		return "jsonObject";
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public String add() {
+
+		return null;
+	}
+
+	public String add2() {
+
+		return null;
+	}
+
 }
