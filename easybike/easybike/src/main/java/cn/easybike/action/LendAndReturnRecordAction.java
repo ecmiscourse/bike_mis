@@ -7,6 +7,7 @@ import java.util.Date;
 import cn.easybike.entity.Bike;
 import cn.easybike.entity.LendAndReturnRecord;
 import cn.easybike.entity.Person;
+import cn.easybike.entity.Station;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -23,10 +24,10 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+    private String id;
 	private JSONObject jsonObject = new JSONObject();
 	private String recordSn;
-
+    private Station lendStation;
 	private Bike bike;
 	private String studentId;
 	private String phoneNumber;
@@ -36,6 +37,22 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	private Timestamp returnDateTime;// 归还时间
 	private Boolean isHasReturned;// 是否归还
 	private String personSn;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Station getLendStation() {
+		return lendStation;
+	}
+
+	public void setLendStation(Station lendStation) {
+		this.lendStation = lendStation;
+	}
 
 	public String getRecordSn() {
 		return recordSn;
@@ -152,16 +169,21 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	public String queryByPage() {
 		String hql = "select l from LendAndReturnRecord l";
 		JSONArray array = new JSONArray();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH：mm：ss");
-		String currentTime = sdf.format(new Date());
 		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql, page, rows)) {
 			JSONObject jo = new JSONObject();
 			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
+			jo.put("lendStation", lendAndReturnRecord.getLendStation().getStationSn());
 			jo.put("bike", lendAndReturnRecord.getBike().getBikeSn());
 			jo.put("studentId", lendAndReturnRecord.getStudentId());
 			jo.put("studentName", lendAndReturnRecord.getStudentName());
 			jo.put("phoneNumber", lendAndReturnRecord.getPhoneNumber());
-			jo.put("lendDateTime", currentTime);
+			Timestamp timestamp = lendAndReturnRecord.getLendDateTime();
+			if(timestamp!=null){
+				String timestamp2=timestamp.toString();
+				jo.put("lendDateTime", timestamp2);
+			}else{
+				jo.put("lendDateTime", "");
+			}
 			jo.put("isHasReturned", "false");
 			jo.put("lendPerson", session.get("personSn"));
 			array.add(jo);
@@ -170,4 +192,28 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		jsonObject.put("rows", array);
 		return "jsonObject";
 	}
+	public String delete(){
+		jsonObject.put("status", "ok");
+		try{
+			lendAndReturnRecordService.deleteByRecordSn(recordSn);
+		}catch(Exception e){
+			jsonObject.put("status", "nook");
+		}
+		System.out.println(id);
+		return "jsonObject";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

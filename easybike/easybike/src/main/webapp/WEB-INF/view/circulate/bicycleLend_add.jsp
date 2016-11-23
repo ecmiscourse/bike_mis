@@ -23,21 +23,7 @@ $(function(){
 
 
 
-	$("#submit").click(function(){
-		$('#fm').form('submit',{
-			url: "",						
-			onSubmit:function(status){
-				if(status!=null){
-					$('#dlg').dialog('close');									
-					$.messager.alert('成功','添加成功','info');
-					$('#dg').datagrid("reload");
-				}else{
-					$.messager.alert('失败','添加失败','info');
-					$('#dlg').dialog('close');
-				}							
-			}
-		},"text");
-	});
+	
 
 
 
@@ -46,28 +32,67 @@ $(function(){
 </script>
 </head>
 <body>
-<div id="dlg" class="easyui-dialog"
-		style="width: 400px; height: 280px; padding: 10px 20px" closed="true"
-		buttons="#dlg-buttons">
-		<form id="fm" method="post">
-			<div class="fitem">
-				<label>账户:</label> <input name="username" class="easyui-validatebox"
-					required="true">
-			</div>
-			<div class="fitem">
-				<label>密码:</label> <input name="password" class="easyui-validatebox"
-					required="true">
-			</div>
-			<div class="fitem">
-				<label>邮箱:</label> <input name="email" class="easyui-validatebox"
-					validType="email">
-			</div>
-			<div id="dlg-buttons">
-				<a id="submit" href="#" class="easyui-linkbutton" iconCls="icon-ok">Save</a>
-				<a href="#" class="easyui-linkbutton" iconCls="icon-cancel"
-					onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
-			</div>
-		</form>
-	</div>
+
+		 <form id="ff" method="post">   
+	    <div style="margin: 15px;">   
+	        <label for="personSn">借车人学号:&nbsp;&nbsp;</label>   
+	        <input id="personSn" class="easyui-textbox" type="text" name="studentId" data-options="position:'top',required:true,validType:'length[8]'" />   
+	    </div>   
+	    <div style="margin: 15px;">   
+	        <label for="personName">借车人姓名:&nbsp;&nbsp;</label>   
+	        <input class="easyui-textbox" type="text" name="studentName" data-options="required:true" />   
+	    </div>
+	    <div style="margin: 15px;">   
+	        <label for="cellphoneNumber">借车人联系方式:</label>   
+	        <input class="easyui-textbox" type="text" name="phoneNumber" data-options="required:true,validType:'length[11]'" />   
+	    </div>
+	    <div style="margin: 15px;">   
+	        <label for="sex">站点:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>   
+	        <input class="easyui-combobox" name="lendStation" data-options="
+				valueField: 'label',
+				required:true,
+				textField: 'value',
+				panelHeight:'auto',
+				data: [{
+					label: '0',
+					value: '站点X'
+				},{
+					label: '1',
+					value: '站点Y'
+				},
+				{
+					label: '2',
+					value: '站点Z'
+				}]" /> 
+	    </div>
+	     <div style="margin: 15px;">   
+	        <label for="sex">自行车:&nbsp;&nbsp;&nbsp;&nbsp;</label>   
+	        <input class="easyui-combobox" name="bike" data-options="
+				valueField: 'label',
+				required:true,
+				textField: 'value',
+				panelHeight:'auto',
+				data: [{
+					label: '0',
+					value: '自行车0'
+				},{
+					label: '1',
+					value: '自行车1'
+				},
+				{
+					label: '2',
+					value: '自行车2'
+				}]" /> 
+	    </div>
+	    
+	    
+	    
+	    
+	    <div style="margin-top: 25px;text-align:center">
+	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>  
+	    	<a id="reset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'">重置</a>  
+	    </div>      
+	</form> 
+	
 </body>
 </html>
