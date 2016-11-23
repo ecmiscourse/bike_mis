@@ -240,6 +240,7 @@
 </script>
 </head>
 <body style="margin:1px;">
+	<input id="type" type="hidden" value="bike"/>
     <table id="dg"></table> 
     <div id="win" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div>
     

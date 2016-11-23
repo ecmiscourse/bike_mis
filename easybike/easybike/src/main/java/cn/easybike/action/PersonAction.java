@@ -1,5 +1,22 @@
 package cn.easybike.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
+
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 import cn.easybike.entity.Person;
@@ -26,8 +43,185 @@ public class PersonAction extends BaseAction<Person> {
 	private Byte sex;
 	private String cellphoneNumber;
 	private String personName;
+	private File uploadExcel;
+	private String uploadExcelContentType;
+	private String uploadExcelFileName;
+	private InputStream excelStream; 
+    private String excelFileName;
 	
+	//人员导出
+	public String export(){
+		XSSFWorkbook wb=new XSSFWorkbook();
+		XSSFSheet sheet=wb.createSheet("人员");
+		XSSFRow row;
+		//数据样式
+		XSSFCellStyle style=wb.createCellStyle();
+		XSSFFont font=wb.createFont();
+		font.setFontName("仿宋_GB2312");
+		font.setFontHeightInPoints((short)12);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);//水平居中  
+		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);//垂直居中 
+		for(int i=0;i<4;i++){
+			sheet.setDefaultColumnStyle(i, style);
+		}
+		sheet.setColumnWidth(0, 50*50);
+		sheet.setColumnWidth(1, 50*50);
+		sheet.setColumnWidth(2, 40*40);
+		sheet.setColumnWidth(3, 70*70);
+		XSSFCell cell;
+		//设置标题
+		row=sheet.createRow(0);
+		cell=row.createCell(0);
+    	cell.setCellValue("姓名");
+    	cell=row.createCell(1);
+    	cell.setCellValue("学号");
+    	cell=row.createCell(2);
+    	cell.setCellValue("性别");
+    	cell=row.createCell(3);
+    	cell.setCellValue("联系方式");
+    	//循环插入数据
+    	int size=0;
+    	for(Person person:personService.queryAll()){
+    		size++;
+    		row=sheet.createRow(size);
+    		cell=row.createCell(0);
+        	cell.setCellValue(person.getPersonName());
+        	cell=row.createCell(1);
+        	cell.setCellValue(person.getPersonSn());
+        	cell=row.createCell(2);
+        	if(person.getSex()==(byte)0){
+        		cell.setCellValue("男");
+        	}else{
+        		cell.setCellValue("女");
+        	}      	
+        	cell=row.createCell(3);
+        	cell.setCellValue(person.getCellphoneNumber());
+    	}
+    	
+    	try  
+        {  
+        	ByteArrayOutputStream fout = new ByteArrayOutputStream();  
+            wb.write(fout);
+            wb.close();
+            fout.close();
+            byte[] fileContent = fout.toByteArray();  
+            ByteArrayInputStream is = new ByteArrayInputStream(fileContent);  
+  
+            excelStream = is;               
+            excelFileName =URLEncoder.encode("人员信息表.xlsx", "UTF-8"); 	      
+        }  
+        catch (Exception e)  
+        {  
+            e.printStackTrace();  
+        }
+		return "export";
+	}
+	//人员批量导入
+	public String importPerson() throws FileNotFoundException{
+		InputStream stream=null;
+		try{
+			stream=new FileInputStream(uploadExcel);
+		}catch(Exception e){
+			return "jsonObject";
+		}
+		XSSFWorkbook wb = null;
+		try {
+			wb=new XSSFWorkbook(stream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		String name="";
+		String sn="";
+		String cell="";
+		String error="";
+		int errornum=0;
+		XSSFSheet xssfSheet = wb.getSheetAt(0);
+		//循环行
+		float m1=xssfSheet.getLastRowNum();
+		for(int rowNum=1;rowNum<=xssfSheet.getLastRowNum();rowNum++){
+			float m2=rowNum;
+			session.put("progressValue",(int)(m2/m1*100));
+			XSSFRow row=xssfSheet.getRow(rowNum);
+			Person person=new Person();
+			if(row==null){
+				continue;
+			}
+			try{
+				//姓名
+				XSSFCell personName=row.getCell(0);
+				if(personName!=null&&personName.toString().trim().length()>0){
+					name=personName.getStringCellValue();
+					person.setPersonName(name);
+				}else{
+					errornum++;
+					error+="第"+(rowNum+1)+"行出现空值，导入失败！";
+					continue;
+				}
+				
+				//学号
+				XSSFCell personSn=row.getCell(1);
+				if(personSn!=null&&personSn.toString().trim().length()>0){
+					sn=personSn.getStringCellValue();
+					if(personService.getByPersonSn(sn)==null){
+						person.setPersonSn(sn);
+					}else{
+						errornum++;
+						error+="第"+(rowNum+1)+"行学号已经存在，导入失败！";
+						continue;
+					}
+				}else{
+					errornum++;
+					error+="第"+(rowNum+1)+"行出现空值，导入失败！";
+					continue;
+				}
+				
+				//性别
+				XSSFCell sex=row.getCell(2);
+				if(sex!=null&&sex.toString().trim().length()>0){
+					if(sex.getStringCellValue().equals("男")){
+						person.setSex((byte) 0);
+					}else{
+						person.setSex((byte) 1);
+					}
+				}else{
+					errornum++;
+					error+="第"+(rowNum+1)+"行出现空值，导入失败！";
+					continue;
+				}
+				//联系方式
+				XSSFCell cellphone=row.getCell(3); 
+				if(cellphone!=null&&cellphone.toString().trim().length()>0){
+					DecimalFormat df = new DecimalFormat("0");   
+					cell = df.format(cellphone.getNumericCellValue());
+					person.setCellphoneNumber(cell);
+				}else{
+					errornum++;
+					error+="第"+(rowNum+1)+"行出现空值，导入失败！";
+					continue;
+				}
+				
+				person.setPassword("123456");
+				personService.save(person);
+			}catch(Exception e){
+				errornum++;
+				error+="第"+(rowNum+1)+"行导入失败！";
+				continue;
+			}
+		}
+		jsonObject.put("errorNum", errornum);
+		jsonObject.put("message", error);
+		session.put("progressValue",0);
+		return "jsonObject";
+				
+	}
 	
+	//查询进度
+	public String importSession(){
+		jsonObject.put("value", (int) session.get("progressValue"));
+		return "jsonObject";
+	}
 	//分页查询
 	public String queryByPage(){
 		String hql="select p from Person p";
@@ -113,6 +307,7 @@ public class PersonAction extends BaseAction<Person> {
 		if(right){
 			session.put("personSn", person.getPersonSn());			
 			session.put("personName", person.getPersonName());
+			session.put("progressValue", 0);//进度条初始值
 			jsonObject.put("status", "ok");
 		}else{
 			jsonObject.put("status", "nook");
@@ -167,5 +362,37 @@ public class PersonAction extends BaseAction<Person> {
 
 	public void setOldPersonSn(String oldPersonSn) {
 		this.oldPersonSn = oldPersonSn;
+	}
+	
+	public File getUploadExcel() {
+		return uploadExcel;
+	}
+
+	public void setUploadExcel(File uploadExcel) {
+		this.uploadExcel = uploadExcel;
+	}
+	public String getUploadExcelContentType() {
+		return uploadExcelContentType;
+	}
+	public void setUploadExcelContentType(String uploadExcelContentType) {
+		this.uploadExcelContentType = uploadExcelContentType;
+	}
+	public String getUploadExcelFileName() {
+		return uploadExcelFileName;
+	}
+	public void setUploadExcelFileName(String uploadExcelFileName) {
+		this.uploadExcelFileName = uploadExcelFileName;
+	}
+	public InputStream getExcelStream() {
+		return excelStream;
+	}
+	public void setExcelStream(InputStream excelStream) {
+		this.excelStream = excelStream;
+	}
+	public String getExcelFileName() {
+		return excelFileName;
+	}
+	public void setExcelFileName(String excelFileName) {
+		this.excelFileName = excelFileName;
 	}
 }
