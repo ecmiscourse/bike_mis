@@ -9,7 +9,7 @@
 <script type="text/javascript">
 $(function(){
   	$('#dg').datagrid({
-  		url:'circulate/lendAndReturnRecordAction_queryByPage.action',
+  		url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_queryByPage2.action',
   		title:'借车记录表',
   		fitColumns:true,
 	    fit:true,
@@ -62,7 +62,7 @@ $(function(){
 		 				height:300,
 		 				title:'借车记录添加',
 		 				cache:false,
-		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/bicycleLend_add" frameborder="0" width="100%" height="100%"/>'
+		 				content:''
 	
 					});
 				}

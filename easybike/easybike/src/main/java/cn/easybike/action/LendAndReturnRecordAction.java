@@ -3,6 +3,7 @@ package cn.easybike.action;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import cn.easybike.entity.Bike;
 import cn.easybike.entity.LendAndReturnRecord;
@@ -27,16 +28,53 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	private String id;
 	private JSONObject jsonObject = new JSONObject();
 	private String recordSn;
-	private Station lendStation;
-	private Bike bike;
+	private String  lendStationSn;
+	private String bikeSn;
 	private String studentId;
 	private String phoneNumber;
 	private String studentName;
-	private Person lendPerson;
+	private String lendPersonSn;
+	private String  returnPersonSn;
 	private Timestamp lendDateTime; // 借出时间
 	private Timestamp returnDateTime;// 归还时间
 	private Boolean isHasReturned;// 是否归还
 	private String personSn;
+
+	public String getLendStationSn() {
+		return lendStationSn;
+	}
+
+	public void setLendStationSn(String lendStationSn) {
+		this.lendStationSn = lendStationSn;
+	}
+
+	public String getBikeSn() {
+		return bikeSn;
+	}
+
+	public void setBikeSn(String bikeSn) {
+		this.bikeSn = bikeSn;
+	}
+
+	public String getLendPersonSn() {
+		return lendPersonSn;
+	}
+
+	public void setLendPersonSn(String lendPersonSn) {
+		this.lendPersonSn = lendPersonSn;
+	}
+
+	public String getReturnPersonSn() {
+		return returnPersonSn;
+	}
+
+	public void setReturnPersonSn(String returnPersonSn) {
+		this.returnPersonSn = returnPersonSn;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public String getId() {
 		return id;
@@ -45,15 +83,6 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public Station getLendStation() {
-		return lendStation;
-	}
-
-	public void setLendStation(Station lendStation) {
-		this.lendStation = lendStation;
-	}
-
 	public String getRecordSn() {
 		return recordSn;
 	}
@@ -61,15 +90,6 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	public void setRecordSn(String recordSn) {
 		this.recordSn = recordSn;
 	}
-
-	public Bike getBike() {
-		return bike;
-	}
-
-	public void setBike(Bike bike) {
-		this.bike = bike;
-	}
-
 	public String getStudentId() {
 		return studentId;
 	}
@@ -93,15 +113,6 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-
-	public Person getLendPerson() {
-		return lendPerson;
-	}
-
-	public void setLendPerson(Person lendPerson) {
-		this.lendPerson = lendPerson;
-	}
-
 	public Timestamp getLendDateTime() {
 
 		return lendDateTime;
@@ -165,7 +176,11 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	public void setPersonSn(String personSn) {
 		this.personSn = personSn;
 	}
-
+	 public static String getUUID(){ 
+	        String s = UUID.randomUUID().toString(); 
+	        //去掉“-”符号 
+	        return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
+	    } 
 	// 借车页面的分页查询
 	public String queryByPage() {
 		String hql = "select l from LendAndReturnRecord l";
@@ -186,7 +201,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 				jo.put("lendDateTime", "");
 			}
 			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
-			jo.put("lendPerson", session.get("personSn"));
+			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonSn() );
 			array.add(jo);
 		}
 		jsonObject.put("total", lendAndReturnRecordService.countByHql("select count(l) from LendAndReturnRecord l"));
@@ -194,7 +209,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		return "jsonObject";
 	}
 
-	public String queryBypage2() {
+	public String queryByPage2() { 
 		String hql = "select l from LendAndReturnRecord l";
 		JSONArray array = new JSONArray();
 		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql, page, rows)) {
@@ -213,7 +228,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 				jo.put("lendDateTime", "");
 			}
 			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
-			jo.put("lendPerson", session.get("personSn"));
+			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonSn() );
 			array.add(jo);
 		}
 		jsonObject.put("total", lendAndReturnRecordService.countByHql("select count(l) from LendAndReturnRecord l"));
@@ -232,9 +247,29 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		return "jsonObject";
 	}
 
-	public String add() {
-
-		return null;
+	public String save() {
+       jsonObject.put("status", "ok");
+       LendAndReturnRecord lendAndReturnRecord = new LendAndReturnRecord();
+       try{
+    	   lendAndReturnRecord.setStudentName(studentName);
+    	   lendAndReturnRecord.setStudentId(studentId);
+    	   lendAndReturnRecord.setPhoneNumber(phoneNumber);
+    	 //  lendAndReturnRecord.setLendStation(lendStationSn);
+    	  // lendAndReturnRecord.setLendPerson(lendPersonSn);
+    	   
+    	   String recordSn=getUUID();
+    	   System.out.println(recordSn);
+    	   lendAndReturnRecord.setRecordSn(recordSn);
+    	   lendAndReturnRecord.setIsHasReturned(false);
+    	   lendAndReturnRecord.setLendPerson(personService.getByPersonSn((String) session.get("personSn")));
+    	   // no time
+    	   lendAndReturnRecordService.save(lendAndReturnRecord);
+    	   
+    	   
+       }catch(Exception e){
+    	   jsonObject.put("status", "nook");
+       }
+		return "jsonObject";
 	}
 
 	public String add2() {
@@ -242,4 +277,25 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		return null;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
