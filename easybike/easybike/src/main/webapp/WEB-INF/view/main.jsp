@@ -8,6 +8,17 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/layout.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/layout.js" charset="utf-8"></script>
+<script type="text/javascript">
+function edit(){
+	$('#win').window({
+			width:330,
+			height:220,
+			title:'修改密码',
+			cache:false,
+			content:'<iframe src="${pageContext.request.contextPath}/myop/person_password" frameborder="0" width="100%" height="100%"/>'
+	});
+};
+</script>
 </head>
 <body class="easyui-layout">
     <div id="divHeader" data-options="region:'north',border:false,href:'header'">
@@ -23,5 +34,8 @@
             </div>
         </div>
     </div>
+    
+    <!-- 修改密码 -->
+    <div id="win" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div>
 </body>
 </html>

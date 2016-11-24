@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 	$(function(){
 		$('#box').datagrid({    
-		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn.action',
+		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn1.action',
 		    fitColumns:true,
 		    fit:true,
 		    striped:true,/*斑马线*/
@@ -50,11 +50,6 @@
 </head>
 <body>
 	<table id="box"></table>
-	<!-- <div id="search">
-		<div>
-			输入自行车编号：<input type="text" name="" >
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search">查询</a>
-		</div>
-	</div> -->
+	
 </body>
 </html>
