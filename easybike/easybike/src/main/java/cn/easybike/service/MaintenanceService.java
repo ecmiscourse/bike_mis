@@ -10,5 +10,7 @@ import cn.easybike.entity.Maintenance;
 * @history 2016年11月21日下午5:36:21 马辉 新建
 */
 public interface MaintenanceService extends BaseService<Maintenance> {
+		//get By sn
+		public Maintenance getByMaintenanceSn(String maintenanceSn);
 
 }

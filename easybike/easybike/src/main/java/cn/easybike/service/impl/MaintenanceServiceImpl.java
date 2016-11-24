@@ -16,4 +16,10 @@ import cn.easybike.service.MaintenanceService;
 @Service("maintenanceService")
 public class MaintenanceServiceImpl extends BaseServiceImpl<Maintenance> implements MaintenanceService {
 
+	@Override
+	public Maintenance getByMaintenanceSn(String maintenanceSn) {
+		
+		return maintenanceDao.getByMaintenanceSn(maintenanceSn);
+	}
+
 }
