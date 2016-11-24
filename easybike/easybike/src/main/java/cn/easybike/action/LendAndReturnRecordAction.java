@@ -132,7 +132,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		String hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
 		String hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
 		JSONArray array = new JSONArray();
-		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql1, 1, 10)) {
+		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql1, page, rows)) {
 			JSONObject jo = new JSONObject();
 			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
 			jo.put("bikeSn", lendAndReturnRecord.getBike().getBikeSn());
@@ -154,7 +154,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		String hql1="select p from LendAndReturnRecord p where p.lendPerson.personSn='"+sn+"'";
 		String hql2="select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='"+sn+"'";
 		JSONArray array=new JSONArray();
-		for(LendAndReturnRecord lendAndReturnRecord:lendAndReturnRecordService.queryByPage(hql1, 1, 10)){
+		for(LendAndReturnRecord lendAndReturnRecord:lendAndReturnRecordService.queryByPage(hql1, page, rows)){
 			JSONObject jo=new JSONObject();
 			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
 			jo.put("bikeSn", lendAndReturnRecord.getBike().getBikeSn());

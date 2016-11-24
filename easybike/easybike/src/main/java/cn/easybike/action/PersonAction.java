@@ -336,6 +336,20 @@ public class PersonAction extends BaseAction<Person> {
 		}
 		return "jsonObject";
 	}
+	//修改密码
+	public String updatePassword(){
+		jsonObject.put("status", "ok");
+		String personSn = (String) session.get("personSn");
+		Person person=personService.getByPersonSn(personSn);
+		try{
+			person.setPassword(password);
+			personService.update(person);;
+		}catch(Exception e){
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+		
+	}
 	//安全退出
 	public String exit(){
 		session.clear();

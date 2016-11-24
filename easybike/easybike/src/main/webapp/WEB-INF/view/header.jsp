@@ -30,7 +30,7 @@
         </div>
     </div>
     <div id="mm">
-        <div onclick="addNewTab('我的信息', '${pageContext.request.contextPath}/myop/person_information');"><a id="mm21">我的信息</a></div>
+        <div onclick="infor()"><a id="mm21">我的信息</a></div>
         <div data-options="iconCls:'icon-edit'" onclick="edit()">修改密码</a></div>
     </div>
     <script type="text/javascript">    

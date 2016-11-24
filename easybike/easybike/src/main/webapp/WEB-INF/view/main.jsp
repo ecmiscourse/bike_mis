@@ -10,7 +10,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/layout.js" charset="utf-8"></script>
 <script type="text/javascript">
 function edit(){
-	$('#win').window({
+	$('#win1').window({
 			width:330,
 			height:220,
 			title:'修改密码',
@@ -18,6 +18,15 @@ function edit(){
 			content:'<iframe src="${pageContext.request.contextPath}/myop/person_password" frameborder="0" width="100%" height="100%"/>'
 	});
 };
+function infor(){
+	$('#win2').window({
+		width:330,
+		height:220,
+		title:'个人信息',
+		cache:false,
+		content:'<iframe src="${pageContext.request.contextPath}/myop/person_information" frameborder="0" width="100%" height="100%"/>'
+	})
+}
 </script>
 </head>
 <body class="easyui-layout">
@@ -36,6 +45,10 @@ function edit(){
     </div>
     
     <!-- 修改密码 -->
-    <div id="win" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div>
+    <div id="win1" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div>
+    </div>
+    
+    <!-- 个人信息 -->
+    <div id="win2" data-options="collapsible:false,minimizable:false,maximizable:false,modal:true"></div>
 </body>
 </html>
