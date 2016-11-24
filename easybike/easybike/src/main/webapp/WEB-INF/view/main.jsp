@@ -21,7 +21,7 @@ function edit(){
 function infor(){
 	$('#win2').window({
 		width:330,
-		height:220,
+		height:250,
 		title:'个人信息',
 		cache:false,
 		content:'<iframe src="${pageContext.request.contextPath}/myop/person_information" frameborder="0" width="100%" height="100%"/>'

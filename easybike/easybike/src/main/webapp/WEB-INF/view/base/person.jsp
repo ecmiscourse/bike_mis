@@ -8,7 +8,6 @@
 <%@include file="/public/head.jspf"%>
 
 <script type="text/javascript">
-
 	$(function(){
 		$('#dg').datagrid({    
 		    url:'${pageContext.request.contextPath}/base/personAction_queryByPage.action',
