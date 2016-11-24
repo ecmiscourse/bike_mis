@@ -298,6 +298,23 @@ public class PersonAction extends BaseAction<Person> {
 		}
 		return "jsonObject";
 	}
+	//验证密码是否正确
+	public String isPassword(){
+		String personSn = (String) session.get("personSn");
+		Person person=personService.getByPersonSn(personSn);
+		Boolean right=false;
+		if(password.equals(person.getPassword())){
+			right=true;
+		}else{
+			right=false;
+		}
+		if(right){
+			jsonObject.put("status", "ok");
+		}else{
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
 	//登录
 	public String login() {
 		Person person=personService.getByPersonSn(personSn);
