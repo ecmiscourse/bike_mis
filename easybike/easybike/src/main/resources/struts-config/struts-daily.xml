@@ -17,7 +17,34 @@
 				<param name="root">jsonObject</param>
 			</result>			
 		</action>
-
+		<action name="traceAction_*"  class="cn.easybike.action.TraceAction" method="{1}">
+			<!-- 配置类型的json的Result -->
+			<result name="jsonObject" type="json">
+				<!-- 为该Result指定参数 -->
+				<param name="noCache">true</param>
+				<param name="contentType">text/html</param>
+				<!-- 设置只序列Action的map属性 -->
+				<param name="root">jsonObject</param>
+			</result>			
+		</action>
+	<action name="distributeAction_*"  class="cn.easybike.action.DistributeAction" method="{1}">
+			<!-- 配置类型的json的Result -->
+			<result name="jsonObject" type="json">
+				<!-- 为该Result指定参数 -->
+				<param name="noCache">true</param>
+				<param name="contentType">text/html</param>
+				<!-- 设置只序列Action的map属性 -->
+				<param name="root">jsonObject</param>
+			</result>	
+			<result name="jsonArray" type="json">
+				<!-- 为该Result指定参数 -->
+				<param name="noCache">true</param>
+				<param name="contentType">text/html</param>
+				<!-- 设置只序列Action的map属性 -->
+				<param name="root">jsonArray</param>
+			</result>		
+		</action>
+			
 		<action name="*">
 			<result>/WEB-INF/view/daily/{1}.jsp</result>			
 		</action>
