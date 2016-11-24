@@ -20,6 +20,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 import cn.easybike.entity.Person;
+import cn.easybike.util.MD5Login;
+import cn.easybike.util.StringUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -49,6 +51,8 @@ public class PersonAction extends BaseAction<Person> {
 	private InputStream excelStream; 
     private String excelFileName;
 	
+    
+    
 	//人员导出
 	public String export(){
 		XSSFWorkbook wb=new XSSFWorkbook();
@@ -300,7 +304,8 @@ public class PersonAction extends BaseAction<Person> {
 		Person person=personService.getByPersonSn(personSn);
 		Boolean right=false;
 		if(person!=null){
-			if(password.equals(person.getPassword())){
+			String realMd5Password = MD5Login.getMD5Str((person.getPassword().trim()+session.get("md5RandomKey")).toString(),null); 
+			if(password.equals(realMd5Password)){
 				right=true;
 			}else{
 				right=false;
