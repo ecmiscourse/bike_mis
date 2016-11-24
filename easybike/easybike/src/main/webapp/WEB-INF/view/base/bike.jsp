@@ -102,7 +102,13 @@
 				iconCls:'icon-excel',
 				text:'车辆导入',
 				handler:function(){
-					console.log('ok');
+					$("#win").window({
+						width:360,
+						height:150,
+						title:"Excel导入",
+						cache:false,
+						content:'<iframe src="${pageContext.request.contextPath}/base/excel" frameborder="0" width="100%" height="100%"/>'
+					});
 				}
 			},{
 				id:'export',

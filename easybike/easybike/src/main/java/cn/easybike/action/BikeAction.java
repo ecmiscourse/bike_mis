@@ -1,6 +1,18 @@
 package cn.easybike.action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import cn.easybike.entity.Bike;
 import net.sf.json.JSONArray;
@@ -25,8 +37,88 @@ public class BikeAction extends BaseAction<Bike> {
 	private String bikeSn;
 	private String startDate;
 	private String oldBikeSn;
+	private File uploadExcel;
+	private String uploadExcelContentType;
+	private String uploadExcelFileName;
+	private InputStream excelStream; 
+    private String excelFileName;
 	
-	
+	//车辆批量导入
+	public String importBike(){
+		InputStream stream=null;
+		try{
+			stream=new FileInputStream(uploadExcel);
+		}catch(Exception e){
+			jsonObject.put("errorNum", 1);
+			jsonObject.put("message", "文件读取错误，请确保文件未损坏或格式正确");
+			return "jsonObject";
+		}
+		XSSFWorkbook wb = null;
+		try {
+			wb=new XSSFWorkbook(stream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		String sn="";
+		String error="";
+		int errornum=0;
+		XSSFSheet xssfSheet = wb.getSheetAt(0);
+		float m1=xssfSheet.getLastRowNum();
+		for(int rowNum=1;rowNum<=xssfSheet.getLastRowNum();rowNum++){
+			XSSFRow row=xssfSheet.getRow(rowNum);
+			float m2=rowNum;
+			session.put("progressValue",(int)(m2/m1*100));
+			Bike bike=new Bike();
+			try{
+				//编号
+				XSSFCell bikeSn=row.getCell(0);
+				if(bikeSn!=null&&bikeSn.toString().trim().length()>0){
+					sn=bikeSn.getStringCellValue();
+					if(bikeService.getByBikeSn(sn)==null){
+						bike.setBikeSn(sn);
+					}else{
+						errornum++;
+						error+="第"+(rowNum+1)+"行编号已经存在，导入失败！";
+						continue;
+					}
+				}else{
+					errornum++;
+					error+="第"+(rowNum+1)+"行出现空值，导入失败！";
+					continue;
+				}
+				
+				//日期
+				XSSFCell start=row.getCell(1);
+				if(start!=null&&start.toString().trim().length()>0){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	
+					try{
+						bike.setStartDate(LocalDate.parse(sdf.format(start.getDateCellValue()).toString()));
+					}catch(Exception e){
+						errornum++;
+						error+="第"+(rowNum+1)+"行数据非日期格式，导入失败！";
+						continue;
+					}
+				}else{
+					bike.setStartDate(LocalDate.now());
+				}
+				
+				bike.setStation(stationService.getByStationSn("0001"));
+				bike.setStatus((byte) 0);
+				bikeService.save(bike);
+			}catch(Exception e){
+				errornum++;
+				error+="第"+(rowNum+1)+"行导入失败！";
+				continue;
+			}
+			
+			
+		}
+		jsonObject.put("errorNum", errornum);
+		jsonObject.put("message", error);
+		session.put("progressValue",0);
+		return "jsonObject";
+	}
 	//分页查询
 	public String queryByPage(){
 		String hql="select b from Bike b";
@@ -142,5 +234,35 @@ public class BikeAction extends BaseAction<Bike> {
 	}
 	public void setOldBikeSn(String oldBikeSn) {
 		this.oldBikeSn = oldBikeSn;
+	}
+	public File getUploadExcel() {
+		return uploadExcel;
+	}
+	public void setUploadExcel(File uploadExcel) {
+		this.uploadExcel = uploadExcel;
+	}
+	public String getUploadExcelContentType() {
+		return uploadExcelContentType;
+	}
+	public void setUploadExcelContentType(String uploadExcelContentType) {
+		this.uploadExcelContentType = uploadExcelContentType;
+	}
+	public String getUploadExcelFileName() {
+		return uploadExcelFileName;
+	}
+	public void setUploadExcelFileName(String uploadExcelFileName) {
+		this.uploadExcelFileName = uploadExcelFileName;
+	}
+	public InputStream getExcelStream() {
+		return excelStream;
+	}
+	public void setExcelStream(InputStream excelStream) {
+		this.excelStream = excelStream;
+	}
+	public String getExcelFileName() {
+		return excelFileName;
+	}
+	public void setExcelFileName(String excelFileName) {
+		this.excelFileName = excelFileName;
 	}
 }

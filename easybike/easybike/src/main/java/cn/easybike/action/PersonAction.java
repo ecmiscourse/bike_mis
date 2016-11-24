@@ -123,6 +123,8 @@ public class PersonAction extends BaseAction<Person> {
 		try{
 			stream=new FileInputStream(uploadExcel);
 		}catch(Exception e){
+			jsonObject.put("errorNum", 1);
+			jsonObject.put("message", "文件读取错误，请确保文件未损坏或格式正确");
 			return "jsonObject";
 		}
 		XSSFWorkbook wb = null;
