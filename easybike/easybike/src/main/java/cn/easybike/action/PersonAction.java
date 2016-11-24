@@ -21,7 +21,6 @@ import org.apache.struts2.ServletActionContext;
 
 import cn.easybike.entity.Person;
 import cn.easybike.util.MD5Login;
-import cn.easybike.util.StringUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -208,7 +207,7 @@ public class PersonAction extends BaseAction<Person> {
 					continue;
 				}
 				
-				person.setPassword("123456");
+				person.setPassword(MD5Login.getMD5Str("123456", null));
 				personService.save(person);
 			}catch(Exception e){
 				errornum++;
@@ -253,7 +252,7 @@ public class PersonAction extends BaseAction<Person> {
 			person.setPersonSn(personSn);
 			person.setCellphoneNumber(cellphoneNumber);
 			person.setPersonName(personName);
-			person.setPassword("123456");
+			person.setPassword(MD5Login.getMD5Str("123456", null));
 			person.setSex(sex);
 			personService.save(person);
 		}catch(Exception e){
@@ -303,9 +302,8 @@ public class PersonAction extends BaseAction<Person> {
 	public String login() {
 		Person person=personService.getByPersonSn(personSn);
 		Boolean right=false;
-		if(person!=null){
-			String realMd5Password = MD5Login.getMD5Str((person.getPassword().trim()+session.get("md5RandomKey")).toString(),null); 
-			if(password.equals(realMd5Password)){
+		if(person!=null){ 
+			if(password.equals(person.getPassword())){
 				right=true;
 			}else{
 				right=false;
