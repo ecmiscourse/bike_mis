@@ -46,7 +46,7 @@ public class LendAndReturnRecord implements java.io.Serializable {
 		this.id = id;
 	}
 	
-	@Column(name="record_sn",unique=true,nullable=false,length=30)
+	@Column(name="record_sn",unique=true,nullable=false,length=100)
 	public String getRecordSn() {
 		return recordSn;
 	}

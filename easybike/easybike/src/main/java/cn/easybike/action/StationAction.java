@@ -18,11 +18,22 @@ public class StationAction extends BaseAction<Station> {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JSONObject jsonObject =new JSONObject();
+	private JSONArray jsonArray=new JSONArray();
 	private String stationSn;
 	private String stationName;//站点名称
 	private String location;//站点位置
 	private String oldStationSn;
-
+	
+	//下拉框获取station
+	public String getAllStation(){
+		for(Station station:stationService.queryAll()){
+			JSONObject jo=new JSONObject();
+			jo.put("stationSn", station.getStationSn());
+			jo.put("stationName", station.getStationName());
+			jsonArray.add(jo);
+		}
+		return "jsonArray";
+	}
 
 	//分页查询
 	public String queryByPage(){
@@ -126,5 +137,12 @@ public class StationAction extends BaseAction<Station> {
 
 	public void setOldStationSn(String oldStationSn) {
 		this.oldStationSn = oldStationSn;
+	}
+	public JSONArray getJsonArray() {
+		return jsonArray;
+	}
+
+	public void setJsonArray(JSONArray jsonArray) {
+		this.jsonArray = jsonArray;
 	}
 }

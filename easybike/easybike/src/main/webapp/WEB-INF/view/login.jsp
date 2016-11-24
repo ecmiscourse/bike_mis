@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="cn.easybike.util.*" %>
-<%    
-	//产生随机数，和密码一起生成MD5  
-	request.getSession().setAttribute("md5RandomKey", StringUtils.getRandomNum(10));    
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,7 +24,7 @@
 			if($('#ff').form('validate')){
 				$('#ff').form('submit', {    
 				    url:'${pageContext.request.contextPath}/base/personAction_login', 
-				    queryParams:{password:MD5($("#password").val()+"${md5RandomKey}")},      
+				    queryParams:{password:MD5($("#password").val())},      
 				    success:function(data){    
 				    	var data = eval('(' + data + ')');  // change the JSON string to javascript object    
 				        if (data.status=='ok'){   
