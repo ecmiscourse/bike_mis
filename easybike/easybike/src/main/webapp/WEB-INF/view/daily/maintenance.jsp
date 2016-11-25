@@ -47,13 +47,10 @@
 				        		return "<a  href='#' onclick='editMaintenance()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"操作"+"</a>";
 				        	}else{
 				        		return "<p>"+"已维修"+"</p>";
-				        	}
-				        	
+				        	}	
 				        }}
 				        ]]				        
-		});	
-		
-		
+		});		
 	})
 	
 
