@@ -9,6 +9,7 @@
 
 <script type="text/javascript">
 	$(function(){
+		$("#ff").form("disableValidation");
 		/*自定义验证*/
 		$.extend($.fn.validatebox.defaults.rules, {    
 		    length: {    
@@ -30,6 +31,7 @@
 		}); 
 		//ajax验证密码是否正确
 		$("input",$("#password1").next("span")).blur(function(){
+			$("#ff").form("ableValidation");
 			$('#password1').textbox('enableValidation')
 			if($('#password1').textbox('isValid')){
 				$.ajax({
