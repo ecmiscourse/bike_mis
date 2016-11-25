@@ -14,6 +14,8 @@
 			$('#gg').css('display','none');
 			$('#ff').css('display','');
 		});
+		//数据回显
+		$("gg").form('load','${pageContext.request.contextPath}/base/personAction_personInfor.action');
 		//重置
 		$("#reset").click(function(){
 			$("#ff").form("reset");
@@ -25,20 +27,20 @@
 <body style="margin:1px;">
 	<form id="gg" method="post">
 		<div style="margin:15px;">
-			<label>姓&nbsp;&nbsp;名:</label>
-			<label id="personName"><a>1313</a></label>
-		</div>
-		<div style="margin:15px;">
 			<label>学&nbsp;&nbsp;号:</label>
-			<label id="personName"><a>1313</a></label>
+			<label id="personSn"></label>
 		</div>
 		<div style="margin:15px;">
-			<label>联系方式:</label>
-			<label id="personName"><a>1313</a></label>
+			<label>姓&nbsp;&nbsp;名:</label>
+			<label id="personName"></label>
 		</div>
 		<div style="margin:15px;">
 			<label>性&nbsp;&nbsp;别:</label>
-			<label id="personName"><a>1313</a></label>
+			<label id="personName"></label>
+		</div>
+		<div style="margin:15px;">
+			<label>联系方式:</label>
+			<label id="cellphoneNumber"></label>
 		</div>
 		<div id="before" style="margin-top: 25px;text-align:center">
 			<a id="update" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>

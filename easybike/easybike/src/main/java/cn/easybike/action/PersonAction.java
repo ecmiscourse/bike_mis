@@ -350,6 +350,21 @@ public class PersonAction extends BaseAction<Person> {
 		return "jsonObject";
 		
 	}
+	//显示个人信息
+	public String personInfor(){
+		String sn=(String) session.get("personSn");
+		String hql="select p form Person p where p.personSn='"+sn+"'";
+		JSONArray array=new JSONArray();
+		for(Person person:personService.queryByPage(hql, 0, 0)){
+			JSONObject jo=new JSONObject();
+			jo.put("personSn", person.getPersonSn());
+			jo.put("personName", person.getPersonName());
+			jo.put("sex", person.getSex());
+			jo.put("cellphoneNumber", person.getCellphoneNumber());
+			array.add(jo);
+		}
+		return "jsonObject";
+	}
 	//安全退出
 	public String exit(){
 		session.clear();
