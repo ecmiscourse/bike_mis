@@ -179,7 +179,8 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	 public static String getUUID(){ 
 	        String s = UUID.randomUUID().toString(); 
 	        //去掉“-”符号 
-	        return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
+	        //return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
+	        return s.substring(0,8);
 	    } 
 	// 借车页面的分页查询
 	public String queryByPage() {
@@ -254,15 +255,17 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
     	   lendAndReturnRecord.setStudentName(studentName);
     	   lendAndReturnRecord.setStudentId(studentId);
     	   lendAndReturnRecord.setPhoneNumber(phoneNumber);
-    	 //  lendAndReturnRecord.setLendStation(lendStationSn);
-    	  // lendAndReturnRecord.setLendPerson(lendPersonSn);
+    	   lendAndReturnRecord.setLendStation(stationService.getByStationSn(lendStationSn));
+    	   //lendAndReturnRecord.setBike(bikeService.getByBikeSn(bikeSn));
     	   
     	   String recordSn=getUUID();
-    	   System.out.println(recordSn);
+    	   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	   lendAndReturnRecord.setLendDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
+    	   
     	   lendAndReturnRecord.setRecordSn(recordSn);
     	   lendAndReturnRecord.setIsHasReturned(false);
     	   lendAndReturnRecord.setLendPerson(personService.getByPersonSn((String) session.get("personSn")));
-    	   // no time
+    	   
     	   lendAndReturnRecordService.save(lendAndReturnRecord);
     	   
     	   
