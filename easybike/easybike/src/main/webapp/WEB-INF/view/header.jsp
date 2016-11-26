@@ -23,7 +23,7 @@
                     <ul>
                         <li><a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-power'" onclick="exit()">安全退出</a></li>
                         <li><a href="#" class="easyui-menubutton" data-options="menu:'#mm',iconCls:'icon-man'"><div id="toDoList">关于我</div></a></li>
-                        <li><a  class="easyui-linkbutton" data-options="plain:true" >您好，<s:property value="#session.personName"/></a></li>
+                        <li><a class="easyui-linkbutton" data-options="plain:true" ><div id="personName">您好，<s:property value="#session.personName"/></div></a></li>
                     </ul>
                 </div>
             </div>

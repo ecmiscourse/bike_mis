@@ -82,15 +82,15 @@
 	<form id="ff" method="post">
 		<div style="margin:15px;">
 			<label>原密码:&nbsp;</label>
-			<input id="password1" class="easyui-passwordbox" type="password" data-options="position:'top',required:true,validType:'length[6,15]'"/>
+			<input id="password1" class="easyui-passwordbox" data-options="position:'top',required:true,validType:'length[6,15]'"/>
 		</div>
 		<div style="margin:15px;">
 			<label>新密码:&nbsp;</label>
-			<input id="password2" class="easyui-passwordbox" type="password" data-options="position:'top',required:true,validType:'length[6,15]'"/>
+			<input id="password2" class="easyui-passwordbox" data-options="position:'top',required:true,validType:'length[6,15]'"/>
 		</div>
 		<div style="margin:15px;">
 			<label>确认密码:</label>
-			<input id="rpassword" class="easyui-passwordbox" type="password" validType="equals['#password2']" data-options="required:true"/>
+			<input id="rpassword" class="easyui-passwordbox" validType="equals['#password2']" data-options="required:true"/>
 		</div>
 		<div style="margin-top: 25px;text-align:center">
 	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">确定</a>  

@@ -352,17 +352,25 @@ public class PersonAction extends BaseAction<Person> {
 	}
 	//显示个人信息
 	public String personInfor(){
-		String sn=(String) session.get("personSn");
-		String hql="select p form Person p where p.personSn='"+sn+"'";
-		JSONArray array=new JSONArray();
-		for(Person person:personService.queryByPage(hql, 0, 0)){
-			JSONObject jo=new JSONObject();
-			jo.put("personSn", person.getPersonSn());
-			jo.put("personName", person.getPersonName());
-			jo.put("sex", person.getSex());
-			jo.put("cellphoneNumber", person.getCellphoneNumber());
-			array.add(jo);
-		}
+		String personSn=(String) session.get("personSn");
+		Person person=personService.getByPersonSn(personSn);
+		jsonObject.put("personSn", person.getPersonSn());
+		jsonObject.put("personName", person.getPersonName());
+		jsonObject.put("sex", person.getSex());
+		jsonObject.put("cellphoneNumber", person.getCellphoneNumber());
+		return "jsonObject";
+	}
+	//修改个人信息
+	public String updateInfor(){
+		jsonObject.put("status", "ok");
+		String personSn=(String) session.get("personSn");
+		Person person=personService.getByPersonSn(personSn);
+		person.setPersonName(personName);
+		person.setSex(sex);
+		person.setCellphoneNumber(cellphoneNumber);
+		personService.update(person);
+		session.put("personName", personName);
+		jsonObject.put("personName", personName);
 		return "jsonObject";
 	}
 	//安全退出

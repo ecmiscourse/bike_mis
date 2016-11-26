@@ -35,13 +35,16 @@
 		        {field:'returnDateTime',title:'归还时间',width:'11%',align:'center'}
 		    ]],
 		    toolbar:[{
-				text:'<input id="search" type="text" style="width:300px">'
+				text:'<input id="search" type="text" value="请输入自行车编号进行查询" style="width:300px">'
 			}]
 		});
 			$('#search').textbox({    
 			    buttonText:'搜索',    
 			    iconCls:'icon-search', 
-			    iconAlign:'left'       
+			    iconAlign:'left',
+			    onClickButton:function(){
+			    	
+			    }
 			})
 
 	})
