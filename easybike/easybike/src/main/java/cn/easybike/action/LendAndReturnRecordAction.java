@@ -39,15 +39,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	private Timestamp returnDateTime;// 归还时间
 	private Boolean isHasReturned;// 是否归还
 	private String personSn;
-	private String bikeSn;
 
-	public String getBikeSn() {
-		return bikeSn;
-	}
-
-	public void setBikeSn(String bikeSn) {
-		this.bikeSn = bikeSn;
-	}
 
 	public String getLendStationSn() {
 		return lendStationSn;
