@@ -127,6 +127,7 @@ $(function(){
 	    
 	    
 	    
+	    
 	    <div style="margin-top: 25px;text-align:center">
 	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>  
 	    	<a id="reset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'">重置</a>  

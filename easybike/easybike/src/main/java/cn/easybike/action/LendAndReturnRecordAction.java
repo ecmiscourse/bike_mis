@@ -258,6 +258,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		return "jsonObject";
 	}
 
+	
 	public String delete() {
 		jsonObject.put("status", "ok");
 		try {
