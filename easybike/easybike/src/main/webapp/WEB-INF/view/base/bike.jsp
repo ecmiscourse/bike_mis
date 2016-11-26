@@ -26,6 +26,8 @@
 			pageList:[15,30,50,100], 
 			/*按钮*/
 			toolbar:[{
+				text:'所在站点：<input id="cc" name="stationSn">'
+			},{
 				id:'add',
 				iconCls:'icon-add',
 				text:'添加',
@@ -115,7 +117,16 @@
 				iconCls:'icon-excel',
 				text:'车辆导出',
 				handler:function(){
-					console.log('ok');
+					$.messager.confirm('导出确认','您确定要导出所有车辆信息吗？',function(r){
+						var form=$("<form>");
+						form.attr("style","display:none");
+						form.attr("target","");
+						form.attr("method","post");
+						form.attr("action","base/bikeAction_export.action");
+						//将表单放入body
+						$("body").append(form);
+						form.submit();//提交表单
+					})
 				}
 			}],
 		    columns:[[    
@@ -239,7 +250,26 @@
 				});
 			}
 		})
-		
+
+		//下拉框
+		$('#cc').combobox({    
+		    url:'${pageContext.request.contextPath}/base/stationAction_getAllStation.action',    
+		    valueField:'stationSn',    
+		    textField:'stationName',
+		    panelHeight:300,
+		    limitToList:true,
+		    //默认选中第一个
+		    /* onLoadSuccess:function(){
+			    if($('#cc').combobox('getData').length>0){
+			    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
+				}
+			}, */
+			onSelect:function(record){
+				$('#dg').datagrid('load',{
+					stationSn:record.stationSn
+				});
+			}  
+		});
 	})
 		
 

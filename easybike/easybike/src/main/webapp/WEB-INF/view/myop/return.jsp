@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>我借出的</title>
+<title>我归还的</title>
 	<%@include file="/public/head.jspf"%>
 	<script type="text/javascript">
 	$(function(){
 		$('#box').datagrid({    
-		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn1.action',
+		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn2.action',
 		    fitColumns:true,
 		    fit:true,
 		    striped:true,/*斑马线*/
@@ -24,15 +24,14 @@
 			pageSize:15,
 			pageList:[15,30,50,100], 
 		    columns:[[
-				{field:'recordSn',title:'借车记录编号',width:'11%',align:'center'},
-		        {field:'bikeSn',title:'自行车编号',width:'11%',align:'center'},
-		        {field:'studentId',title:'借车人学号',width:'11%',align:'center'},
-		        {field:'studentName',title:'借车人姓名',width:'11%',align:'center'},
-		        {field:'phoneNumber',title:'借车人联系方式',width:'11%',align:'center'},
-		        {field:'lendDateTime',title:'借出时间',width:'11%',align:'center'},
-		        {field:'isHasReturned',title:'是否归还',width:'11%',align:'center'},
-		        {field:'returnPerson',title:'操作归还的人',width:'11%',align:'center'},
-		        {field:'returnDateTime',title:'归还时间',width:'11%',align:'center'}
+				{field:'recordSn',title:'借车记录编号',width:'12%',align:'center'},
+		        {field:'bikeSn',title:'自行车编号',width:'12%',align:'center'},
+		        {field:'studentId',title:'借车人学号',width:'12%',align:'center'},
+		        {field:'studentName',title:'借车人姓名',width:'12%',align:'center'},
+		        {field:'phoneNumber',title:'借车人联系方式',width:'12%',align:'center'},
+		        {field:'lendPerson',title:'借出人',width:'12%',align:'center'},
+		        {field:'lendDateTime',title:'借出时间',width:'12%',align:'center'},
+		        {field:'returnDateTime',title:'归还时间',width:'12%',align:'center'}
 		    ]],
 		    toolbar:[{
 				text:'<input id="search" type="text" style="width:300px">'

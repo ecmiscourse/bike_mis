@@ -1,20 +1,27 @@
 package cn.easybike.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import cn.easybike.entity.Bike;
+import cn.easybike.entity.Person;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -42,7 +49,87 @@ public class BikeAction extends BaseAction<Bike> {
 	private String uploadExcelFileName;
 	private InputStream excelStream; 
     private String excelFileName;
-	
+	//车辆导出
+    public String export(){
+    	XSSFWorkbook wb=new XSSFWorkbook();
+		XSSFSheet sheet=wb.createSheet("车辆信息");
+		XSSFRow row;
+		//数据样式
+		XSSFCellStyle style=wb.createCellStyle();
+		XSSFFont font=wb.createFont();
+		font.setFontName("仿宋_GB2312");
+		font.setFontHeightInPoints((short)12);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);//水平居中  
+		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);//垂直居中 
+		for(int i=0;i<4;i++){
+			sheet.setDefaultColumnStyle(i, style);
+		}
+		sheet.setColumnWidth(0, 80*80);
+		sheet.setColumnWidth(1, 80*80);
+		sheet.setColumnWidth(2, 80*80);
+		sheet.setColumnWidth(3, 80*80);
+		XSSFCell cell;
+		//设置标题
+		row=sheet.createRow(0);
+		cell=row.createCell(0);
+    	cell.setCellValue("车辆编号");
+    	cell=row.createCell(1);
+    	cell.setCellValue("开始使用日期");
+    	cell=row.createCell(2);
+    	cell.setCellValue("当前车辆状态");
+    	cell=row.createCell(3);
+    	cell.setCellValue("当前所在站点");
+    	//循环插入数据
+    	int size=0;
+    	for(Bike bike:bikeService.queryAll()){
+    		size++;
+    		row=sheet.createRow(size);
+    		cell=row.createCell(0);
+        	cell.setCellValue(bike.getBikeSn());
+        	
+        	cell=row.createCell(1);
+        	cell.setCellValue(bike.getStartDate().toString());
+        	
+        	cell=row.createCell(2);
+        	if(bike.getStatus()==(byte)0){
+        		cell.setCellValue("可借");
+        	}else if(bike.getStatus()==(byte)1){
+        		cell.setCellValue("借出");
+        	}else if(bike.getStatus()==(byte)2){
+        		cell.setCellValue("维修中");
+        	}else if(bike.getStatus()==(byte)3){
+        		if(bike.getEndDate()!=null){
+        			cell.setCellValue("报废，报废时间："+bike.getEndDate().toString());
+        		}else{
+        			cell.setCellValue("报废");
+        		}
+        		
+        	}        	
+        	cell=row.createCell(3);
+        	if(bike.getStation()!=null){
+        		cell.setCellValue(bike.getStation().getStationName());
+        	} 	
+    	}
+    	
+    	try  
+        {  
+        	ByteArrayOutputStream fout = new ByteArrayOutputStream();  
+            wb.write(fout);
+            wb.close();
+            fout.close();
+            byte[] fileContent = fout.toByteArray();  
+            ByteArrayInputStream is = new ByteArrayInputStream(fileContent);  
+  
+            excelStream = is;               
+            excelFileName =URLEncoder.encode("车辆信息表.xlsx", "UTF-8"); 	      
+        }  
+        catch (Exception e)  
+        {  
+            e.printStackTrace();  
+        }
+		return "export";
+    }
 	//车辆批量导入
 	public String importBike(){
 		InputStream stream=null;
@@ -123,6 +210,9 @@ public class BikeAction extends BaseAction<Bike> {
 	public String queryByPage(){
 		String hql="select b from Bike b";
 		JSONArray array=new JSONArray();
+		if(stationSn!=null&&stationSn.trim().length()>0){
+			hql+=" where b.station.stationSn='"+stationSn+"'";
+		}
 		for(Bike bike:bikeService.queryByPage(hql, page, rows)){
 			JSONObject jo=new JSONObject();
 			jo.put("bikeSn", bike.getBikeSn());

@@ -3,6 +3,7 @@ package cn.easybike.dao.impl;
 import org.springframework.stereotype.Repository;
 
 import cn.easybike.dao.MaintenanceDao;
+import cn.easybike.entity.Bike;
 import cn.easybike.entity.Maintenance;
 
 /**
@@ -14,5 +15,11 @@ import cn.easybike.entity.Maintenance;
 */
 @Repository("maintenanceDao")
 public class MaintenanceDaoImpl extends BaseDaoImpl<Maintenance> implements MaintenanceDao {
+
+	@Override
+	public Maintenance getByMaintenanceSn(String maintenanceSn) {
+		String hql="select m from Maintenance m where m.maintenanceSn=:maintenanceSn";
+		return (Maintenance) getSession().createQuery(hql).setString("maintenanceSn",maintenanceSn).uniqueResult();
+	}
 
 }

@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/jquery.min.js"></script>
+	
 <title></title>
 </head>
 <body>
@@ -29,8 +30,8 @@
         </div>
     </div>
     <div id="mm">
-        <div onclick="addNewTab('我的信息', '${pageContext.request.contextPath}/jj');"><a id="mm21">我的信息</a></div>
-        <div data-options="iconCls:'icon-edit'" onclick="addNewTab('修改密码', '${pageContext.request.contextPath}/ss');"><a id="mm22">修改密码</a></div>
+        <div onclick="infor()"><a id="mm21">我的信息</a></div>
+        <div data-options="iconCls:'icon-edit'" onclick="edit()">修改密码</a></div>
     </div>
     <script type="text/javascript">    
 		function exit(){

@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 import cn.easybike.entity.Person;
+import cn.easybike.util.MD5Login;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -49,6 +50,8 @@ public class PersonAction extends BaseAction<Person> {
 	private InputStream excelStream; 
     private String excelFileName;
 	
+    
+    
 	//人员导出
 	public String export(){
 		XSSFWorkbook wb=new XSSFWorkbook();
@@ -204,7 +207,7 @@ public class PersonAction extends BaseAction<Person> {
 					continue;
 				}
 				
-				person.setPassword("123456");
+				person.setPassword(MD5Login.getMD5Str("123456", null));
 				personService.save(person);
 			}catch(Exception e){
 				errornum++;
@@ -249,7 +252,7 @@ public class PersonAction extends BaseAction<Person> {
 			person.setPersonSn(personSn);
 			person.setCellphoneNumber(cellphoneNumber);
 			person.setPersonName(personName);
-			person.setPassword("123456");
+			person.setPassword(MD5Login.getMD5Str("123456", null));
 			person.setSex(sex);
 			personService.save(person);
 		}catch(Exception e){
@@ -295,11 +298,28 @@ public class PersonAction extends BaseAction<Person> {
 		}
 		return "jsonObject";
 	}
+	//验证密码是否正确
+	public String isPassword(){
+		String personSn = (String) session.get("personSn");
+		Person person=personService.getByPersonSn(personSn);
+		Boolean right=false;
+		if(password.equals(person.getPassword())){
+			right=true;
+		}else{
+			right=false;
+		}
+		if(right){
+			jsonObject.put("status", "ok");
+		}else{
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
 	//登录
 	public String login() {
 		Person person=personService.getByPersonSn(personSn);
 		Boolean right=false;
-		if(person!=null){
+		if(person!=null){ 
 			if(password.equals(person.getPassword())){
 				right=true;
 			}else{
@@ -313,6 +333,35 @@ public class PersonAction extends BaseAction<Person> {
 			jsonObject.put("status", "ok");
 		}else{
 			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
+	//修改密码
+	public String updatePassword(){
+		jsonObject.put("status", "ok");
+		String personSn = (String) session.get("personSn");
+		Person person=personService.getByPersonSn(personSn);
+		try{
+			person.setPassword(password);
+			personService.update(person);;
+		}catch(Exception e){
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+		
+	}
+	//显示个人信息
+	public String personInfor(){
+		String sn=(String) session.get("personSn");
+		String hql="select p form Person p where p.personSn='"+sn+"'";
+		JSONArray array=new JSONArray();
+		for(Person person:personService.queryByPage(hql, 0, 0)){
+			JSONObject jo=new JSONObject();
+			jo.put("personSn", person.getPersonSn());
+			jo.put("personName", person.getPersonName());
+			jo.put("sex", person.getSex());
+			jo.put("cellphoneNumber", person.getCellphoneNumber());
+			array.add(jo);
 		}
 		return "jsonObject";
 	}

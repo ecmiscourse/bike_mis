@@ -6,6 +6,7 @@
 <title>校园公共自行车管理系统</title>
 <%@include file="/public/head.jspf"%>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/md5.js"></script>
 <style type="text/css">
 	body{ background:#0066A8;}
 	.tit{ margin:auto; margin-top:170px; text-align:center; width:350px; padding-bottom:20px;}
@@ -22,12 +23,12 @@
 			$('#ff').form('enableValidation');
 			if($('#ff').form('validate')){
 				$('#ff').form('submit', {    
-				    url:'${pageContext.request.contextPath}/base/personAction_login',        
+				    url:'${pageContext.request.contextPath}/base/personAction_login', 
+				    queryParams:{password:MD5($("#password").val())},      
 				    success:function(data){    
 				    	var data = eval('(' + data + ')');  // change the JSON string to javascript object    
-				        if (data.status=='ok'){  
-					        console.log('ww');  
-				        	location.href ="main";   
+				        if (data.status=='ok'){   
+				        	location.href ="${pageContext.request.contextPath}/main";   
 				        }else{
 				        	$.messager.alert('警告','用户名密码不正确！');
 					    }   
@@ -50,7 +51,7 @@
 		    </tr>
 		    <tr>
 		    	<td><span>密  码：</span></td>
-		      	<td><input name="password" class="easyui-passwordbox" prompt="密码" required="true" iconWidth="24" style="width:180px;height:24px;padding:10px"></td>
+		      	<td><input id="password" class="easyui-passwordbox" prompt="密码" required="true" iconWidth="24" style="width:180px;height:24px;padding:10px"></td>
 		    </tr>
 		    <tr height="80px">
 		    	<td colspan="2" style="text-align: center"><a href="#" id="submit" class="easyui-linkbutton">&nbsp;登 &nbsp;录&nbsp;</a></td>
