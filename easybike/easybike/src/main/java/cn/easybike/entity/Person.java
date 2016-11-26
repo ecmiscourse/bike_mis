@@ -84,8 +84,8 @@ public class Person implements java.io.Serializable{
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "person_role", joinColumns = {
-			@JoinColumn(name = "person_sn", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "role_sn", nullable = false, updatable = false) })
+			@JoinColumn(name = "person_sn", referencedColumnName="person_sn",nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "role_sn", referencedColumnName="role_sn",nullable = false, updatable = false) })
 	public Set<Role> getRoles() {
 		return roles;
 	}

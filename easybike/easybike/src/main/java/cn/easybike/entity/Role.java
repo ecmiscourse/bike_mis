@@ -68,8 +68,8 @@ public class Role implements Serializable{
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "role_resource", joinColumns = {
-			@JoinColumn(name = "role_sn", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "resource_sn", nullable = false, updatable = false) })
+			@JoinColumn(name = "role_sn", referencedColumnName="role_sn",nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "resource_sn", referencedColumnName="resource_sn",nullable = false, updatable = false) })
 	public Set<Resource> getResources() {
 		return resources;
 	}

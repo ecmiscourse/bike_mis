@@ -20,7 +20,7 @@ public class ResourceAction extends BaseAction<Resource> {
 	private String id;
 	private JSONArray jsonArray=new JSONArray();
 	public String getMenu(){
-		jsonArray=resourceService.getMenu("", id);
+		jsonArray=resourceService.getMenu((String) session.get("personSn"), id);
 		return "jsonArray";
 	}
 	
