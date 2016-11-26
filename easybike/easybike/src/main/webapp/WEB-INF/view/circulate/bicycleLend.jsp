@@ -25,22 +25,22 @@ $(function(){
 		pageList:[15,30,50,100], 
   		 columns:[[
 				{field:'recordSn',title:'借还记录编号',width:100}, 
-				{field:'lendStation',title:'借车站点',width:100,formatter:function(value,row,index){
-					if(value==0){
-						return '站点X';
-					}else if(value==1){
-						return '站点Y';
+				{field:'lendStationSn',title:'借车站点',width:100,formatter:function(value,row,index){
+					if(value==4899){
+						return 'A';
+					}else if(value==6666){
+						return 'B';
 					}else{
-						return '站点Z';
+						return 'C';
 					}
 			    }},
-				{field:'bike',title:'借出车辆',width:100,formatter:function(value,row,index){
+				{field:'bikeSn',title:'借出车辆',width:100,formatter:function(value,row,index){
 					if(value==0){
-						return '自行车0';
+						return '01';
 					}else if(value==1){
-						return '自行车1';
+						return '02';
 					}else{
-						return '自行车2';
+						return '03';
 					}
 					
 				}},
@@ -119,6 +119,7 @@ $(function(){
   	
   	
 });
+      
       
       </script>
 </head>
