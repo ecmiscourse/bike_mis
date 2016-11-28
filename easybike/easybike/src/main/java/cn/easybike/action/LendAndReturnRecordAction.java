@@ -139,10 +139,17 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		this.isHasReturned = isHasReturned;
 	}
 
-	public String queryByPersonSn1() {
+	public String queryByPersonSn() {
 		String sn = (String) session.get("personSn");
-		String hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
-		String hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
+		String hql1="";
+		String hql2="";
+		if(bikeSn==null||bikeSn.trim().length()==0){
+			hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
+			hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
+		}else{
+			hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "' and p.bike.bikeSn='"+ bikeSn +"'";
+			hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "' and p.bike.bikeSn='" + bikeSn + "'";
+		}
 		JSONArray array = new JSONArray();
 		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql1, page, rows)) {
 			JSONObject jo = new JSONObject();
@@ -151,6 +158,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			jo.put("studentId", lendAndReturnRecord.getStudentId());
 			jo.put("studentName", lendAndReturnRecord.getStudentName());
 			jo.put("phoneNumber", lendAndReturnRecord.getPhoneNumber());
+			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonName());
 			jo.put("lendDateTime", lendAndReturnRecord.getReturnDateTime().toString());
 			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
 			jo.put("returnPerson", lendAndReturnRecord.getReturnPerson().getPersonName());
@@ -161,48 +169,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		jsonObject.put("total", lendAndReturnRecordService.countByHql(hql2));
 		return "jsonObject";
 	}
-	public String queryByPersonSn2(){
-		String sn=(String) session.get("personSn");
-		String hql1="select p from LendAndReturnRecord p where p.lendPerson.personSn='"+sn+"'";
-		String hql2="select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='"+sn+"'";
-		JSONArray array=new JSONArray();
-		for(LendAndReturnRecord lendAndReturnRecord:lendAndReturnRecordService.queryByPage(hql1, page, rows)){
-			JSONObject jo=new JSONObject();
-			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
-			jo.put("bikeSn", lendAndReturnRecord.getBike().getBikeSn());
-			jo.put("studentId", lendAndReturnRecord.getStudentId());
-			jo.put("studentName", lendAndReturnRecord.getStudentName());
-			jo.put("phoneNumber", lendAndReturnRecord.getPhoneNumber());
-			jo.put("lendDateTime", lendAndReturnRecord.getReturnDateTime().toString());
-			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonName());
-			jo.put("returnDateTime", lendAndReturnRecord.getReturnDateTime().toString());
-			array.add(jo);
-		}
-		jsonObject.put("rows", array);
-		jsonObject.put("total", lendAndReturnRecordService.countByHql(hql2));
-		return "jsonObject";
-	}
-	public String queryByBikeSn(){
-		String hql1="select p from LendAndReturnRecord p where p.bike.bikeSn='"+bikeSn+"'";
-		String hql2="select count(p) from LendAndReturnRecord p where p.bike.bikeSn='"+bikeSn+"'";
-		JSONArray array=new JSONArray();
-		for(LendAndReturnRecord lendAndReturnRecord:lendAndReturnRecordService.queryByPage(hql1, page, rows)){
-			JSONObject jo=new JSONObject();
-			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
-			jo.put("bikeSn", lendAndReturnRecord.getBike().getBikeSn());
-			jo.put("studentId", lendAndReturnRecord.getStudentId());
-			jo.put("studentName", lendAndReturnRecord.getStudentName());
-			jo.put("phoneNumber", lendAndReturnRecord.getPhoneNumber());
-			jo.put("lendDateTime", lendAndReturnRecord.getReturnDateTime().toString());
-			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonName());
-			jo.put("returnDateTime", lendAndReturnRecord.getReturnDateTime().toString());
-			array.add(jo);
-		}
-		jsonObject.put("rows", array);
-		jsonObject.put("total", lendAndReturnRecordService.countByHql(hql2));
-		return "jsonObject";
-	}
-
+	
 	public JSONObject getJsonObject() {
 		return jsonObject;
 	}

@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 	$(function(){
 		$('#box').datagrid({    
-		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn2.action',
+		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn.action',
 		    fitColumns:true,
 		    fit:true,
 		    striped:true,/*斑马线*/
@@ -40,7 +40,13 @@
 			$('#search').textbox({    
 			    buttonText:'搜索',    
 			    iconCls:'icon-search', 
-			    iconAlign:'left'       
+			    iconAlign:'left',
+			    prompt: '请输入自行车编号进行查询',
+			    onClickButton:function(){
+				   $('#box').datagrid('reload',{
+				    	bikeSn:$('#search').textbox('getValue')
+				   })
+				}
 			})
 
 	})

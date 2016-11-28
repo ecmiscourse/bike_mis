@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 	$(function(){
 		$('#box').datagrid({    
-		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn1.action',
+		    url:'${pageContext.request.contextPath}/myop/lendAndReturnRecordAction_queryByPersonSn.action',
 		    fitColumns:true,
 		    fit:true,
 		    striped:true,/*斑马线*/
@@ -30,20 +30,29 @@
 		        {field:'studentName',title:'借车人姓名',width:'11%',align:'center'},
 		        {field:'phoneNumber',title:'借车人联系方式',width:'11%',align:'center'},
 		        {field:'lendDateTime',title:'借出时间',width:'11%',align:'center'},
-		        {field:'isHasReturned',title:'是否归还',width:'11%',align:'center'},
+		        {field:'isHasReturned',title:'是否归还',width:'11%',align:'center',formatter:function(value,row,index){
+		        	if(value==true){
+		        		return "是";
+		        	}else{
+		        		return "否";
+		        	}
+		        }},
 		        {field:'returnPerson',title:'操作归还的人',width:'11%',align:'center'},
 		        {field:'returnDateTime',title:'归还时间',width:'11%',align:'center'}
 		    ]],
 		    toolbar:[{
-				text:'<input id="search" type="text" value="请输入自行车编号进行查询" style="width:300px">'
+				text:'<input id="search" type="text" style="width:300px">'
 			}]
 		});
 			$('#search').textbox({    
 			    buttonText:'搜索',    
 			    iconCls:'icon-search', 
 			    iconAlign:'left',
+			    prompt: '请输入自行车编号进行查询',
 			    onClickButton:function(){
-			    	
+			    	$('#box').datagrid('reload',{
+			    		bikeSn:$('#search').textbox('getValue')
+			    	})
 			    }
 			})
 
