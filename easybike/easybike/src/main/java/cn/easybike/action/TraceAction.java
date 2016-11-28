@@ -15,7 +15,13 @@ public class TraceAction extends BaseAction<Station> {
 	public String queryAllTrace(){
 		System.out.println("qqqqqqqqq");
 		System.out.println(bikeSn);
-		String hql="select lendandreturnrecord from LendAndReturnRecord lendandreturnrecord where lendandreturnrecord.bike.bikeSn= "+bikeSn;
+		String hql="";
+		if(bikeSn==""||bikeSn==null){
+			hql="select lendandreturnrecord from LendAndReturnRecord lendandreturnrecord";
+		}else{
+			hql="select lendandreturnrecord from LendAndReturnRecord lendandreturnrecord where lendandreturnrecord.bike.bikeSn= "+bikeSn;
+		}
+	
 		System.out.println("qqqqqqqqq");
 		JSONArray array=new JSONArray();
 		for(LendAndReturnRecord lendandreturnrecord:lendAndReturnRecordService.queryByPage(hql, page, rows)){

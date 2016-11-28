@@ -31,16 +31,20 @@ $(function(){
 		          {field:'lendStationSn',title:'借出站点',width:'10%',align:'center'},
 		          {field:'returnPerson',title:'操作归还的人',width:'10%',align:'center'},
     			  {field:'returnStationSn',title:'归还站点',width:'10%',align:'center'} 
-			]]
+			]],
+			 toolbar:[{
+					text:'<input id="search" type="tb"  style="width:300px">'
+				}]
 		});
 	//提交 
-	$('#tb').textbox({    
+	$('#search').textbox({    
 	    buttonText:'Search',    
-	    iconCls:'icon-man', 
+	    iconCls:'icon-search', 
 	    iconAlign:'left' ,
+	    promot:'请输入车辆编号',
 	    onClickButton:function(){
 	    	$('#dg').datagrid('reload',{
-	    		bikeSn:$('#tb').textbox('getValue')
+	    		bikeSn:$('#search').textbox('getValue')
 	    	})
 	    }
 	})
@@ -50,9 +54,7 @@ $(function(){
 </script>
 </head>
 <body style="margin:1px;">
- <div style="margin-top: 25px;text-align:center">
-	<input id="tb" type="text" style="width:300px">
-  </div>
+
 	<table id="dg"></table> 
 </body>
 
