@@ -15,5 +15,17 @@ import cn.easybike.entity.Role;
 @Repository("roleDao")
 public class RoleDaoImpl extends BaseDaoImpl<Role> implements RoleDao {
 
+	@Override
+	public Role getBySn(String roleSn) {
+		String hql="select r from Role r where r.roleSn=:roleSn";
+		return (Role) getSession().createQuery(hql).setString("roleSn", roleSn).uniqueResult();
+	}
+
+	@Override
+	public void deleteBySn(String roleSn) {
+		String hql="delete Role r where r.roleSn=:roleSn";
+		getSession().createQuery(hql).setString("roleSn", roleSn).executeUpdate();		
+	}
+
 	
 }

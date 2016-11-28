@@ -5,7 +5,7 @@
 <head>
 <title>校园公共自行车管理系统</title>
 <%@include file="/public/head.jspf"%>
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/logo.png" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/layout.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/layout.js" charset="utf-8"></script>
 <script type="text/javascript">

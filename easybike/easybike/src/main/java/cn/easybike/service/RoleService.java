@@ -10,5 +10,7 @@ import cn.easybike.entity.Role;
 * @history 2016年11月21日下午5:42:05 马辉 新建
 */
 public interface RoleService extends BaseService<Role> {
-
+	public Role getBySn(String roleSn);
+	
+	public void deleteBySn(String roleSn);
 }

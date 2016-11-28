@@ -13,6 +13,6 @@ import net.sf.json.JSONArray;
 * @history 2016年11月18日下午9:48:35 马辉 新建
 */
 public interface ResourceDao extends BaseDao<Resource> {
-	//��ȡ�����˵�
+	//获取菜单
 	public JSONArray getMenu(String personSn, String parentResourceSn);
 }

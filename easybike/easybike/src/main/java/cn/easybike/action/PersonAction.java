@@ -41,6 +41,7 @@ public class PersonAction extends BaseAction<Person> {
 	private String password;
 	private String oldPersonSn;
 	private JSONObject jsonObject=new JSONObject();
+	private JSONArray jsonArray=new JSONArray();	
 	private Byte sex;
 	private String cellphoneNumber;
 	private String personName;
@@ -49,9 +50,33 @@ public class PersonAction extends BaseAction<Person> {
 	private String uploadExcelFileName;
 	private InputStream excelStream; 
     private String excelFileName;
-	
-    
-    
+	private String roleSn;
+    private String q;
+    //按学号或姓名进行检索
+	public String queryByQ(){
+		String hql="select p from Person p where p.personName like '%"+q+"%' or p.personSn like '%"+q+"%'";
+		for(Person person:personService.queryByPage(hql, 1, 10)){
+			JSONObject jo=new JSONObject();
+			jo.put("personSn", person.getPersonSn());
+			jo.put("personName", person.getPersonName());
+			jsonArray.add(jo);
+		}
+		return "jsonArray";
+	}
+	//根据角色查询人员
+	public String queryByRoleSn(){
+		JSONArray array=new JSONArray();
+		String hql="select p from Person p inner join p.roles r where r.roleSn='"+roleSn+"'";
+		for(Person person:personService.queryByPage(hql, page, rows)){
+			JSONObject jo=new JSONObject();
+			jo.put("personSn", person.getPersonSn());
+			jo.put("personName", person.getPersonName());
+			array.add(jo);
+		}
+		jsonObject.put("rows", array);
+		jsonObject.put("total", personService.countByHql(hql.replaceFirst("p", "count(p)")));
+		return "jsonObject";
+	}
 	//人员导出
 	public String export(){
 		XSSFWorkbook wb=new XSSFWorkbook();
@@ -453,5 +478,23 @@ public class PersonAction extends BaseAction<Person> {
 	}
 	public void setExcelFileName(String excelFileName) {
 		this.excelFileName = excelFileName;
+	}
+	public String getRoleSn() {
+		return roleSn;
+	}
+	public void setRoleSn(String roleSn) {
+		this.roleSn = roleSn;
+	}
+	public JSONArray getJsonArray() {
+		return jsonArray;
+	}
+	public void setJsonArray(JSONArray jsonArray) {
+		this.jsonArray = jsonArray;
+	}
+	public String getQ() {
+		return q;
+	}
+	public void setQ(String q) {
+		this.q = q;
 	}
 }
