@@ -25,46 +25,48 @@ $(function(){
 		pageList:[15,30,50,100], 
   		 columns:[[
 				{field:'recordSn',title:'借还记录编号',width:100}, 
-				{field:'lendStation',title:'借车站点',width:100,formatter:function(value,row,index){
-					if(value==0){
-						return '站点X';
-					}else if(value==1){
-						return '站点Y';
-					}else{
-						return '站点Z';
-					}
-			    }},
-				{field:'bike',title:'借出车辆',width:100,formatter:function(value,row,index){
-					if(value==0){
-						return '自行车0';
-					}else if(value==1){
-						return '自行车1';
-					}else{
-						return '自行车2';
-					}
-					
-				}},
+				{field:'lendStationSn',title:'借车站点',width:100},
+				{field:'bikeSn',title:'借出车辆',width:100},
 				{field:'studentId',title:'借车人学号',width:100},
 				{field:'studentName',title:'借车人姓名',width:100},	
 				{field:'phoneNumber',title:'借车人联系方式',width:100},	
 				{field:'lendDateTime',title:'借出时间',width:100},	
 				{field:'isHasReturned',title:'是否归还',width:100},	
 				{field:'lendPerson',title:'借出人',width:100},
+				{field:'returnPersonName',title:'还车人',width:100},
+				{field:'returnDateTime',title:'还车时间',width:100},
+				{field:'returnStationName',title:'还车站点',width:100},
+				{field:'returnMark',title:'备注',width:100},
 				
   		     ]],
   		   toolbar: [{
   			   	id:'add',
-		    	text:'新增',
-				iconCls: 'icon-add',
+		    	text:'还车录入',
+				iconCls: 'icon-edit',
 				handler: function(){
+					var row=$("#dg").datagrid("getSelected");
+					if(row){
 					$('#win').window({
-						width:380,
-		 				height:300,
-		 				title:'借车记录添加',
+						width:320,
+		 				height:200,
+		 				title:'还车记录添加',
 		 				cache:false,
-		 				content:''
-	
+		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/bicycleReturn_update" frameborder="0" width="100%" height="100%"/>'
+
 					});
+					}else{
+						$.messager.show({
+							title:'我的提示',
+							msg:'请先选择一条记录！',
+							timeout:1000,
+							showType:'show',
+							style:{
+								right:'',
+								top:document.body.scrollTop+document.documentElement.scrollTop+200,
+								bottom:''
+							}
+						});
+					}
 				}
 			},{
 				id:'delete',
@@ -110,15 +112,26 @@ $(function(){
 						})
 					}
 				}
+			},
+			{
+				text:"<input id='ss' name='search' />"
 			}
-			
   		   ],
   	});
   	
   	
-  	
-  	
-  	
+	//把普通的文本框转化为搜索文本框
+  	$('#ss').searchbox({ 
+  		//触发查询事件
+	  		searcher:function(value,name)
+	  		{ 
+	  		//获取当前查询的关键字
+	  			$('#dg').datagrid('load',{
+	  				studentId:value
+	  			});
+	  		}, 
+	  		prompt:'请输入借车人学号' 
+  		}); 
 });
       
       </script>
