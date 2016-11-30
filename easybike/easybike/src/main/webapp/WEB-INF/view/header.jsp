@@ -42,7 +42,20 @@
 			    	//$.post("${pageContext.request.contextPath}/hazard/exitAction_exit.action");
 			    }    
 			});
-		};
+		}
+		$(function(){
+			$("#today").text("");
+			// 指定向JSONExample发送请求，将id为form1的表单所包含的表单控件转换为请求参数
+			$.post("${pageContext.request.contextPath}/base/resourceAction_chinaDate" , function(data , statusText)
+				{
+				for(var propName in data)
+				{
+					$("#today").append(data[propName]);
+				}
+				},
+				// 指定服务器响应为JSON数据
+				"json");
+		})
 	</script>
 </body>
 </html>
