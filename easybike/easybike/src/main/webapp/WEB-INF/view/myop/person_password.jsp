@@ -64,7 +64,7 @@
 				    		parent.$.messager.alert("提示信息","修改密码成功！");
 							$("#ff").form("reset");
 							//关闭窗体
-							parent.$("#win").window("close");
+							parent.$("#win1").window("close");
 							//刷新dg
 							parent.$("#dg").datagrid("reload");
 					   	}else{

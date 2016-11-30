@@ -38,7 +38,7 @@ function infor(){
     </div>
     <div id="divContent" data-options="region:'center',title:false">
         <div id="tabs" class="easyui-tabs" data-options="fit:true,border:false">
-            <div id="divTitleBar" title="默认页面" data-options="href:'${pageContext.request.contextPath}/myop/home'">
+            <div id="divTitleBar" title="欢迎来到校园公共自行车管理系统" data-options="href:'${pageContext.request.contextPath}/myop/home'">
             	
             </div>
         </div>
