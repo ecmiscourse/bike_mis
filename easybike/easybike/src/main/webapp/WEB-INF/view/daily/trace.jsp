@@ -38,10 +38,10 @@ $(function(){
 		});
 	//提交 
 	$('#search').textbox({    
-	    buttonText:'Search',    
+	    buttonText:'搜索',    
 	    iconCls:'icon-search', 
 	    iconAlign:'left' ,
-	    promot:'请输入车辆编号',
+	    prompt:'请输入自行车编号进行查询',
 	    onClickButton:function(){
 	    	$('#dg').datagrid('reload',{
 	    		bikeSn:$('#search').textbox('getValue')

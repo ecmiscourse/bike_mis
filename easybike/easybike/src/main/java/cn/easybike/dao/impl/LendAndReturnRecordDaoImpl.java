@@ -22,6 +22,17 @@ public class LendAndReturnRecordDaoImpl extends BaseDaoImpl<LendAndReturnRecord>
 		getSession().createQuery(hql).setString("recordSn", recordSn).executeUpdate();
 	}
 
+	@Override
+	public LendAndReturnRecord getByStudentId(String studentId) {
+		String hql="select l from LendAndReturnRecord l where l.studentId=:studentId";
+		return (LendAndReturnRecord) getSession().createQuery(hql).setString("studentId", studentId).uniqueResult();
+	}
+	@Override
+	public LendAndReturnRecord getByRecordSn(String recordSn) {
+		String hql="select l from LendAndReturnRecord l where l.recordSn=:recordSn";
+		return (LendAndReturnRecord) getSession().createQuery(hql).setString("recordSn", recordSn).uniqueResult();
+	}
+
 	
 	
 }
