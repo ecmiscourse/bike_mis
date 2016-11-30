@@ -24,21 +24,20 @@
 			pageSize:15,
 			pageList:[15,30,50,100], 
 		    columns:[[
-				{field:'recordSn',title:'借车记录编号',width:'11%',align:'center'},
-		        {field:'bikeSn',title:'自行车编号',width:'11%',align:'center'},
-		        {field:'studentId',title:'借车人学号',width:'11%',align:'center'},
-		        {field:'studentName',title:'借车人姓名',width:'11%',align:'center'},
-		        {field:'phoneNumber',title:'借车人联系方式',width:'11%',align:'center'},
-		        {field:'lendDateTime',title:'借出时间',width:'11%',align:'center'},
-		        {field:'isHasReturned',title:'是否归还',width:'11%',align:'center',formatter:function(value,row,index){
+		        {field:'bikeSn',title:'自行车编号',width:'12%',align:'center'},
+		        {field:'studentId',title:'借车人学号',width:'12%',align:'center'},
+		        {field:'studentName',title:'借车人姓名',width:'12%',align:'center'},
+		        {field:'phoneNumber',title:'借车人联系方式',width:'12%',align:'center'},
+		        {field:'lendDateTime',title:'借出时间',width:'12%',align:'center'},
+		        {field:'isHasReturned',title:'是否归还',width:'12%',align:'center',formatter:function(value,row,index){
 		        	if(value==true){
 		        		return "是";
 		        	}else{
 		        		return "否";
 		        	}
 		        }},
-		        {field:'returnPerson',title:'操作归还的人',width:'11%',align:'center'},
-		        {field:'returnDateTime',title:'归还时间',width:'11%',align:'center'}
+		        {field:'returnPerson',title:'操作归还的人',width:'12%',align:'center'},
+		        {field:'returnDateTime',title:'归还时间',width:'12%',align:'center'}
 		    ]],
 		    toolbar:[{
 				text:'<input id="search" type="text" style="width:300px">'

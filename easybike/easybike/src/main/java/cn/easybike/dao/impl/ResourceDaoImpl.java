@@ -35,7 +35,7 @@ public class ResourceDaoImpl extends BaseDaoImpl<Resource> implements ResourceDa
 			jo.put("id",resource.getResourceSn());
 			jo.put("text",resource.getResourceName());
 			jo.put("url",resource.getUrl());
-			if(resource.getChildren().size()>0){
+			if(resource.getHasMenuChildren()==true){
 				jo.put("state","closed");
 			}else{
 				jo.put("state", "open");
@@ -52,9 +52,9 @@ public class ResourceDaoImpl extends BaseDaoImpl<Resource> implements ResourceDa
 		String hql="";
 		JSONArray array=new JSONArray();
 		if(parentResourceSn!=null && parentResourceSn.trim().length()>0){
-			hql="select distinct r from Resource r inner join r.roles s inner join s.persons p where r.parent.resourceSn="+parentResourceSn+" and r.resourceType='menu' and p.personSn='"+personSn+"'order by r.showSequence";
+			hql="select distinct r from Resource r inner join r.roles s inner join s.persons p where r.parent.resourceSn="+parentResourceSn+" and p.personSn='"+personSn+"'order by r.showSequence";
 		}else{
-			hql="select distinct r from Resource r inner join r.roles s inner join s.persons p where r.parent=null and r.resourceType='menu' and p.personSn='"+personSn+"' order by r.showSequence";
+			hql="select distinct r from Resource r inner join r.roles s inner join s.persons p where r.parent=null and p.personSn='"+personSn+"' order by r.showSequence";
 		}
 		String hql2="select r from Resource r inner join r.roles s where s.roleSn='"+roleSn+"'";
 		List<Resource> resources=new ArrayList<Resource>();

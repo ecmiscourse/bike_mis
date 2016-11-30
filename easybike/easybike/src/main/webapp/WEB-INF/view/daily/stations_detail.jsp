@@ -62,7 +62,7 @@
 			    <input id="cc1" class="easyui-combobox" />   
 				<input id="cc2" name="selectedbikes"  class="easyui-combobox" />  
 	    </div>   
-	        <div style="margin-top: 25px;text-align:center">
+	        <div style="margin-top: 60px;text-align:center">
 	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">确认</a>  
 	    	<a id="reset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'">重置</a>  
 	    </div>

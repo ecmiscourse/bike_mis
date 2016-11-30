@@ -12,7 +12,7 @@
 		function diverge(){
 			$('#win').window({
 				width:500,
-				height:300,
+				height:200,
 				title:'车辆调拨',
 				cache:false,
 				content:'<iframe src="${pageContext.request.contextPath}/daily/stations_detail" frameborder="0" width="100%" height="100%"/>'
@@ -38,7 +38,7 @@
 			           {field:'stationSn',title:'站点编号',width:'20%',align:'center'}, 
 				        {field:'stationName',title:'站点名称',width:'20%',align:'center'}, 
 				        {field:'bikes',title:'所剩车辆',width:'20%',align:'center'}, 
-				        {field:'diverge',title:'调入',width:'20%',formatter:function(value,row,index){
+				        {field:'diverge',title:'调入',width:'20%',align:'center',formatter:function(value,row,index){
 				        		return "<a  href='#' onclick='diverge()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"调入"+"</a>";				        	
 				        }}
 				        ]]				        
