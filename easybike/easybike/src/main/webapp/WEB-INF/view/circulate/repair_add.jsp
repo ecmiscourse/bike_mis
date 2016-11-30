@@ -55,20 +55,10 @@ $(function(){
 	$('#cc2').combobox({    
 	    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllBike.action',    
 	    valueField:'bikeSn',    
-	    textField:'id',
+	    textField:'bikeSn',
 	    panelHeight:300,
 	    limitToList:true,
-	    //默认选中第一个
-	    /* onLoadSuccess:function(){
-		    if($('#cc').combobox('getData').length>0){
-		    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
-			}
-		}, */
-		onSelect:function(record){
-			$('#dg').datagrid('load',{
-				bikeSn:record.bikeSn
-			});
-		}  
+	    
 	});
 	
 	
@@ -80,8 +70,8 @@ $(function(){
 
 		 <form id="ff" method="post">   
 	    <div style="margin: 15px;">   
-	        <label for="reportMark">保修说明</label>   
-	        <input id="reportMark" class="easyui-textbox" type="textarea" name="reportMark"  />   
+	        <label for="reportMark">报修说明:</label>   
+	        <input id="reportMark" class="easyui-textbox" type="textarea" name="reportMark" data-options="multiline:true" style="width:270px;height:88px" />   
 	    </div>   
 	     <div style="margin: 15px;">
 	    <label >自行车:&nbsp;</label>

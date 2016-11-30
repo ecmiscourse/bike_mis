@@ -72,38 +72,22 @@ $(function(){
 	    url:'${pageContext.request.contextPath}/base/stationAction_getAllStation.action',    
 	    valueField:'stationSn',    
 	    textField:'stationName',
+	    queryParams:{stationSn:'stationSn'},
 	    panelHeight:300,
 	    limitToList:true,
-	    //默认选中第一个
-	    /* onLoadSuccess:function(){
-		    if($('#cc').combobox('getData').length>0){
-		    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
-			}
-		}, */
 		onSelect:function(record){
-			$('#dg').datagrid('load',{
-				stationSn:record.stationSn
-			});
+			var url = '${pageContext.request.contextPath}/daily/distributeAction_queryAll.action?stationSn='+record.stationSn;    
+            $('#cc2').combobox('reload', url);
 		}  
 	});
 	//下拉框自行车
 	$('#cc2').combobox({    
-	    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllBike.action',    
+	   // url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllBike.action',    
 	    valueField:'bikeSn',    
-	    textField:'id',
+	    textField:'bikeSn',
 	    panelHeight:300,
 	    limitToList:true,
-	    //默认选中第一个
-	    /* onLoadSuccess:function(){
-		    if($('#cc').combobox('getData').length>0){
-		    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
-			}
-		}, */
-		onSelect:function(record){
-			$('#dg').datagrid('load',{
-				bikeSn:record.bikeSn
-			});
-		}  
+	
 	});
 	
 	

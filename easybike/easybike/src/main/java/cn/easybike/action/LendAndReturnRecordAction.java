@@ -308,6 +308,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			JSONObject jo = new JSONObject();
 			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
 			jo.put("lendStationSn", lendAndReturnRecord.getLendStation().getStationSn());
+			jo.put("lendStationName", lendAndReturnRecord.getLendStation().getStationName());
 			jo.put("bikeSn", lendAndReturnRecord.getBike().getBikeSn());
 			jo.put("studentId", lendAndReturnRecord.getStudentId());
 			jo.put("studentName", lendAndReturnRecord.getStudentName());
@@ -321,6 +322,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			}
 			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
 			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonSn());
+			jo.put("lendPersonName", lendAndReturnRecord.getLendPerson().getPersonName());
 			array.add(jo);
 		}
 		jsonObject.put("total", lendAndReturnRecordService.countByHql("select count(l) from LendAndReturnRecord l"));
@@ -341,6 +343,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			JSONObject jo = new JSONObject();
 			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
 			jo.put("lendStationSn", lendAndReturnRecord.getLendStation().getStationSn());
+			jo.put("lendStationName", lendAndReturnRecord.getLendStation().getStationName());
 			jo.put("bikeSn", lendAndReturnRecord.getBike().getBikeSn());
 			jo.put("studentId", lendAndReturnRecord.getStudentId());
 			jo.put("studentName", lendAndReturnRecord.getStudentName());
@@ -354,7 +357,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			}
 			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
 			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonSn());
-
+			jo.put("lendPersonName", lendAndReturnRecord.getLendPerson().getPersonName());
 			if (lendAndReturnRecord.getReturnPerson() != null) {
 				jo.put("returnPersonName", lendAndReturnRecord.getReturnPerson().getPersonName());
 			}

@@ -24,7 +24,7 @@ $(function(){
 		pageSize:15,
 		pageList:[15,30,50,100], 
   		 columns:[[
-				{field:'maintenanceSn',title:'维修编号',width:'10%',align:'center'},    
+				{field:'maintenanceSn',title:'维修编号',width:'10%',align:'center',hidden:true},    
 				{field:'bikeSn',title:'车辆编号',width:'10%',align:'center'},    
 				{field:'reporterSn',title:'报修人',width:'10%',align:'center'},    
 				{field:'reportDatetime',title:'报修时间',width:'10%',align:'center'},
@@ -36,8 +36,8 @@ $(function(){
 				iconCls: 'icon-add',
 				handler: function(){
 					$('#win').window({
-						width:380,
-		 				height:330,
+						width:330,
+		 				height:300,
 		 				title:'报修记录添加',
 		 				cache:false,
 		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/repair_add" frameborder="0" width="100%" height="100%"/>'
