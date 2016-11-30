@@ -413,6 +413,8 @@ public class PersonAction extends BaseAction<Person> {
 			session.put("personSn", person.getPersonSn());			
 			session.put("personName", person.getPersonName());
 			session.put("progressValue", 0);//进度条初始值
+			session.put("resources", personService.getResources(person.getPersonSn()));
+			session.put("roles", personService.getRoles(person.getPersonSn()));
 			jsonObject.put("status", "ok");
 		}else{
 			jsonObject.put("status", "nook");

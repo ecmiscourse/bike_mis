@@ -1,5 +1,7 @@
 package cn.easybike.service;
 
+import java.util.HashMap;
+
 import cn.easybike.entity.Person;
 
 
@@ -16,5 +18,8 @@ public interface PersonService extends BaseService<Person> {
 	public Person getByPersonSn(String personSn);
 	//根据编号删除人员
 	public void deleteBySn(String personSn);
-
+	//获取员工角色
+	public HashMap<String,String> getRoles(String personSn);
+	//获取人员权限
+	public HashMap<String,String> getResources(String personSn);
 }
