@@ -16,7 +16,6 @@ public class DistributeAction extends BaseAction<Station> {
 	
 	//分页查询
 	public String queryByPage(){
-		System.out.println("oooooooooooo");
 		String hql="select s from Station s";
 		JSONArray array=new JSONArray();
 		for(Station station:stationService.queryByPage(hql, page, rows)){
@@ -47,10 +46,9 @@ public class DistributeAction extends BaseAction<Station> {
 	//查询每个站点对应的车辆
 	public  String queryAll(){
 		System.out.println(stationSn);
-		String hql="select b from Bike b where b.station.stationSn= "+stationSn;
+		String hql="select b from Bike b where b.station.stationSn= "+stationSn ;
 		JSONArray array=new JSONArray();
 		for(Bike bike:bikeService.queryByPage(hql, 1, 100)){
-			System.out.println("01234567");
 			JSONObject jo=new JSONObject();
 			jo.put("bikeSn", bike.getBikeSn());
 			System.out.println("llllldddd12345865");
@@ -61,8 +59,6 @@ public class DistributeAction extends BaseAction<Station> {
 	
 	//调入车辆
 	public String distribution(){
-		System.out.println("newstationSn");
-		System.out.println(newstationSn);
 		jsonObject.put("status", "ok");
 		if(selectedbikes!=null&&selectedbikes.length()>0){
 			String[] selectedbike=selectedbikes.split(", ");
