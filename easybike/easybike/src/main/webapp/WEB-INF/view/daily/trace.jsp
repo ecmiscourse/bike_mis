@@ -8,8 +8,10 @@
 <script type="text/javascript">
 
 $(function(){
+	var row=parent.$('#dg').datagrid('getSelected');
 	$('#dg').datagrid({    
 	    url:'${pageContext.request.contextPath}/daily/traceAction_queryAllTrace.action',
+	    queryParams:{bikeSn:row.bikeSn},
 	    fitColumns:true,
 	    fit:true,
 	    striped:true,/*斑马线*/
@@ -22,32 +24,18 @@ $(function(){
 		pageSize:15,
 		pageList:[15,30,50,100], 
 		columns:[[
-		          {field:'recordSn',title:'记录编号',width:'10%',align:'center'},
-		          {field:'studentId',title:'借车人学号',width:'10%',align:'center'},
-		          {field:'lendDateTime',title:'借出时间',width:'10%',align:'center'},
-		          {field:'returnDateTime',title:'归还时间',width:'10%',align:'center'},
+		          {field:'recordSn',title:'记录编号',align:'center',hidden:true},
+		          {field:'studentId',title:'借车人',width:'10%',align:'center'},
+		          {field:'lendDateTime',title:'借出时间',width:'15%',align:'center'},
+		          {field:'returnDateTime',title:'归还时间',width:'15%',align:'center'},
 		          {field:'isHasReturned',title:'是否归回',width:'10%',align:'center'},
-		          {field:'lendPerson',title:'借出人',width:'10%',align:'center'},
-		          {field:'lendStationSn',title:'借出站点',width:'10%',align:'center'},
-		          {field:'returnPerson',title:'操作归还的人',width:'10%',align:'center'},
+		          {field:'lendPerson',title:'借出人',width:'15%',align:'center'},
+		          {field:'lendStationSn',title:'借出站点',width:'15%',align:'center'},
+		          {field:'returnPerson',title:'操作归还的人',width:'15%',align:'center'},
     			  {field:'returnStationSn',title:'归还站点',width:'10%',align:'center'} 
-			]],
-			 toolbar:[{
-					text:'<input id="search" type="tb"  style="width:300px">'
-				}]
+			]]
 		});
-	//提交 
-	$('#search').textbox({    
-	    buttonText:'搜索',    
-	    iconCls:'icon-search', 
-	    iconAlign:'left' ,
-	    prompt:'请输入自行车编号进行查询',
-	    onClickButton:function(){
-	    	$('#dg').datagrid('reload',{
-	    		bikeSn:$('#search').textbox('getValue')
-	    	})
-	    }
-	})
+
 
 })
 

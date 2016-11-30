@@ -36,10 +36,13 @@ public class DistributeAction extends BaseAction<Station> {
 		String hql="select s from Station s where s.stationSn <> "+stationSn;
 		JSONArray array=new JSONArray();
 		for(Station station:stationService.queryByPage(hql, 1, 100)){
-			JSONObject jo=new JSONObject();
-			jo.put("stationSn", station.getStationSn());
-			jo.put("stationName", station.getStationName());
-			jsonArray.add(jo);
+			if(station.getBikes().size()>0){
+				JSONObject jo=new JSONObject();
+				jo.put("stationSn", station.getStationSn());
+				jo.put("stationName", station.getStationName());
+				jsonArray.add(jo);
+			}
+			
 		}
 		return "jsonArray";
 	}

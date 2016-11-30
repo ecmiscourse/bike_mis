@@ -11,24 +11,35 @@ public class TraceAction extends BaseAction<Station> {
 	private JSONObject jsonObject =new JSONObject();
 	private static final long serialVersionUID = 1L;
 	private String bikeSn;
+	
+	//
+	public String queryAllbikes(){
+		String hql="select b from Bike b";
+		JSONArray array=new JSONArray();
+		for(Bike bike:bikeService.queryByPage(hql, page, rows)){
+			JSONObject jo=new JSONObject();			
+			jo.put("bikeSn",bike.getBikeSn());	
+			jo.put("status", bike.getStatus());
+			array.add(jo);
+		}		
+		jsonObject.put("rows", array);
+		jsonObject.put("total",bikeService.countByHql("select count(b) from Bike b"));
+		return "jsonObject";
+	}
 	//根据车辆编号分页查询
 	public String queryAllTrace(){
-		System.out.println("qqqqqqqqq");
 		System.out.println(bikeSn);
 		String hql="";
-		if(bikeSn==""||bikeSn==null){
-			hql="select lendandreturnrecord from LendAndReturnRecord lendandreturnrecord";
-		}else{
-			hql="select lendandreturnrecord from LendAndReturnRecord lendandreturnrecord where lendandreturnrecord.bike.bikeSn= "+bikeSn;
-		}
+		String hql2="";
 	
-		System.out.println("qqqqqqqqq");
+			hql="select lendandreturnrecord from LendAndReturnRecord lendandreturnrecord  where lendandreturnrecord.bike.bikeSn= "+bikeSn;
+			hql2="select count(lendandreturnrecord) from LendAndReturnRecord lendandreturnrecord where lendandreturnrecord.bike.bikeSn= "+bikeSn;
+		
 		JSONArray array=new JSONArray();
 		for(LendAndReturnRecord lendandreturnrecord:lendAndReturnRecordService.queryByPage(hql, page, rows)){
-			System.out.println("qqqqqqqqq");
 			JSONObject jo=new JSONObject();
 			jo.put("recordSn", lendandreturnrecord.getRecordSn());
-			jo.put("studentId", lendandreturnrecord.getStudentId());
+			jo.put("studentId", lendandreturnrecord.getStudentName());
 			jo.put("lendDateTime",lendandreturnrecord.getLendDateTime().toString());
 			jo.put("returnDateTime",lendandreturnrecord.getReturnDateTime().toString());
 			if(lendandreturnrecord.getIsHasReturned()==true){
@@ -37,24 +48,24 @@ public class TraceAction extends BaseAction<Station> {
 				jo.put("isHasReturned","否" );
 			}
 			if( lendandreturnrecord.getLendPerson()!=null){
-				jo.put("lendPerson", lendandreturnrecord.getLendPerson().getPersonSn());
+				jo.put("lendPerson", lendandreturnrecord.getLendPerson().getPersonName());
 			}else{
 				jo.put("lendPerson", "");
 			}	
 			if(lendandreturnrecord.getLendStation()!=null){
 				System.out.println("qq");
-				jo.put("lendStationSn", lendandreturnrecord.getLendStation().getStationSn());
+				jo.put("lendStationSn", lendandreturnrecord.getLendStation().getStationName());
 			}else{
 				jo.put("lendStationSn", "");
 			}
 			
 			if( lendandreturnrecord.getReturnPerson()!=null){
-				jo.put("returnPerson", lendandreturnrecord.getReturnPerson().getPersonSn());
+				jo.put("returnPerson", lendandreturnrecord.getReturnPerson().getPersonName());
 			}else{
 				jo.put("returnPerson", "");
 			}	
 			if(lendandreturnrecord.getReturnStation()!=null){
-				jo.put("returnStationSn", lendandreturnrecord.getReturnStation().getStationSn());
+				jo.put("returnStationSn", lendandreturnrecord.getReturnStation().getStationName());
 			}else{
 				jo.put("returnStationSn", "");
 			}
@@ -63,7 +74,8 @@ public class TraceAction extends BaseAction<Station> {
 			array.add(jo);
 		}
 		jsonObject.put("rows", array);
-		jsonObject.put("total",lendAndReturnRecordService.countByHql("select count(r) from LendAndReturnRecord r"));
+		jsonObject.put("total",lendAndReturnRecordService.countByHql(hql2));
+		
 		return "jsonObject";
 	}
 

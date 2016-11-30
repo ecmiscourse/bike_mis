@@ -33,7 +33,7 @@
 			pageSize:15,
 			pageList:[15,30,50,100], 
 			 columns:[[    
-				        {field:'maintenanceSn',title:'维修编号',width:'10%',align:'center'},    
+				        {field:'maintenanceSn',title:'维修编号',width:'10%',align:'center',hidden:true},    
 				        {field:'bikeSn',title:'车辆编号',width:'10%',align:'center'},    
 				        {field:'reporterSn',title:'报修人',width:'10%',align:'center'},    
 				        {field:'reportDatetime',title:'报修时间',width:'10%',align:'center'},
