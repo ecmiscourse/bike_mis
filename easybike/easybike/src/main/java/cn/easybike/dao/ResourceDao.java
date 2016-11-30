@@ -15,4 +15,8 @@ import net.sf.json.JSONArray;
 public interface ResourceDao extends BaseDao<Resource> {
 	//获取菜单
 	public JSONArray getMenu(String personSn, String parentResourceSn);
+	//获取权限
+	public JSONArray getResource(String personSn,String parentResourceSn,String roleSn);
+	//getBySn
+	public Resource getBySn(String resourceSn);
 }

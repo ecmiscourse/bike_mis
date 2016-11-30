@@ -3,6 +3,7 @@ package cn.easybike.action;
 
 import cn.easybike.action.BaseAction;
 import cn.easybike.entity.Person;
+import cn.easybike.entity.Resource;
 import cn.easybike.entity.Role;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -25,6 +26,42 @@ public class RoleAction extends BaseAction<Role> {
 	private String roleName;
 	private String oldRoleSn;
 	private String personSn;
+	private String resourceSn;
+	
+	//角色授权
+	public String addResource(){
+		jsonObject.put("status", "ok");
+		try{
+			Role role = roleService.getBySn(roleSn);
+			Resource resource=resourceService.getBySn(resourceSn);
+			if(role!=null&&resource!=null){
+				role.getResources().add(resource);
+				roleService.update(role);
+			}else{
+				jsonObject.put("status", "nook");
+			}
+		}catch(Exception e){
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
+	//角色撤权
+	public String removeResource(){
+		jsonObject.put("status", "ok");
+		try{
+			Role role = roleService.getBySn(roleSn);
+			Resource resource=resourceService.getBySn(resourceSn);
+			if(role!=null&&resource!=null){
+				role.getResources().remove(resource);
+				roleService.update(role);
+			}else{
+				jsonObject.put("status", "nook");
+			}
+		}catch(Exception e){
+			jsonObject.put("status", "nook");
+		}
+		return "jsonObject";
+	}
 	//人员授权
 	public String addPerson(){
 		jsonObject.put("status", "ok");
@@ -149,5 +186,11 @@ public class RoleAction extends BaseAction<Role> {
 	}
 	public void setPersonSn(String personSn) {
 		this.personSn = personSn;
+	}
+	public String getResourceSn() {
+		return resourceSn;
+	}
+	public void setResourceSn(String resourceSn) {
+		this.resourceSn = resourceSn;
 	}
 }

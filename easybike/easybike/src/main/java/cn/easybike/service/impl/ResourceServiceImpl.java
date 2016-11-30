@@ -17,10 +17,21 @@ import net.sf.json.JSONArray;
 @Service("resourceService")
 public class ResourceServiceImpl extends BaseServiceImpl<Resource> implements ResourceService{
 
-	//��ȡ�˵�
+	//获取菜单
 	@Override
 	public JSONArray getMenu(String personSn, String parentResourceSn) {
 		return resourceDao.getMenu(personSn, parentResourceSn);
+	}
+
+	//获取权限
+	@Override
+	public JSONArray getResource(String personSn, String parentResourceSn, String roleSn) {
+		return resourceDao.getResource(personSn, parentResourceSn, roleSn);
+	}
+	//getBySn
+	@Override
+	public Resource getBySn(String resourceSn) {
+		return resourceDao.getBySn(resourceSn);
 	}
 
 }

@@ -19,8 +19,16 @@ public class ResourceAction extends BaseAction<Resource> {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private JSONArray jsonArray=new JSONArray();
+	private String roleSn;
+	
+
+
 	public String getMenu(){
 		jsonArray=resourceService.getMenu((String) session.get("personSn"), id);
+		return "jsonArray";
+	}
+	public String getResources(){
+		jsonArray=resourceService.getResource((String) session.get("personSn"), id, roleSn);
 		return "jsonArray";
 	}
 	
@@ -40,6 +48,13 @@ public class ResourceAction extends BaseAction<Resource> {
 		this.id = id;
 	}
 
-	
+	public String getRoleSn() {
+		return roleSn;
+	}
+
+
+	public void setRoleSn(String roleSn) {
+		this.roleSn = roleSn;
+	}
 
 }

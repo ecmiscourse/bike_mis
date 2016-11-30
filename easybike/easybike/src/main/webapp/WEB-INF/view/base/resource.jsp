@@ -9,7 +9,13 @@
 
 <script type="text/javascript">
 	function resources(){
-		alert('还没做');
+		$('#win').window({
+			width:200,
+			height:300,
+			title:'角色授权',
+			cache:false,
+			content:'<iframe src="${pageContext.request.contextPath}/base/role_resource" frameborder="0" width="100%" height="100%"/>'
+		});
 	}
 	function persons(){
 		$('#win').window({
