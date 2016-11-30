@@ -110,46 +110,7 @@ $(function(){
 	        <label for="cellphoneNumber">借车人联系方式:</label>   
 	        <input class="easyui-textbox" type="text" name="phoneNumber" data-options="required:true,validType:'length[11]'" />   
 	    </div>
-	     <!--
-	   <div style="margin: 15px;">   
-	        <label for="sex">站点:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>   
-	         <input class="easyui-combobox" name="lendStationSn" data-options="
-				valueField: 'label',
-				required:true,
-				textField: 'value',
-				panelHeight:'auto',
-				data: [{
-					label: '4899',
-					value: 'A'
-				},{
-					label: '6666',
-					value: 'B'
-				},
-				{
-					label: '4396',
-					value: 'C'
-				}]" /> 
-	    </div>
-	     <div style="margin: 15px;">   
-	        <label for="sex">自行车:&nbsp;&nbsp;&nbsp;&nbsp;</label>   
-	        <input class="easyui-combobox" name="bikeSn" data-options="
-				valueField: 'label',
-				required:true,
-				textField: 'value',
-				panelHeight:'auto',
-				data: [{
-					label: '0',
-					value: '01'
-				},{
-					label: '1',
-					value: '02'
-				},
-				{
-					label: '2',
-					value: '03'
-				}]" /> 
-	    </div>
-	     -->
+	
 	     <div style="margin: 15px;">
 	    <label >站点:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 	    <input id="cc" name="stationSn">	

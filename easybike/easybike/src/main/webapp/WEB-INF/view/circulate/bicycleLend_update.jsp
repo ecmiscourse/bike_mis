@@ -71,7 +71,6 @@
 				});
 			}
 		});
-		
 		//下拉框站点
 		$('#cc').combobox({    
 		    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllStation.action',    

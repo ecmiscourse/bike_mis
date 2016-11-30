@@ -85,8 +85,7 @@
 	    <input id="cc" name="returnStationSn">	
 	    </div>
 	    
-	   
-	    
+
 	    
 	    <div style="margin-top: 25px;text-align:center">
 	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">还车</a>  
