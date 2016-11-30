@@ -15,6 +15,13 @@
 				<param name="contentType">text/html</param>
 				<!-- 设置只序列Action的map属性 -->
 				<param name="root">jsonArray</param>
+			</result>
+			<result name="today" type="json">
+				<!-- 为该Result指定参数 -->
+				<param name="noCache">true</param>
+				<param name="contentType">text/html</param>
+				<!-- 设置只序列Action的map属性 -->
+				<param name="root">today</param>
 			</result>			
 		</action>		
 		<action name="personAction_*"  class="cn.easybike.action.PersonAction" method="{1}">

@@ -20,9 +20,13 @@ public class ResourceAction extends BaseAction<Resource> {
 	private String id;
 	private JSONArray jsonArray=new JSONArray();
 	private String roleSn;
-	
+	private String today;
 
-
+	//获取今天日期
+	public String chinaDate(){
+		setToday(cn.easybike.util.ChinaDate.today());
+		return "today";
+	}
 	public String getMenu(){
 		jsonArray=resourceService.getMenu((String) session.get("personSn"), id);
 		return "jsonArray";
@@ -56,5 +60,10 @@ public class ResourceAction extends BaseAction<Resource> {
 	public void setRoleSn(String roleSn) {
 		this.roleSn = roleSn;
 	}
-
+	public String getToday() {
+		return today;
+	}
+	public void setToday(String today) {
+		this.today = today;
+	}
 }

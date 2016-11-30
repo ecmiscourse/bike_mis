@@ -28,6 +28,7 @@ public class RoleAction extends BaseAction<Role> {
 	private String personSn;
 	private String resourceSn;
 	
+	
 	//角色授权
 	public String addResource(){
 		jsonObject.put("status", "ok");

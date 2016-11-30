@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 import cn.easybike.entity.Person;
+import cn.easybike.entity.Role;
 import cn.easybike.util.MD5Login;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -52,6 +53,63 @@ public class PersonAction extends BaseAction<Person> {
     private String excelFileName;
 	private String roleSn;
     private String q;
+    //人员批量授权
+  	public String personRole(){
+  		InputStream stream=null;
+		try{
+			stream=new FileInputStream(uploadExcel);
+		}catch(Exception e){
+			jsonObject.put("errorNum", 1);
+			jsonObject.put("message", "文件读取错误，请确保文件未损坏或格式正确");
+			return "jsonObject";
+		}
+		XSSFWorkbook wb = null;
+		try {
+			wb=new XSSFWorkbook(stream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		String sn="";
+		String error="";
+		int errornum=0;
+		XSSFSheet xssfSheet = wb.getSheetAt(0);
+		Role role=roleService.getBySn(roleSn);
+		//循环行
+		for(int rowNum=1;rowNum<=xssfSheet.getLastRowNum();rowNum++){
+			XSSFRow row=xssfSheet.getRow(rowNum);
+			if(row==null){
+				continue;
+			}
+			try{
+				//学号
+				XSSFCell personSn=row.getCell(1);
+				if(personSn!=null&&personSn.toString().trim().length()>0){
+					sn=personSn.getStringCellValue();
+					Person person=personService.getByPersonSn(sn);
+					if(person==null){
+						errornum++;
+						error+="第"+(rowNum+1)+"行人员不存在，授权失败！";
+						continue;
+					}else{
+						person.getRoles().add(role);
+						personService.update(person);
+					}
+				}else{
+					errornum++;
+					error+="第"+(rowNum+1)+"行出现空值，授权失败！";
+					continue;
+				}
+			}catch(Exception e){
+				errornum++;
+				error+="第"+(rowNum+1)+"行授权失败！";
+				continue;
+			}
+		}
+		jsonObject.put("errorNum", errornum);
+		jsonObject.put("message", error);
+		return "jsonObject";
+  	}
     //按学号或姓名进行检索
 	public String queryByQ(){
 		String hql="select p from Person p where p.personName like '%"+q+"%' or p.personSn like '%"+q+"%'";
@@ -355,6 +413,8 @@ public class PersonAction extends BaseAction<Person> {
 			session.put("personSn", person.getPersonSn());			
 			session.put("personName", person.getPersonName());
 			session.put("progressValue", 0);//进度条初始值
+			session.put("resources", personService.getResources(person.getPersonSn()));
+			session.put("roles", personService.getRoles(person.getPersonSn()));
 			jsonObject.put("status", "ok");
 		}else{
 			jsonObject.put("status", "nook");

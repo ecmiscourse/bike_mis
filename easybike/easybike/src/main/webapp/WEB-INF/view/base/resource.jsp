@@ -19,9 +19,9 @@
 	}
 	function persons(){
 		$('#win').window({
-			width:500,
+			width:550,
 			height:300,
-			title:'角色详情',
+			title:'人员授权',
 			cache:false,
 			content:'<iframe src="${pageContext.request.contextPath}/base/person_role" frameborder="0" width="100%" height="100%"/>'
 		});
@@ -62,24 +62,29 @@
 				handler:function(){
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
-						$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
-							if (r){
-								$.ajax({
-									url:'${pageContext.request.contextPath}/base/roleAction_delete.action',
-									method:'POST',
-									dataType:'json',
-									data:{'roleSn':row.roleSn},
-									success:function(data){
-										if(data.status=="ok"){
-											$.messager.alert('我的提示','删除成功！','info');
-											$("#dg").datagrid("reload");						
-										}else{
-											$.messager.alert('我的提示','删除失败！','error');
+						if(row.roleSn=='cjgly'){
+							$.messager.alert('我的消息','对不起，您无法删除此角色！','warning');
+						}else{
+							$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
+								if (r){
+									$.ajax({
+										url:'${pageContext.request.contextPath}/base/roleAction_delete.action',
+										method:'POST',
+										dataType:'json',
+										data:{'roleSn':row.roleSn},
+										success:function(data){
+											if(data.status=="ok"){
+												$.messager.alert('我的提示','删除成功！','info');
+												$("#dg").datagrid("reload");						
+											}else{
+												$.messager.alert('我的提示','删除失败！','error');
+											}
 										}
-									}
-								})
-							}
-						});					
+									})
+								}
+							});	
+						}
+										
 					}else{
 						$.messager.show({
 							title:'我的提示',
@@ -101,13 +106,18 @@
 				handler:function(){
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
-						$('#win').window({
-			 				width:330,
-			 				height:200,
-			 				title:'角色修改',
-			 				cache:false,
-			 				content:'<iframe src="${pageContext.request.contextPath}/base/role_update" frameborder="0" width="100%" height="100%"/>'
-			 			});
+						if(row.roleSn=='cjgly'){
+							$.messager.alert('我的消息','对不起，您无法修改此角色！','warning');
+						}else{
+							$('#win').window({
+				 				width:330,
+				 				height:200,
+				 				title:'角色修改',
+				 				cache:false,
+				 				content:'<iframe src="${pageContext.request.contextPath}/base/role_update" frameborder="0" width="100%" height="100%"/>'
+				 			});
+						}
+						
 					}else{
 						$.messager.show({
 							title:'我的提示',
@@ -130,7 +140,11 @@
 					return "<a href='#' onclick='persons()' style='text-decoration:none'>人员分配["+value+"]</a>";
 			    }},
 		        {field:'resources',title:'角色授权',width:'20%',align:'center',formatter:function(value,row,index){
-					return "<a href='#' onclick='resources()' style='text-decoration:none'>权限分配</a>";
+		        	if(row.roleSn=="cjgly"){
+		        		return "无法分配";
+		        	}else{
+		        		return "<a href='#' onclick='resources()' style='text-decoration:none'>权限分配</a>";
+		        	}
 			    }}   
 		    ]]    
 		}); 

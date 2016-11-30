@@ -1,5 +1,7 @@
 package cn.easybike.service.impl;
 
+import java.util.HashMap;
+
 import org.springframework.stereotype.Service;
 
 import cn.easybike.entity.Person;
@@ -17,6 +19,16 @@ public class PersonServiceImpl extends BaseServiceImpl<Person> implements Person
 	@Override
 	public void deleteBySn(String personSn) {
 		personDao.deleteBySn(personSn);
+	}
+
+	@Override
+	public HashMap<String, String> getRoles(String personSn) {
+		return personDao.getRoles(personSn);
+	}
+
+	@Override
+	public HashMap<String, String> getResources(String personSn) {
+		return personDao.getResources(personSn);
 	}
 
 }
