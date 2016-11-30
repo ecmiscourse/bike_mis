@@ -9,7 +9,9 @@
 
 <script type="text/javascript">
 
-	$(function(){
+	$(function(){	
+		var roles="${sessionScope['roles']}";//获取角色
+		var resources="${sessionScope['resources']}";//获取权限
 		$('#dg').datagrid({    
 		    url:'${pageContext.request.contextPath}/base/bikeAction_queryByPage.action',
 		    fitColumns:true,
@@ -32,45 +34,53 @@
 				iconCls:'icon-add',
 				text:'添加',
 				handler:function(){
-					$('#dd1').dialog('open');
+					if(resources.indexOf('040201')==-1){
+						$('#add').css('display','none');
+					}else{
+						$('#dd1').dialog('open');
+					}		
 				}
 			},{
 				id:'delete',
 				iconCls:'icon-remove',
 				text:'删除',
 				handler:function(){
-					var row=$("#dg").datagrid("getSelected");
-					if(row){
-						$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
-							if (r){
-								$.ajax({
-									url:'${pageContext.request.contextPath}/base/bikeAction_delete.action',
-									method:'POST',
-									dataType:'json',
-									data:{'bikeSn':row.bikeSn},
-									success:function(data){
-										if(data.status=="ok"){
-											$.messager.alert('我的提示','删除成功！','info');
-											$("#dg").datagrid("reload");						
-										}else{
-											$.messager.alert('我的提示','删除失败！','error');
-										}
-									}
-								})
-							}
-						});					
+					if(resources.indexOf('040202')==-1){
+						$('#delete').css('display','none');
 					}else{
-						$.messager.show({
-							title:'我的提示',
-							msg:'请先选择一条记录！',
-							timeout:1000,
-							showType:'show',
-							style:{
-								right:'',
-								top:document.body.scrollTop+document.documentElement.scrollTop+200,
-								bottom:''
-							}
-						})
+						var row=$("#dg").datagrid("getSelected");
+						if(row){
+							$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
+								if (r){
+									$.ajax({
+										url:'${pageContext.request.contextPath}/base/bikeAction_delete.action',
+										method:'POST',
+										dataType:'json',
+										data:{'bikeSn':row.bikeSn},
+										success:function(data){
+											if(data.status=="ok"){
+												$.messager.alert('我的提示','删除成功！','info');
+												$("#dg").datagrid("reload");						
+											}else{
+												$.messager.alert('我的提示','删除失败！','error');
+											}
+										}
+									})
+								}
+							});					
+						}else{
+							$.messager.show({
+								title:'我的提示',
+								msg:'请先选择一条记录！',
+								timeout:1000,
+								showType:'show',
+								style:{
+									right:'',
+									top:document.body.scrollTop+document.documentElement.scrollTop+200,
+									bottom:''
+								}
+							})
+						}
 					}
 				}
 			},{
@@ -78,55 +88,67 @@
 				iconCls:'icon-edit',
 				text:'修改',
 				handler:function(){
-					var row=$("#dg").datagrid("getSelected");
-					if(row){
-						$('#ff2').form('load',{
-							bikeSn:row.bikeSn,
-							startDate:row.startDate
-						});
-						$('#dd2').dialog('open');
+					if(resources.indexOf('040203')==-1){
+						$('#update').css('display','none');
 					}else{
-						$.messager.show({
-							title:'我的提示',
-							msg:'请先选择一条记录！',
-							timeout:1000,
-							showType:'show',
-							style:{
-								right:'',
-								top:document.body.scrollTop+document.documentElement.scrollTop+200,
-								bottom:''
-							}
-						});
-					} 
+						var row=$("#dg").datagrid("getSelected");
+						if(row){
+							$('#ff2').form('load',{
+								bikeSn:row.bikeSn,
+								startDate:row.startDate
+							});
+							$('#dd2').dialog('open');
+						}else{
+							$.messager.show({
+								title:'我的提示',
+								msg:'请先选择一条记录！',
+								timeout:1000,
+								showType:'show',
+								style:{
+									right:'',
+									top:document.body.scrollTop+document.documentElement.scrollTop+200,
+									bottom:''
+								}
+							});
+						} 
+					}	
 				}
 			},{
 				id:'import',
 				iconCls:'icon-excel',
 				text:'车辆导入',
 				handler:function(){
-					$("#win").window({
-						width:360,
-						height:150,
-						title:"Excel导入",
-						cache:false,
-						content:'<iframe src="${pageContext.request.contextPath}/base/excel" frameborder="0" width="100%" height="100%"/>'
-					});
+					if(resources.indexOf('040204')==-1){
+						$('#import').css('display','none');
+					}else{
+						$("#win").window({
+							width:360,
+							height:150,
+							title:"Excel导入",
+							cache:false,
+							content:'<iframe src="${pageContext.request.contextPath}/base/excel" frameborder="0" width="100%" height="100%"/>'
+						});
+					}					
 				}
 			},{
 				id:'export',
 				iconCls:'icon-excel',
 				text:'车辆导出',
 				handler:function(){
-					$.messager.confirm('导出确认','您确定要导出所有车辆信息吗？',function(r){
-						var form=$("<form>");
-						form.attr("style","display:none");
-						form.attr("target","");
-						form.attr("method","post");
-						form.attr("action","base/bikeAction_export.action");
-						//将表单放入body
-						$("body").append(form);
-						form.submit();//提交表单
-					})
+					if(resources.indexOf('040205')==-1){
+						$('#export').css('display','none');
+					}else{
+						$.messager.confirm('导出确认','您确定要导出所有车辆信息吗？',function(r){
+							var form=$("<form>");
+							form.attr("style","display:none");
+							form.attr("target","");
+							form.attr("method","post");
+							form.attr("action","base/bikeAction_export.action");
+							//将表单放入body
+							$("body").append(form);
+							form.submit();//提交表单
+						})
+					}
 				}
 			}],
 		    columns:[[    
@@ -258,18 +280,29 @@
 		    textField:'stationName',
 		    panelHeight:300,
 		    limitToList:true,
-		    //默认选中第一个
-		    /* onLoadSuccess:function(){
-			    if($('#cc').combobox('getData').length>0){
-			    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
-				}
-			}, */
 			onSelect:function(record){
 				$('#dg').datagrid('load',{
 					stationSn:record.stationSn
 				});
 			}  
 		});
+		
+		//按钮权限
+		if(resources.indexOf('040201')==-1){
+			$('#add').css('display','none');
+		}
+		if(resources.indexOf('040202')==-1){
+			$('#delete').css('display','none');
+		}
+		if(resources.indexOf('040203')==-1){
+			$('#update').css('display','none');
+		}
+		if(resources.indexOf('040204')==-1){
+			$('#import').css('display','none');
+		}
+		if(resources.indexOf('040205')==-1){
+			$('#export').css('display','none');
+		}
 	})
 		
 

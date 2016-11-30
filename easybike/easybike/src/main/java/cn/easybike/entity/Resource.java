@@ -32,6 +32,7 @@ public class Resource implements java.io.Serializable{
 	private String resourceType;//类型 menu和button
 	private String url;
 	private int showSequence;//显示顺序
+	private Boolean hasMenuChildren;//是否有子页面
 	private Set<Resource> children=new HashSet<Resource>(0);
 	private Set<Role> roles=new HashSet<Role>(0);
 	
@@ -79,7 +80,7 @@ public class Resource implements java.io.Serializable{
 		this.resourceType = resourceType;
 	}
 	
-	@Column(name="url",unique=true,length=100)
+	@Column(name="url",length=100)
 	public String getUrl() {
 		return url;
 	}
@@ -95,6 +96,13 @@ public class Resource implements java.io.Serializable{
 		this.showSequence = showSequence;
 	}
 	
+	@Column(name="has_menu_children")
+	public Boolean getHasMenuChildren() {
+		return hasMenuChildren;
+	}
+	public void setHasMenuChildren(Boolean hasMenuChildren) {
+		this.hasMenuChildren = hasMenuChildren;
+	}
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="parent")
 	public Set<Resource> getChildren() {
 		return children;

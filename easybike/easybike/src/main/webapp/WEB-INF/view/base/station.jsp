@@ -19,6 +19,8 @@
 		});
 	}
 	$(function(){
+		var roles="${sessionScope['roles']}";//获取角色
+		var resources="${sessionScope['resources']}";//获取权限
 		$('#dg').datagrid({    
 		    url:'${pageContext.request.contextPath}/base/stationAction_queryByPage.action',
 		    fitColumns:true,
@@ -39,80 +41,94 @@
 				iconCls:'icon-add',
 				text:'添加',
 				handler:function(){
-					$('#win').window({
-		 				width:330,
-		 				height:250,
-		 				title:'站点添加',
-		 				cache:false,
-		 				content:'<iframe src="${pageContext.request.contextPath}/base/station_add" frameborder="0" width="100%" height="100%"/>'
-		 			});
+					if(resources.indexOf('040301')==-1){
+						$('#add').css('display','none');
+					}else{
+						$('#win').window({
+			 				width:330,
+			 				height:250,
+			 				title:'站点添加',
+			 				cache:false,
+			 				content:'<iframe src="${pageContext.request.contextPath}/base/station_add" frameborder="0" width="100%" height="100%"/>'
+			 			});
+					}
 				}
 			},{
 				id:'delete',
 				iconCls:'icon-remove',
 				text:'删除',
 				handler:function(){
-					var row=$("#dg").datagrid("getSelected");
-					if(row){
-						$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
-							if (r){
-								$.ajax({
-									url:'${pageContext.request.contextPath}/base/stationAction_delete.action',
-									method:'POST',
-									dataType:'json',
-									data:{'stationSn':row.stationSn},
-									success:function(data){
-										if(data.status=="ok"){
-											$.messager.alert('我的提示','删除成功！','info');
-											$("#dg").datagrid("reload");						
-										}else{
-											$.messager.alert('我的提示','删除失败！','error');
-										}
-									}
-								})
-							}
-						});					
+					if(resources.indexOf('040302')==-1){
+						$('#delete').css('display','none');
 					}else{
-						$.messager.show({
-							title:'我的提示',
-							msg:'请先选择一条记录！',
-							timeout:1000,
-							showType:'show',
-							style:{
-								right:'',
-								top:document.body.scrollTop+document.documentElement.scrollTop+200,
-								bottom:''
-							}
-						})
+						var row=$("#dg").datagrid("getSelected");
+						if(row){
+							$.messager.confirm('确认对话框', '您想要删除所选数据吗？', function(r){
+								if (r){
+									$.ajax({
+										url:'${pageContext.request.contextPath}/base/stationAction_delete.action',
+										method:'POST',
+										dataType:'json',
+										data:{'stationSn':row.stationSn},
+										success:function(data){
+											if(data.status=="ok"){
+												$.messager.alert('我的提示','删除成功！','info');
+												$("#dg").datagrid("reload");						
+											}else{
+												$.messager.alert('我的提示','删除失败！','error');
+											}
+										}
+									})
+								}
+							});					
+						}else{
+							$.messager.show({
+								title:'我的提示',
+								msg:'请先选择一条记录！',
+								timeout:1000,
+								showType:'show',
+								style:{
+									right:'',
+									top:document.body.scrollTop+document.documentElement.scrollTop+200,
+									bottom:''
+								}
+							})
+						}
 					}
+					
 				}
 			},{
 				id:'update',
 				iconCls:'icon-edit',
 				text:'修改',
 				handler:function(){
-					var row=$("#dg").datagrid("getSelected");
-					if(row){
-						$('#win').window({
-			 				width:330,
-			 				height:250,
-			 				title:'站点修改',
-			 				cache:false,
-			 				content:'<iframe src="${pageContext.request.contextPath}/base/station_update" frameborder="0" width="100%" height="100%"/>'
-			 			});
+					if(resources.indexOf('040303')==-1){
+						$('#update').css('display','none');
 					}else{
-						$.messager.show({
-							title:'我的提示',
-							msg:'请先选择一条记录！',
-							timeout:1000,
-							showType:'show',
-							style:{
-								right:'',
-								top:document.body.scrollTop+document.documentElement.scrollTop+200,
-								bottom:''
-							}
-						});
-					} 
+						var row=$("#dg").datagrid("getSelected");
+						if(row){
+							$('#win').window({
+				 				width:330,
+				 				height:250,
+				 				title:'站点修改',
+				 				cache:false,
+				 				content:'<iframe src="${pageContext.request.contextPath}/base/station_update" frameborder="0" width="100%" height="100%"/>'
+				 			});
+						}else{
+							$.messager.show({
+								title:'我的提示',
+								msg:'请先选择一条记录！',
+								timeout:1000,
+								showType:'show',
+								style:{
+									right:'',
+									top:document.body.scrollTop+document.documentElement.scrollTop+200,
+									bottom:''
+								}
+							});
+						} 
+					}
+					
 				}
 			}],
 		    columns:[[    
@@ -125,6 +141,16 @@
 		    ]]    
 		}); 
 		
+		//权限设置
+		if(resources.indexOf('040301')==-1){
+			$('#add').css('display','none');
+		}
+		if(resources.indexOf('040302')==-1){
+			$('#delete').css('display','none');
+		}
+		if(resources.indexOf('040303')==-1){
+			$('#update').css('display','none');
+		}
 	})
 		
 
