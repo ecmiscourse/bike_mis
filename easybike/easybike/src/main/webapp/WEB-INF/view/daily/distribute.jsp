@@ -20,6 +20,8 @@
 		}
 
 	$(function(){	
+		var roles="${sessionScope['roles']}";//获取角色
+		var resources="${sessionScope['resources']}";//获取权限
 		$('#dg').datagrid({
 			url:'${pageContext.request.contextPath}/daily/distributeAction_queryByPage.action',
 			fitColumns:true,
@@ -39,7 +41,12 @@
 				        {field:'stationName',title:'站点名称',width:'20%',align:'center'}, 
 				        {field:'bikes',title:'所剩车辆',width:'20%',align:'center'}, 
 				        {field:'diverge',title:'调入',width:'20%',align:'center',formatter:function(value,row,index){
-				        		return "<a  href='#' onclick='diverge()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"调入"+"</a>";				        	
+				        	if(resources.indexOf('030201')==-1){
+				        		return "无权操作";
+				        	}else{
+				        		return "<a  href='#' onclick='diverge()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"调入"+"</a>";			
+				        	}
+				        		        	
 				        }}
 				        ]]				        
 		});	

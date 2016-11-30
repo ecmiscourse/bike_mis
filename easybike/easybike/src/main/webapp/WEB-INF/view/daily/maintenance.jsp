@@ -18,6 +18,9 @@
 			});
 		}
 	$(function(){	
+		var roles="${sessionScope['roles']}";//获取角色
+		var resources="${sessionScope['resources']}";//获取权限
+		
 		$('#dg').datagrid({
 			url:'${pageContext.request.contextPath}/daily/maintenanceAction_queryByPage.action',
 			fitColumns:true,
@@ -43,17 +46,25 @@
 				        {field:'repairMark',title:'维修说明',width:'10%',align:'center',},
 				        {field:'isrepairable',title:'车辆状态',width:'10%',align:'center',},
 				        {field:'operate',title:'维修状态',width:'10%',formatter:function(value,row,index){
-				        	if(row.repairmanSn=="" || row.repairmanSn==null){
-				        		return "<a  href='#' onclick='editMaintenance()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"操作"+"</a>";
+				        	if(resources.indexOf('030101')==-1){
+				        		return"无权操作";
 				        	}else{
-				        		return "<p>"+"已维修"+"</p>";
-				        	}	
+				        		if(row.repairmanSn=="" || row.repairmanSn==null){
+					        		return "<a  href='#' onclick='editMaintenance()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"操作"+"</a>";
+					        	}else{
+					        		return "<p>"+"已维修"+"</p>";
+					        	}	
+				        	}
+				        	
+				        
 				        }}
 				        ]]				        
 		});		
-	})
+	
 	
 
+		
+	})
 	
 </script>
 </head>

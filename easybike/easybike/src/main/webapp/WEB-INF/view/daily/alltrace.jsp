@@ -7,7 +7,7 @@
 <%@include file="/public/head.jspf"%>
 <script type="text/javascript">
 
-function Details(){
+ function Details(){
 	$('#win').window({
 		width:500,
 		height:300,
@@ -15,8 +15,11 @@ function Details(){
 		cache:false,
 		content:'<iframe src="${pageContext.request.contextPath}/daily/trace" frameborder="0" width="100%" height="100%"/>'
 	});
-}
+} 
 $(function(){
+	var roles="${sessionScope['roles']}";//获取角色
+	var resources="${sessionScope['resources']}";//获取权限
+	
 	$('#dg').datagrid({    
 	    url:'${pageContext.request.contextPath}/daily/traceAction_queryAllbikes.action',
 	    fitColumns:true,
@@ -34,7 +37,10 @@ $(function(){
 		          {field:'bikeSn',title:'车辆编号',width:'20%',align:'center'},
 		          {field:'status',title:'当前状态',width:'20%',align:'center'},
 		          {field:'details',title:'历史记录',width:'20%',align:'center',formatter:function(value,row,index){
-		        		return "<a  href='#' onclick='Details()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"查看历史记录"+"</a>";				        	
+		        
+		        		  return "<a  href='#' onclick='Details()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"查看历史记录"+"</a>";				        	
+		        	  
+		        		
 		        }}
 			]],
 			 toolbar:[{
