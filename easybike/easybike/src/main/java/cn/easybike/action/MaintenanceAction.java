@@ -1,7 +1,11 @@
 package cn.easybike.action;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+
+import java.util.UUID;
+
+
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -16,9 +20,14 @@ import net.sf.json.JSONObject;
 public class MaintenanceAction extends BaseAction<Maintenance> {
 	private String maintenanceSn;
 	private String repairMark;
+	private String reportMark;
 	private Timestamp repairDatetime;
 	private String  isrepairable;
 	private JSONObject jsonObject=new JSONObject();
+	private String bikeSn;
+	private String repairmanSn;
+	private String repairDateTime;
+	
 
 	//分页查询
 		public String queryByPage(){
@@ -30,7 +39,7 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 				jo.put("bikeSn", maintenance.getBike().getBikeSn());
 				jo.put("reporterSn", maintenance.getReporter().getPersonSn());
 				jo.put("reportDatetime", maintenance.getReportDateTime().toString());
-				jo.put("reportMark", maintenance.getRepairMark());
+				jo.put("reportMark", maintenance.getReportMark());
 				if(maintenance.getRepairMan()!=null){
 					jo.put("repairmanSn", maintenance.getRepairMan().getPersonSn());
 				}else{
@@ -98,6 +107,12 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 	
 
 	
+		public String getReportMark() {
+			return reportMark;
+		}
+		public void setReportMark(String reportMark) {
+			this.reportMark = reportMark;
+		}
 		public Timestamp getRepairDatetime() {
 			return repairDatetime;
 		}
@@ -110,4 +125,77 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 		public void setIsrepairable(String isrepairable) {
 			this.isrepairable = isrepairable;
 		}
+		
+		public String getBikeSn() {
+			return bikeSn;
+		}
+		public void setBikeSn(String bikeSn) {
+			this.bikeSn = bikeSn;
+		}
+		public String getRepairmanSn() {
+			return repairmanSn;
+		}
+		public void setRepairmanSn(String repairmanSn) {
+			this.repairmanSn = repairmanSn;
+		}
+		public String getRepairDateTime() {
+			return repairDateTime;
+		}
+		public void setRepairDateTime(String repairDateTime) {
+			this.repairDateTime = repairDateTime;
+		}
+		//车辆保修页面获取数据
+		public String queryReportMessage(){
+			String hql="select m from Maintenance m";
+			JSONArray array=new JSONArray();
+			for(Maintenance maintenance:maintenanceService.queryByPage(hql, page,rows)){
+				JSONObject jo=new JSONObject();
+				jo.put("maintenanceSn",maintenance.getMaintenanceSn());
+				jo.put("bikeSn", maintenance.getBike().getBikeSn());
+				jo.put("reporterSn", maintenance.getReporter().getPersonSn());
+				jo.put("reportDatetime", maintenance.getReportDateTime().toString());
+				jo.put("reportMark", maintenance.getReportMark());
+				array.add(jo);
+			}
+			jsonObject.put("total", maintenanceService.countByHql("select count(m) from Maintenance m"));
+			jsonObject.put("rows", array);
+			return "jsonObject";
+		}
+		//保修页面的add
+		public String save2() {
+			jsonObject.put("status", "ok");
+			Maintenance maintenance= new Maintenance();
+			try {
+				String maintenanceSn=getUUID();
+				maintenance.setMaintenanceSn(maintenanceSn);
+				maintenance.setBike(bikeService.getByBikeSn(bikeSn));
+				maintenance.setReporter(personService.getByPersonSn((String) session.get("personSn")));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				maintenance.setReportDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
+				maintenance.setReportMark(reportMark);
+				maintenance.setIsRepairable(false);
+				maintenanceService.save(maintenance);
+			
+			} catch (Exception e) {
+				jsonObject.put("status", "nook");
+			}
+			return "jsonObject";
+		}
+		public static String getUUID() {
+			String s = UUID.randomUUID().toString();
+			// 去掉“-”符号
+			// return
+			// s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24);
+			return s.substring(0, 8);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

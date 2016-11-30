@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import cn.easybike.entity.Bike;
 import cn.easybike.entity.LendAndReturnRecord;
-
+import cn.easybike.entity.Maintenance;
 import cn.easybike.entity.Station;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -121,8 +121,6 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		this.stationSn = stationSn;
 	}
 
-	
-
 	public String getLendStationSn() {
 		return lendStationSn;
 	}
@@ -226,14 +224,16 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 
 	public String queryByPersonSn() {
 		String sn = (String) session.get("personSn");
-		String hql1="";
-		String hql2="";
-		if(bikeSn==null||bikeSn==""){
-		hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
-		hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
-		}else{
-			hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "' and p.bike.bikeSn= '" + bikeSn + "'";
-			hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "' and p.bike.bikeSn= '" + bikeSn + "'";	
+		String hql1 = "";
+		String hql2 = "";
+		if (bikeSn == null || bikeSn == "") {
+			hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
+			hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "'";
+		} else {
+			hql1 = "select p from LendAndReturnRecord p where p.lendPerson.personSn='" + sn + "' and p.bike.bikeSn= '"
+					+ bikeSn + "'";
+			hql2 = "select count(p) from LendAndReturnRecord p where p.lendPerson.personSn='" + sn
+					+ "' and p.bike.bikeSn= '" + bikeSn + "'";
 		}
 		JSONArray array = new JSONArray();
 		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql1, page, rows)) {
@@ -397,17 +397,17 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		}
 		return "jsonArray";
 	}
+
 	// 还车下拉框获取station
-		public String getAllStation2() {
-			for (Station station : stationService.queryAll()) {
-				JSONObject jo = new JSONObject();
-				jo.put("returnStationSn", station.getStationSn());
-				jo.put("returnStationName", station.getStationName());
-				jsonArray.add(jo);
-			}
-			return "jsonArray";
+	public String getAllStation2() {
+		for (Station station : stationService.queryAll()) {
+			JSONObject jo = new JSONObject();
+			jo.put("returnStationSn", station.getStationSn());
+			jo.put("returnStationName", station.getStationName());
+			jsonArray.add(jo);
 		}
-	
+		return "jsonArray";
+	}
 
 	public String delete() {
 		jsonObject.put("status", "ok");
@@ -446,6 +446,8 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		return "jsonObject";
 	}
 
+	
+
 	public String update() {
 		jsonObject.put("status", "ok");
 		LendAndReturnRecord lendAndReturnRecord = lendAndReturnRecordService.getByStudentId(oldStudentId);
@@ -476,7 +478,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 				lendAndReturnRecord.setReturnPerson(personService.getByPersonSn((String) session.get("personSn")));
 				lendAndReturnRecord.setReturnStation(stationService.getByStationSn(returnStationSn));
 				lendAndReturnRecord.setReturnMark(returnMark);
-				//lendAndReturnRecord.setReturnDateTime(returnDateTime);
+				// lendAndReturnRecord.setReturnDateTime(returnDateTime);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				lendAndReturnRecord.setReturnDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
 				lendAndReturnRecordService.update(lendAndReturnRecord);
