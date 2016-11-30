@@ -14,5 +14,16 @@ import cn.easybike.service.RoleService;
 @Service("roleService")
 public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService {
 
+	@Override
+	public Role getBySn(String roleSn) {
+		// TODO Auto-generated method stub
+		return roleDao.getBySn(roleSn);
+	}
+
+	@Override
+	public void deleteBySn(String roleSn) {
+		roleDao.deleteBySn(roleSn);
+	}
+
 	
 }

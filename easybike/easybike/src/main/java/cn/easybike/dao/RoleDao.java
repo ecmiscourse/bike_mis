@@ -10,5 +10,7 @@ import cn.easybike.entity.Role;
 * @history 2016年11月21日下午5:40:20 马辉 新建
 */
 public interface RoleDao extends BaseDao<Role> {
-
+	public Role getBySn(String roleSn);
+	
+	public void deleteBySn(String roleSn);
 }

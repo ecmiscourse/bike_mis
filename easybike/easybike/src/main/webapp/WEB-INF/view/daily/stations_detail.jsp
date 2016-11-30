@@ -41,7 +41,7 @@
 				    url:'${pageContext.request.contextPath}/daily/distributeAction_distribution.action',    
 				    queryParams:{newstationSn:row.stationSn},
 				    success:function(data){  
-					    parent.$.messager.alert("提示信息","添加维修信息成功！");
+					    parent.$.messager.alert("提示信息","调拨车辆成功！");
 						$("#ff").form("reset");
 					    	//关闭窗体
 					    	parent.$("#win").window("close");

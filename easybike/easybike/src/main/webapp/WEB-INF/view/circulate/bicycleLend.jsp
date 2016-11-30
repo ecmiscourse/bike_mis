@@ -25,25 +25,8 @@ $(function(){
 		pageList:[15,30,50,100], 
   		 columns:[[
 				{field:'recordSn',title:'借还记录编号',width:100}, 
-				{field:'lendStationSn',title:'借车站点',width:100,formatter:function(value,row,index){
-					if(value==4899){
-						return 'A';
-					}else if(value==6666){
-						return 'B';
-					}else{
-						return 'C';
-					}
-			    }},
-				{field:'bikeSn',title:'借出车辆',width:100,formatter:function(value,row,index){
-					if(value==0){
-						return '01';
-					}else if(value==1){
-						return '02';
-					}else{
-						return '03';
-					}
-					
-				}},
+				{field:'lendStationSn',title:'借车站点',width:100},
+				{field:'bikeSn',title:'借出车辆',width:100},
 				{field:'studentId',title:'借车人学号',width:100},
 				{field:'studentName',title:'借车人姓名',width:100},	
 				{field:'phoneNumber',title:'借车人联系方式',width:100},	
@@ -58,7 +41,7 @@ $(function(){
 				handler: function(){
 					$('#win').window({
 						width:380,
-		 				height:300,
+		 				height:330,
 		 				title:'借车记录添加',
 		 				cache:false,
 		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/bicycleLend_add" frameborder="0" width="100%" height="100%"/>'
@@ -108,6 +91,34 @@ $(function(){
 							}
 						})
 					}
+				}
+			},{
+				id:'update',
+				iconCls:'icon-edit',
+				text:'修改',
+				handler:function(){
+					var row=$("#dg").datagrid("getSelected");
+					if(row){
+						$('#win').window({
+			 				width:280,
+			 				height:400,
+			 				title:'信息修改',
+			 				cache:false,
+			 				content:'<iframe src="${pageContext.request.contextPath}/circulate/bicycleLend_update" frameborder="0" width="100%" height="100%"/>'
+			 			});
+					}else{
+						$.messager.show({
+							title:'我的提示',
+							msg:'请先选择一条记录！',
+							timeout:1000,
+							showType:'show',
+							style:{
+								right:'',
+								top:document.body.scrollTop+document.documentElement.scrollTop+200,
+								bottom:''
+							}
+						});
+					} 
 				}
 			}
 			
