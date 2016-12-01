@@ -10,7 +10,7 @@
 	<div align="center">
 		<div>
 			<p style="font-size:70px">中国矿业大学</p>
-			<p style="font-size:40px">校园自行车管理系统</p>
+			<p style="font-size:40px">校园公共自行车管理系统</p>
 		</div>
 		<div align="center">
 			<img alt="自行车" src="${pageContext.request.contextPath}/images/home.jpg">
