@@ -8,6 +8,9 @@
 <%@include file="/public/head.jspf"%>
 <script type="text/javascript">
 $(function(){
+	var roles="${sessionScope['roles']}";//获取角色
+	var resources="${sessionScope['resources']}";//获取权限
+	
   	$('#dg').datagrid({
   		url:'circulate/lendAndReturnRecordAction_queryByPage.action',
   		title:'借车记录表',
@@ -41,6 +44,9 @@ $(function(){
 		    	text:'新增',
 				iconCls: 'icon-add',
 				handler: function(){
+					if(resources.indexOf('020101')==-1){
+						$('#add').css('display','none');
+					}else{
 					$('#win').window({
 						width:380,
 		 				height:330,
@@ -50,11 +56,15 @@ $(function(){
 	
 					});
 				}
+				}
 			},{
 				id:'delete',
 				iconCls:'icon-remove',
 				text:'删除',
 				handler:function(){
+					if(resources.indexOf('020102')==-1){
+						$('#delete').css('display','none');
+					}else{
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
 						console.log(row);
@@ -93,12 +103,18 @@ $(function(){
 							}
 						})
 					}
+					
+					}
+					
 				}
 			},{
 				id:'update',
 				iconCls:'icon-edit',
 				text:'修改',
 				handler:function(){
+					if(resources.indexOf('020103')==-1){
+						$('#update').css('display','none');
+					}else{
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
 						$('#win').window({
@@ -121,11 +137,43 @@ $(function(){
 							}
 						});
 					} 
+				
+					}
+				
+				
 				}
 			}
 			
   		   ],
   	});
+  	
+  	
+  	
+  	
+  	
+  //权限设置
+	if(resources.indexOf('020101')==-1){
+		$('#add').css('display','none');
+	}
+	if(resources.indexOf('020102')==-1){
+		$('#delete').css('display','none');
+	}
+	if(resources.indexOf('020103')==-1){
+		$('#update').css('display','none');
+	}
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
   	
   	
   	

@@ -8,6 +8,8 @@
 <%@include file="/public/head.jspf"%>
 <script type="text/javascript">
 $(function(){
+	var roles="${sessionScope['roles']}";//获取角色
+	var resources="${sessionScope['resources']}";//获取权限
   	$('#dg').datagrid({
   		url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_queryByPage2.action',
   		title:'借车记录表',
@@ -45,6 +47,9 @@ $(function(){
 		    	text:'还车录入',
 				iconCls: 'icon-edit',
 				handler: function(){
+					if(resources.indexOf('020201')==-1){
+						$('#add').css('display','none');
+					}else{
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
 					$('#win').window({
@@ -68,12 +73,19 @@ $(function(){
 							}
 						});
 					}
+					
+					
+					}
+					
 				}
 			},{
 				id:'delete',
 				iconCls:'icon-remove',
 				text:'删除',
 				handler:function(){
+					if(resources.indexOf('020202')==-1){
+						$('#delete').css('display','none');
+					}else{
 					var row=$("#dg").datagrid("getSelected");
 					if(row){
 						console.log(row);
@@ -112,6 +124,10 @@ $(function(){
 							}
 						})
 					}
+				
+					}
+				
+				
 				}
 			},
 			{
@@ -133,6 +149,15 @@ $(function(){
 	  		}, 
 	  		prompt:'请输入借车人学号' 
   		}); 
+	
+  	if(resources.indexOf('020201')==-1){
+		$('#add').css('display','none');
+	}
+	if(resources.indexOf('020202')==-1){
+		$('#delete').css('display','none');
+	}
+	
+	
 });
       
       

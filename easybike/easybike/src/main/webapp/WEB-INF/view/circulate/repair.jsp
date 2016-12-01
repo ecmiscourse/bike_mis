@@ -8,6 +8,8 @@
 <%@include file="/public/head.jspf"%>
 <script type="text/javascript">
 $(function(){
+	var roles="${sessionScope['roles']}";//获取角色
+	var resources="${sessionScope['resources']}";//获取权限
   	$('#dg').datagrid({
   		url:'${pageContext.request.contextPath}/daily/maintenanceAction_queryReportMessage.action',
   		title:'保修记录表',
@@ -35,6 +37,9 @@ $(function(){
 		    	text:'新增',
 				iconCls: 'icon-add',
 				handler: function(){
+					if(resources.indexOf('020301')==-1){
+						$('#add').css('display','none');
+					}else{
 					$('#win').window({
 						width:330,
 		 				height:450,
@@ -43,13 +48,20 @@ $(function(){
 		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/repair_add" frameborder="0" width="100%" height="100%"/>'
 	
 					});
+					
+					
+					}
+					
 				}
 			},
 			
   		   ],
   	});
   	
-  	
+  //权限设置
+	if(resources.indexOf('020301')==-1){
+		$('#add').css('display','none');
+	}
   	
   	
 });
