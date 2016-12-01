@@ -10,8 +10,8 @@
 <script type="text/javascript">
 		function editMaintenance(){
 			$('#win').window({
-				width:600,
-				height:300,
+				width:320,
+				height:260,
 				title:'操作',
 				cache:false,
 				content:'<iframe src="${pageContext.request.contextPath}/daily/maintenance_operate" frameborder="0" width="100%" height="100%"/>'
@@ -35,22 +35,36 @@
 			pageNumber:1,
 			pageSize:15,
 			pageList:[15,30,50,100], 
+			onLoadSuccess:function(){
+				$('[name=operate]').linkbutton({    
+				    iconCls: 'icon-edit' ,
+				    plain:true
+				});  
+			},
 			 columns:[[    
-				        {field:'maintenanceSn',title:'维修编号',width:'10%',align:'center',hidden:true},    
+				        {field:'maintenanceSn',title:'维修编号',align:'center',hidden:true},    
 				        {field:'bikeSn',title:'车辆编号',width:'10%',align:'center'},    
-				        {field:'reporterSn',title:'报修人',width:'10%',align:'center'},    
+				        {field:'reporterName',title:'报修人',width:'10%',align:'center'},    
 				        {field:'reportDatetime',title:'报修时间',width:'10%',align:'center'},
-				        {field:'reportMark',title:'报修说明',width:'10%',align:'center'},
-				        {field:'repairmanSn',title:'维修负责人',width:'10%',align:'center',},
+				        {field:'reportMark',title:'报修说明',width:'15%',align:'center'},
+				        {field:'repairmanName',title:'维修负责人',width:'10%',align:'center',},
 				        {field:'repairDatetime',title:'维修时间',width:'10%',align:'center',},
-				        {field:'repairMark',title:'维修说明',width:'10%',align:'center',},
-				        {field:'isrepairable',title:'车辆状态',width:'10%',align:'center',},
-				        {field:'operate',title:'维修状态',width:'10%',formatter:function(value,row,index){
+				        {field:'repairMark',title:'维修说明',width:'15%',align:'center',},
+				        {field:'isrepairable',title:'车辆状态',width:'10%',align:'center',formatter:function(value,row,index){
+				        	if(value==true){
+				        		return "完成";
+				        	}else if(value==false){
+				        		return "报废";
+				        	}else{
+				        		return "处理中";
+				        	}
+				        }},
+				        {field:'operate',title:'维修状态',width:'10%',align:'center',formatter:function(value,row,index){
 				        	if(resources.indexOf('030101')==-1){
 				        		return"无权操作";
 				        	}else{
-				        		if(row.repairmanSn=="" || row.repairmanSn==null){
-					        		return "<a  href='#' onclick='editMaintenance()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"操作"+"</a>";
+				        		if(row.repairmanName=="" || row.repairmanName==null){
+					        		return "<a name='operate' href='#' onclick='editMaintenance()'>"+"操作"+"</a>";
 					        	}else{
 					        		return "<p>"+"已维修"+"</p>";
 					        	}	
@@ -60,7 +74,7 @@
 				        }}
 				        ]]				        
 		});		
-	
+		
 	
 
 		

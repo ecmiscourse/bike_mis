@@ -15,7 +15,7 @@ $(function(){
 	    fitColumns:true,
 	    fit:true,
 	    striped:true,/*斑马线*/
-	    nowarp:true,/*数据同一行*/ 
+	    nowarp:false,/*数据同一行*/ 
 	    loadmsg:'请等待',
 	    rownumbers:true,
 	    singleSelect:true,
@@ -25,13 +25,13 @@ $(function(){
 		pageList:[15,30,50,100], 
 		columns:[[
 		          {field:'recordSn',title:'记录编号',align:'center',hidden:true},
-		          {field:'studentId',title:'借车人',width:'10%',align:'center'},
-		          {field:'lendDateTime',title:'借出时间',width:'15%',align:'center'},
-		          {field:'returnDateTime',title:'归还时间',width:'15%',align:'center'},
+		          {field:'studentId',title:'借车人',width:'8%',align:'center'},
+		          {field:'lendDateTime',title:'借出时间',width:'16%',align:'center'},
+		          {field:'returnDateTime',title:'归还时间',width:'16%',align:'center'},
 		          {field:'isHasReturned',title:'是否归回',width:'10%',align:'center'},
-		          {field:'lendPerson',title:'借出人',width:'15%',align:'center'},
-		          {field:'lendStationSn',title:'借出站点',width:'15%',align:'center'},
-		          {field:'returnPerson',title:'操作归还的人',width:'15%',align:'center'},
+		          {field:'lendPerson',title:'借出操作人',width:'15%',align:'center'},
+		          {field:'lendStationSn',title:'借出站点',width:'10%',align:'center'},
+		          {field:'returnPerson',title:'归还操作人',width:'15%',align:'center'},
     			  {field:'returnStationSn',title:'归还站点',width:'10%',align:'center'} 
 			]]
 		});

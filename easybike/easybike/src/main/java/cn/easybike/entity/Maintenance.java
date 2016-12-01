@@ -41,7 +41,7 @@ public class Maintenance implements java.io.Serializable{
 		this.id = id;
 	}
 	
-	@Column(name="maintenance_sn",unique=true,nullable=false)
+	@Column(name="maintenance_sn",unique=true,nullable=false,length=100)
 	public String getMaintenanceSn() {
 		return maintenanceSn;
 	}

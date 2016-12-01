@@ -15,22 +15,27 @@
 		    url:'${pageContext.request.contextPath}/daily/distributeAction_queryAllStationExceptionself.action',    
 		    queryParams:{stationSn:row.stationSn},
 		    valueField:'stationSn',    
-		    textField:'stationName' ,
-		    panelHeight:200,
+		    textField:'stationName',
+		    prompt:'选择调出站点',
+		    panelHeight:100,
 		    onSelect:function(record){
 		    	var url = '${pageContext.request.contextPath}/daily/distributeAction_queryAll.action?stationSn='+record.stationSn;    
-	            $('#cc2').combobox('reload', url);
+		    	$('#cc2').combobox('clear');
+		    	$('#cc2').combobox('reload', url);
 		    }
 		});
 		$('#cc2').combobox({
-			 	valueField:'bikeSn',    
-			    textField:'bikeSn' ,
-			    panelHeight:200,
-			    multiple:true
+			 valueField:'bikeSn',    
+			 textField:'bikeSn',
+			 panelHeight:100,
+			 multiple:true,
+			 prompt:'选择调出车辆，可多选',
 		});
 		//重置
 		$("#reset").click(function(){
-			$("#ff").form("reset");
+			$('#cc1').combobox('clear');
+			$('#cc2').combobox('clear');
+			//$("#ff").form("reset");
 		});
 		//提交 
 		$('#submit').click(function(){

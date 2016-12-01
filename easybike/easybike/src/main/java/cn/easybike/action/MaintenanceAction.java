@@ -37,11 +37,11 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 				JSONObject jo=new JSONObject();
 				jo.put("maintenanceSn",maintenance.getMaintenanceSn());
 				jo.put("bikeSn", maintenance.getBike().getBikeSn());
-				jo.put("reporterSn", maintenance.getReporter().getPersonSn());
+				jo.put("reporterName", maintenance.getReporter().getPersonName());
 				jo.put("reportDatetime", maintenance.getReportDateTime().toString());
 				jo.put("reportMark", maintenance.getReportMark());
 				if(maintenance.getRepairMan()!=null){
-					jo.put("repairmanSn", maintenance.getRepairMan().getPersonSn());
+					jo.put("repairmanName", maintenance.getRepairMan().getPersonName());
 				}else{
 					jo.put("repairmanSn","");
 				}
@@ -51,16 +51,16 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 					jo.put("repairDatetime", "");
 				}
 				jo.put("repairMark",maintenance.getRepairMark());				
-				if(maintenance.getIsRepairable()==null || maintenance.getIsRepairable().equals(1)){
-					jo.put("isrepairable", "正常");
-				}else{
-					jo.put("isrepairable", "报废");
-				}
+				//if(maintenance.getIsRepairable()==null || maintenance.getIsRepairable()==false){
+				jo.put("isrepairable", maintenance.getIsRepairable());
+				//}else{
+					//jo.put("isrepairable", "报废");
+				//}
 				array.add(jo);
 			}
 			jsonObject.put("total", maintenanceService.countByHql("select count(m) from Maintenance m"));
 			jsonObject.put("rows", array);
-			System.out.println(jsonObject);
+			//System.out.println(jsonObject);
 
 			return "jsonObject";
 		}
@@ -173,7 +173,7 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				maintenance.setReportDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
 				maintenance.setReportMark(reportMark);
-				maintenance.setIsRepairable(false);
+				//maintenance.setIsRepairable(false);
 				maintenanceService.save(maintenance);
 			
 			} catch (Exception e) {

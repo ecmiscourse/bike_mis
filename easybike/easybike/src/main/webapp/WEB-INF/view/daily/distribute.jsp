@@ -11,7 +11,7 @@
 
 		function diverge(){
 			$('#win').window({
-				width:500,
+				width:400,
 				height:200,
 				title:'车辆调拨',
 				cache:false,
@@ -37,14 +37,14 @@
 			pageSize:15,
 			pageList:[15,30,50,100], 
 			 columns:[[    
-			           {field:'stationSn',title:'站点编号',width:'20%',align:'center'}, 
-				        {field:'stationName',title:'站点名称',width:'20%',align:'center'}, 
-				        {field:'bikes',title:'所剩车辆',width:'20%',align:'center'}, 
-				        {field:'diverge',title:'调入',width:'20%',align:'center',formatter:function(value,row,index){
+			           {field:'stationSn',title:'站点编号',width:'25%',align:'center'}, 
+				        {field:'stationName',title:'站点名称',width:'25%',align:'center'}, 
+				        {field:'bikes',title:'所剩车辆',width:'25%',align:'center'}, 
+				        {field:'diverge',title:'调入操作',width:'25%',align:'center',formatter:function(value,row,index){
 				        	if(resources.indexOf('030201')==-1){
 				        		return "无权操作";
 				        	}else{
-				        		return "<a  href='#' onclick='diverge()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"调入"+"</a>";			
+				        		return "<a  href='#' onclick='diverge()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"车辆调入"+"</a>";			
 				        	}
 				        		        	
 				        }}

@@ -9,7 +9,7 @@
 
  function Details(){
 	$('#win').window({
-		width:500,
+		width:800,
 		height:300,
 		title:'历史记录',
 		cache:false,
@@ -34,14 +34,21 @@ $(function(){
 		pageSize:15,
 		pageList:[15,30,50,100], 
 		columns:[[
-		          {field:'bikeSn',title:'车辆编号',width:'20%',align:'center'},
-		          {field:'status',title:'当前状态',width:'20%',align:'center'},
+		          {field:'bikeSn',title:'车辆编号',width:'40%',align:'center'},
+		          {field:'status',title:'当前状态',width:'40%',align:'center',formatter:function(value,row,index){
+		        	  if(value==0){
+		        		  return "可借";
+		        	  }else if(value==1){
+		        		  return "借出"
+		        	  }else if (value==2){
+		        		  return "维修";
+		        	  }else if(value==3){
+		        		  return "报废";
+		        	  }
+		          }},
 		          {field:'details',title:'历史记录',width:'20%',align:'center',formatter:function(value,row,index){
-		        
-		        		  return "<a  href='#' onclick='Details()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"查看历史记录"+"</a>";				        	
-		        	  
-		        		
-		        }}
+		        		  return "<a  href='#' onclick='Details()' data-options='iconCls:'icon-edit'' class='easyui-linkbutton' style='text-decoration:none'>"+"查看历史记录"+"</a>";				        		
+		        	}}
 			]],
 			 toolbar:[{
 					text:'<input id="search" type="tb"  style="width:300px">'

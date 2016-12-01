@@ -37,14 +37,18 @@
     <form id="ff" method="post">    
 	    <div style="margin: 15px;">   
 	        <label for="repairMark">维修说明:</label>   
-	        <input id="repairMark" class="easyui-textbox" type="text" name="repairMark" data-options="position:'top',required:true" />   
+	        <input id="repairMark" class="easyui-textbox" name="repairMark" data-options="
+	        	prompt:'在此输入备注，可不填！',
+	        	multiline:true,
+	        	height:66" />   
 	    </div>   
 	    <div style="margin: 15px;">   
 	        <label for="repairDatetime">维修时间:</label>   
 	        <input  id="repairDatetime"  name="repairDatetime" type= "text" class= "easyui-datebox" required ="required"> 
 	    </div>
-	 		<div style="margin: 15px;">   
-	  	   <input type="radio" name="isrepairable"  value="1">完成</input>
+	 	<div style="margin: 15px;">
+	 		<label for="radio">维修结果:</label>    
+	  	   	<input type="radio" name="isrepairable"  value="1">完成</input>
 	        <input type="radio" name="isrepairable"  value="0">报废</input>
 	    </div>
 	    <div style="margin-top: 25px;text-align:center">

@@ -15,6 +15,9 @@ public class TraceAction extends BaseAction<Station> {
 	//
 	public String queryAllbikes(){
 		String hql="select b from Bike b";
+		if(bikeSn!=null&&bikeSn.trim().length()>0){
+			hql+=" where b.bikeSn like '%"+bikeSn+"%'";
+		}
 		JSONArray array=new JSONArray();
 		for(Bike bike:bikeService.queryByPage(hql, page, rows)){
 			JSONObject jo=new JSONObject();			
@@ -23,7 +26,7 @@ public class TraceAction extends BaseAction<Station> {
 			array.add(jo);
 		}		
 		jsonObject.put("rows", array);
-		jsonObject.put("total",bikeService.countByHql("select count(b) from Bike b"));
+		jsonObject.put("total",bikeService.countByHql(hql.replaceFirst("b", "count(b)")));
 		return "jsonObject";
 	}
 	//根据车辆编号分页查询
