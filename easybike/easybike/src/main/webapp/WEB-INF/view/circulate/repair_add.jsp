@@ -52,14 +52,34 @@ $(function(){
 	})
 	
 	//下拉框自行车
-	$('#cc2').combobox({    
+	/*$('#cc2').combobox({    
 	    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllBike.action',    
 	    valueField:'bikeSn',    
 	    textField:'bikeSn',
 	    panelHeight:300,
 	    limitToList:true,
 	    
+	});*/
+	
+	toolbar:[{
+		text:'<form id="ff1" method="post"><input id="cc1" name="bikeSn"/></form>'
+	}],
+	
+	$('#cc1').combogrid({ 
+		url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_queryByQ.action',     		     
+		idField:'bikeSn',    
+	    textField:'bikeSn',
+	    width:200,
+	    delay:500,
+	    prompt:'输入自行车编号进行检索，',
+	    mode: 'remote',
+	    required:true,        
+	    columns:[[    
+	        {field:'id',title:'编号',width:'50%',align:'center'},    
+	        {field:'bikeSn',title:'自行车编号',width:'50%',align:'center'}
+		]]     
 	});
+	
 	
 	
 	
@@ -73,9 +93,10 @@ $(function(){
 	        <label for="reportMark">报修说明:</label>   
 	        <input id="reportMark" class="easyui-textbox" type="textarea" name="reportMark" data-options="multiline:true" style="width:270px;height:88px" />   
 	    </div>   
+	    
 	     <div style="margin: 15px;">
 	    <label >自行车:&nbsp;</label>
-	    <input id="cc2" name="bikeSn">	
+	    <input id="cc1" name="bikeSn">	
 	    </div>
 	    
 	    <div style="margin-top: 25px;text-align:center">

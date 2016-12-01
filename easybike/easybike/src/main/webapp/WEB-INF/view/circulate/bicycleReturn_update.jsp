@@ -30,7 +30,9 @@
 			if($('#ff').form('validate')){
 				$('#ff').form('submit', {    
 				    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_update2.action',     
-				    queryParams:{'recordSn':row.recordSn},
+				    queryParams:{'recordSn':row.recordSn,
+				    	         'bikeSn':row.bikeSn
+				    	},
 				    success:function(data){    
 				    	var result = eval('(' + data + ')');
 				    	if(result.status=='ok'){
@@ -40,6 +42,8 @@
 							parent.$("#win").window("close");
 							//刷新dg
 							parent.$("#dg").datagrid("reload");
+					   	}else if(result.status=='zook'){
+					   		parent.$.messager.alert("提示信息","不能重复还车！",'error');
 					   	}else{
 					   		parent.$.messager.alert("提示信息","修改失败！",'error');
 						}
@@ -55,18 +59,27 @@
 		    textField:'returnStationName',
 		    panelHeight:300,
 		    limitToList:true,
-		    //默认选中第一个
-		    /* onLoadSuccess:function(){
-			    if($('#cc').combobox('getData').length>0){
-			    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
-				}
-			}, */
 			onSelect:function(record){
 				$('#dg').datagrid('load',{
 					returnStationSn:record.returnStationSn
 				});
 			}  
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	})
@@ -78,7 +91,7 @@
 	    
 	    <div style="margin: 15px;">   
 	        <label for="cellphoneNumber">备注&nbsp;&nbsp;:</label>   
-	        <input class="easyui-textbox" type="textarea" name="returnMark" />   
+	        <input class="easyui-textbox" type="textarea" name="returnMark" data-options="multiline:true"/>   
 	    </div>
 	     <div style="margin: 15px;">
 	    <label >还车站点:</label>

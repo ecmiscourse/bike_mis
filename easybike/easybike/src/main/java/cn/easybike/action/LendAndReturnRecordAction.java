@@ -34,6 +34,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	private String lendStationSn;
 	private String lendStationName;
 	private String bikeSn;
+	private String oldBikeSn;
 	private String bike;
 	private String studentId;
 	private String phoneNumber;
@@ -48,6 +49,24 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	private String personSn;
 	private String oldStudentId;
 	private String returnMark;
+	private String q;
+	
+
+	public String getOldBikeSn() {
+		return oldBikeSn;
+	}
+
+	public void setOldBikeSn(String oldBikeSn) {
+		this.oldBikeSn = oldBikeSn;
+	}
+
+	public String getQ() {
+		return q;
+	}
+
+	public void setQ(String q) {
+		this.q = q;
+	}
 
 	public String getReturnMark() {
 		return returnMark;
@@ -426,6 +445,7 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 	public String save() {
 		jsonObject.put("status", "ok");
 		LendAndReturnRecord lendAndReturnRecord = new LendAndReturnRecord();
+		
 		try {
 			lendAndReturnRecord.setStudentName(studentName);
 			lendAndReturnRecord.setStudentId(studentId);
@@ -440,8 +460,12 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			lendAndReturnRecord.setRecordSn(recordSn);
 			lendAndReturnRecord.setIsHasReturned(false);
 			lendAndReturnRecord.setLendPerson(personService.getByPersonSn((String) session.get("personSn")));
-
 			lendAndReturnRecordService.save(lendAndReturnRecord);
+			
+			Bike bike =bikeService.getByBikeSn(bikeSn);
+			bike.setStatus((byte)1);
+			bikeService.update(bike);
+			
 
 		} catch (Exception e) {
 			jsonObject.put("status", "nook");
@@ -451,48 +475,68 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 
 	
 
-	public String update() {
-		jsonObject.put("status", "ok");
-		LendAndReturnRecord lendAndReturnRecord = lendAndReturnRecordService.getByStudentId(oldStudentId);
-		if (lendAndReturnRecord != null) {
-			try {
-				lendAndReturnRecord.setStudentId(studentId);
-				lendAndReturnRecord.setStudentName(studentName);
-				lendAndReturnRecord.setPhoneNumber(phoneNumber);
-				lendAndReturnRecord.setLendStation(stationService.getByStationSn(lendStationSn));
-				lendAndReturnRecord.setBike(bikeService.getByBikeSn(bikeSn));
-				lendAndReturnRecordService.update(lendAndReturnRecord);
-			} catch (Exception e) {
-				jsonObject.put("status", "nook");
+	 //借车页面的录入
+		public String update() {
+			jsonObject.put("status", "ok");
+			LendAndReturnRecord lendAndReturnRecord = lendAndReturnRecordService.getByStudentId(oldStudentId);
+			if (lendAndReturnRecord != null) {
+				try {
+					lendAndReturnRecord.setStudentId(studentId);
+					lendAndReturnRecord.setStudentName(studentName);
+					lendAndReturnRecord.setPhoneNumber(phoneNumber);
+					lendAndReturnRecord.setLendStation(stationService.getByStationSn(lendStationSn));
+					lendAndReturnRecord.setBike(bikeService.getByBikeSn(bikeSn));
+					lendAndReturnRecordService.update(lendAndReturnRecord);
+					
+					Bike bike = bikeService.getByBikeSn(oldBikeSn);
+					bike.setStatus((byte)0);
+					bikeService.update(bike);
+					Bike bike2 =bikeService.getByBikeSn(bikeSn);
+					bike2.setStatus((byte)1);
+					bikeService.update(bike2);
+					
+				} catch (Exception e) {
+					jsonObject.put("status", "nook");
+				}
+			} else {
+				jsonObject.put("status", "took");
 			}
-		} else {
-			jsonObject.put("status", "took");
+			return "jsonObject";
 		}
-		return "jsonObject";
-	}
 
 	// 还车页面的录入
-	public String update2() {
-		jsonObject.put("status", "ok");
-		LendAndReturnRecord lendAndReturnRecord = lendAndReturnRecordService.getByRecordSn(recordSn);
-		if (lendAndReturnRecord != null) {
-			try {
-				lendAndReturnRecord.setIsHasReturned(true);
-				lendAndReturnRecord.setReturnPerson(personService.getByPersonSn((String) session.get("personSn")));
-				lendAndReturnRecord.setReturnStation(stationService.getByStationSn(returnStationSn));
-				lendAndReturnRecord.setReturnMark(returnMark);
-				// lendAndReturnRecord.setReturnDateTime(returnDateTime);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				lendAndReturnRecord.setReturnDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
-				lendAndReturnRecordService.update(lendAndReturnRecord);
-			} catch (Exception e) {
-				jsonObject.put("status", "nook");
+		public String update2() {
+			jsonObject.put("status", "ok");
+			LendAndReturnRecord lendAndReturnRecord = lendAndReturnRecordService.getByRecordSn(recordSn);
+			Bike bike = bikeService.getByBikeSn(bikeSn);
+			if (lendAndReturnRecord != null) {
+				try {
+					if(bike.getStatus()==(byte)1){
+					lendAndReturnRecord.setIsHasReturned(true);
+					lendAndReturnRecord.setReturnPerson(personService.getByPersonSn((String) session.get("personSn")));
+					lendAndReturnRecord.setReturnStation(stationService.getByStationSn(returnStationSn));
+					lendAndReturnRecord.setReturnMark(returnMark);
+					// lendAndReturnRecord.setReturnDateTime(returnDateTime);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					lendAndReturnRecord.setReturnDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
+					lendAndReturnRecordService.update(lendAndReturnRecord);
+					//自行车设置为可借状态
+					bike.setStatus((byte)0);
+					bike.setStation(stationService.getByStationSn(returnStationSn));
+					bikeService.update(bike);
+					}else{
+						jsonObject.put("status", "zook");
+					}
+					
+					
+				} catch (Exception e) {
+					jsonObject.put("status", "nook");
+				}
+			} else {
+				jsonObject.put("status", "took");
 			}
-		} else {
-			jsonObject.put("status", "took");
+			return "jsonObject";
 		}
-		return "jsonObject";
-	}
 
 	public String isExist() {
 		if (lendAndReturnRecordService.getByStudentId(studentId) != null) {
@@ -502,6 +546,20 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		}
 		return "jsonObject";
 	}
+	
+	//按照bikeSn搜索
+		public String queryByQ(){
+			String hql="select b from Bike b where b.bikeSn like '%"+q+"%'";
+			for(Bike bike:bikeService.queryByPage(hql, 1, 20)){
+				if(bike.getStatus()==(byte)0){
+				JSONObject jo=new JSONObject();
+				jo.put("id", bike.getId());
+				jo.put("bikeSn", bike.getBikeSn());
+				jsonArray.add(jo);
+				}
+			}
+			return "jsonArray";
+		}
 
 }
 

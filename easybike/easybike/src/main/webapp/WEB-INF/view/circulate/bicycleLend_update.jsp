@@ -54,7 +54,9 @@
 			if($('#ff').form('validate')){
 				$('#ff').form('submit', {    
 				    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_update.action', 
-				    queryParams:{'oldStudentId':row.studentId},      
+				    queryParams:{'oldStudentId':row.studentId,
+				    	         'oldBikeSn':row.bikeSn   
+				    },      
 				    success:function(data){    
 				    	var result = eval('(' + data + ')');
 				    	if(result.status=='ok'){
@@ -73,41 +75,25 @@
 		});
 		//下拉框站点
 		$('#cc').combobox({    
-		    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllStation.action',    
-		    valueField:'lendStationSn',    
+		    url:'${pageContext.request.contextPath}/base/stationAction_getAllStation.action',    
+		    valueField:'stationSn',    
 		    textField:'stationName',
+		    queryParams:{stationSn:'stationSn'},
 		    panelHeight:300,
 		    limitToList:true,
-		    //默认选中第一个
-		    /* onLoadSuccess:function(){
-			    if($('#cc').combobox('getData').length>0){
-			    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
-				}
-			}, */
 			onSelect:function(record){
-				$('#dg').datagrid('load',{
-					lendStationSn:record.lendStationSn
-				});
+				var url = '${pageContext.request.contextPath}/daily/distributeAction_queryAll.action?stationSn='+record.stationSn;    
+	            $('#cc2').combobox('reload', url);
 			}  
 		});
 		//下拉框自行车
 		$('#cc2').combobox({    
-		    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllBike.action',    
+		   // url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllBike.action',    
 		    valueField:'bikeSn',    
-		    textField:'id',
+		    textField:'bikeSn',
 		    panelHeight:300,
 		    limitToList:true,
-		    //默认选中第一个
-		    /* onLoadSuccess:function(){
-			    if($('#cc').combobox('getData').length>0){
-			    	$('#cc').combobox('select', $('#cc').combobox('getData')[0].stationSn);					
-				}
-			}, */
-			onSelect:function(record){
-				$('#dg').datagrid('load',{
-					bikeSn:record.bikeSn
-				});
-			}  
+		
 		});
 		
 	})
@@ -139,7 +125,7 @@
 	    
 	    
 	    <div style="margin-top: 25px;text-align:center">
-	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>  
+	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">完成</a>  
 	    </div>      
 	</form> 
 </body>

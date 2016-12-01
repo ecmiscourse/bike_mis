@@ -10,7 +10,7 @@
 $(function(){
   	$('#dg').datagrid({
   		url:'${pageContext.request.contextPath}/daily/maintenanceAction_queryReportMessage.action',
-  		title:'借车记录表',
+  		title:'保修记录表',
   		fitColumns:true,
 	    fit:true,
 	    striped:true,/*斑马线*/
@@ -37,7 +37,7 @@ $(function(){
 				handler: function(){
 					$('#win').window({
 						width:330,
-		 				height:300,
+		 				height:450,
 		 				title:'报修记录添加',
 		 				cache:false,
 		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/repair_add" frameborder="0" width="100%" height="100%"/>'
