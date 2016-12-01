@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import cn.easybike.entity.Bike;
 import cn.easybike.entity.Maintenance;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -162,25 +163,30 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 			return "jsonObject";
 		}
 		//保修页面的add
-		public String save2() {
-			jsonObject.put("status", "ok");
-			Maintenance maintenance= new Maintenance();
-			try {
-				String maintenanceSn=getUUID();
-				maintenance.setMaintenanceSn(maintenanceSn);
-				maintenance.setBike(bikeService.getByBikeSn(bikeSn));
-				maintenance.setReporter(personService.getByPersonSn((String) session.get("personSn")));
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				maintenance.setReportDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
-				maintenance.setReportMark(reportMark);
-				//maintenance.setIsRepairable(false);
-				maintenanceService.save(maintenance);
-			
-			} catch (Exception e) {
-				jsonObject.put("status", "nook");
-			}
-			return "jsonObject";
-		}
+				public String save2() {
+					jsonObject.put("status", "ok");
+					Maintenance maintenance= new Maintenance();
+					Bike bike = bikeService.getByBikeSn(bikeSn);
+					try {
+						String maintenanceSn=getUUID();
+						maintenance.setMaintenanceSn(maintenanceSn);
+						maintenance.setBike(bikeService.getByBikeSn(bikeSn));
+						maintenance.setReporter(personService.getByPersonSn((String) session.get("personSn")));
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						maintenance.setReportDateTime(Timestamp.valueOf(sdf.format(System.currentTimeMillis())));
+						maintenance.setReportMark(reportMark);
+						maintenance.setIsRepairable(false);
+						maintenanceService.save(maintenance);
+					
+						bike.setStatus((byte)2);
+						bikeService.update(bike);
+						
+						
+					} catch (Exception e) {
+						jsonObject.put("status", "nook");
+					}
+					return "jsonObject";
+				}
 		public static String getUUID() {
 			String s = UUID.randomUUID().toString();
 			// 去掉“-”符号

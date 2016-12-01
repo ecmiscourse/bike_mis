@@ -46,19 +46,21 @@ public class DistributeAction extends BaseAction<Station> {
 		}
 		return "jsonArray";
 	}
-	//查询每个站点对应的车辆
-	public  String queryAll(){
-		System.out.println(stationSn);
-		String hql="select b from Bike b where b.station.stationSn= "+stationSn ;
-		JSONArray array=new JSONArray();
-		for(Bike bike:bikeService.queryByPage(hql, 1, 100)){
-			JSONObject jo=new JSONObject();
-			jo.put("bikeSn", bike.getBikeSn());
-			System.out.println("llllldddd12345865");
-			jsonArray.add(jo);
+	//查询每个站点对应的车辆,新加自行车状态判断功能
+		public  String queryAll(){
+			System.out.println(stationSn);
+			String hql="select b from Bike b where b.station.stationSn= "+stationSn ;
+			JSONArray array=new JSONArray();
+			for(Bike bike:bikeService.queryByPage(hql, 1, 100)){
+				JSONObject jo=new JSONObject();
+				jo.put("bikeSn", bike.getBikeSn());
+				System.out.println("llllldddd12345865");
+				 if(bike.getStatus()==(byte)0){
+				jsonArray.add(jo);
+				 }
+			}
+			return "jsonArray";
 		}
-		return "jsonArray";
-	}
 	
 	//调入车辆
 	public String distribution(){
