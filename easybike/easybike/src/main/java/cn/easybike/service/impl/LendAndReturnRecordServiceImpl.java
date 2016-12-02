@@ -24,6 +24,7 @@ public class LendAndReturnRecordServiceImpl extends BaseServiceImpl<LendAndRetur
 		return lendAndReturnRecordDao.getByRecordSn(recordSn);
 	}
 
+
 	
 }
 

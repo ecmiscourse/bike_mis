@@ -12,7 +12,7 @@ $(function(){
 	var resources="${sessionScope['resources']}";//获取权限
   	$('#dg').datagrid({
   		url:'${pageContext.request.contextPath}/daily/maintenanceAction_queryReportMessage.action',
-  		title:'保修记录表',
+  		title:'报修记录表',
   		fitColumns:true,
 	    fit:true,
 	    striped:true,/*斑马线*/
@@ -26,15 +26,16 @@ $(function(){
 		pageSize:15,
 		pageList:[15,30,50,100], 
   		 columns:[[
-				{field:'maintenanceSn',title:'维修编号',width:'10%',align:'center',hidden:true},    
-				{field:'bikeSn',title:'车辆编号',width:'10%',align:'center'},    
-				{field:'reporterSn',title:'报修人',width:'10%',align:'center'},    
-				{field:'reportDatetime',title:'报修时间',width:'10%',align:'center'},
-				{field:'reportMark',title:'报修说明',width:'10%',align:'center'},	
+				{field:'maintenanceSn',title:'维修编号',width:'20%',align:'center',hidden:true},    
+				{field:'bikeSn',title:'车辆编号',width:'20%',align:'center'},    
+				{field:'reporterSn',title:'报修人',width:'20%',align:'center'},    
+				{field:'reportDatetime',title:'报修时间',width:'20%',align:'center'},
+				{field:'reportMark',title:'报修说明',width:'40%',align:'center'},
+				
   		     ]],
   		   toolbar: [{
   			   	id:'add',
-		    	text:'新增',
+		    	text:'报修',
 				iconCls: 'icon-add',
 				handler: function(){
 					if(resources.indexOf('020301')==-1){
@@ -43,7 +44,7 @@ $(function(){
 					$('#win').window({
 						width:330,
 		 				height:450,
-		 				title:'报修记录添加',
+		 				title:'报修',
 		 				cache:false,
 		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/repair_add" frameborder="0" width="100%" height="100%"/>'
 	
