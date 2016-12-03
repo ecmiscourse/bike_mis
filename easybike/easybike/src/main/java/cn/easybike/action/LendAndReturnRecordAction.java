@@ -333,11 +333,10 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 
 	// 按照bikeSn搜索
 	public String queryByQ() {
-		String hql = "select b from Bike b where b.bikeSn like '%" + q + "%'";
-		for (Bike bike : bikeService.queryByPage(hql, 1, 20)) {
+		String hql = "select b from Bike b where b.bikeSn like '%" + q + "%' and b.status=0";
+		for (Bike bike : bikeService.queryByPage(hql, 1,15)) {
 			if (bike.getStatus() == (byte) 0) {
 				JSONObject jo = new JSONObject();
-				jo.put("id", bike.getId());
 				jo.put("bikeSn", bike.getBikeSn());
 				jsonArray.add(jo);
 			}

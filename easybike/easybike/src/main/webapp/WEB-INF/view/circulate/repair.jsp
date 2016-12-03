@@ -28,10 +28,18 @@ $(function(){
   		 columns:[[
 				{field:'maintenanceSn',title:'维修编号',width:'20%',align:'center',hidden:true},    
 				{field:'bikeSn',title:'车辆编号',width:'20%',align:'center'},    
-				{field:'reporterSn',title:'报修人',width:'20%',align:'center'},    
+				{field:'reporterName',title:'报修人',width:'20%',align:'center'},    
 				{field:'reportDatetime',title:'报修时间',width:'20%',align:'center'},
-				{field:'reportMark',title:'报修说明',width:'40%',align:'center'},
-				
+				{field:'reportMark',title:'报修说明',width:'30%',align:'center'},
+				{field:'isrepairable',title:'维修结果',width:'10%',align:'center',formatter:function(value,row,index){
+		        	if(value==true){
+		        		return "完成";
+		        	}else if(value==false){
+		        		return "报废处理";
+		        	}else{
+		        		return "处理中";
+		        	}
+		        }}
   		     ]],
   		   toolbar: [{
   			   	id:'add',
@@ -41,22 +49,17 @@ $(function(){
 					if(resources.indexOf('020301')==-1){
 						$('#add').css('display','none');
 					}else{
-					$('#win').window({
-						width:330,
-		 				height:450,
-		 				title:'报修',
-		 				cache:false,
-		 				content:'<iframe src="${pageContext.request.contextPath}/circulate/repair_add" frameborder="0" width="100%" height="100%"/>'
-	
-					});
-					
-					
-					}
-					
+						$('#win').window({
+							width:360,
+			 				height:250,
+			 				title:'报修',
+			 				cache:false,
+			 				content:'<iframe src="${pageContext.request.contextPath}/circulate/repair_add" frameborder="0" width="100%" height="100%"/>'
+		
+						});
+					}					
 				}
-			},
-			
-  		   ],
+			}],
   	});
   	
   //权限设置

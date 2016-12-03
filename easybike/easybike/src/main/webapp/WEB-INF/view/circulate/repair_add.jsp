@@ -31,35 +31,31 @@ $(function(){
 	$('#submit').click(function(){
 		$("#ff").form("enableValidation");
 		if($('#ff').form('validate')){
-			$('#ff').form('submit', {    
-			    url:'${pageContext.request.contextPath}/daily/maintenanceAction_save2.action',       
-			    success:function(data){
-			    	$("#ff").form("disableValidation");    
-			    	var result = eval('(' + data + ')');
-			    	if(result.status=='ok'){
-			    		parent.$.messager.alert("提示信息","添加成功！");
-						$("#ff").form("reset");
-						//关闭窗体
-						parent.$("#win").window("close");
-						//刷新dg
-						parent.$("#dg").datagrid("reload");
-				   	}else{
-				   		parent.$.messager.alert("提示信息","添加失败！",'error');
-					}
-			    }    
+			
+			$.messager.confirm('确认对话框', '一旦申报，不可撤回或更改，你确认要申报吗？', function(r){
+				if (r){
+					$('#ff').form('submit', {    
+					    url:'${pageContext.request.contextPath}/daily/maintenanceAction_save2.action',       
+					    success:function(data){
+					    	$("#ff").form("disableValidation");    
+					    	var result = eval('(' + data + ')');
+					    	if(result.status=='ok'){
+					    		parent.$.messager.alert("提示信息","添加成功！");
+								$("#ff").form("reset");
+								//关闭窗体
+								parent.$("#win").window("close");
+								//刷新dg
+								parent.$("#dg").datagrid("reload");
+						   	}else{
+						   		parent.$.messager.alert("提示信息","添加失败！",'error');
+							}
+					    }    
+					});
+				}
 			});
+			
 		}
 	})
-	
-	//下拉框自行车
-	/*$('#cc2').combobox({    
-	    url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_getAllBike.action',    
-	    valueField:'bikeSn',    
-	    textField:'bikeSn',
-	    panelHeight:300,
-	    limitToList:true,
-	    
-	});*/
 	
 	toolbar:[{
 		text:'<form id="ff1" method="post"><input id="cc1" name="bikeSn"/></form>'
@@ -69,14 +65,16 @@ $(function(){
 		url:'${pageContext.request.contextPath}/circulate/lendAndReturnRecordAction_queryByQ.action',     		     
 		idField:'bikeSn',    
 	    textField:'bikeSn',
+	    rownumbers:true,
+	    limitToList:true,
 	    width:200,
+	    panelHeight:150,
 	    delay:500,
-	    prompt:'输入自行车编号进行检索，',
+	    prompt:'输入自行车编号进行检索',
 	    mode: 'remote',
 	    required:true,        
-	    columns:[[    
-	        {field:'id',title:'编号',width:'50%',align:'center'},    
-	        {field:'bikeSn',title:'自行车编号',width:'50%',align:'center'}
+	    columns:[[        
+	        {field:'bikeSn',title:'自行车编号',width:'100%',align:'center'}
 		]]     
 	});
 	
@@ -91,16 +89,16 @@ $(function(){
 		 <form id="ff" method="post">   
 	    <div style="margin: 15px;">   
 	        <label for="reportMark">报修说明:</label>   
-	        <input id="reportMark" class="easyui-textbox" type="textarea" name="reportMark" data-options="multiline:true" style="width:270px;height:88px" />   
+	        <input id="reportMark" class="easyui-textbox" type="textarea" name="reportMark" data-options="multiline:true" style="width:200px;height:66px" />   
 	    </div>   
 	    
 	     <div style="margin: 15px;">
-	    <label >自行车:&nbsp;</label>
-	    <input id="cc1" name="bikeSn">	
+	    	<label >自行车:&nbsp;</label>
+	    	<input id="cc1" name="bikeSn">	
 	    </div>
 	    
 	    <div style="margin-top: 25px;text-align:center">
-	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>  
+	    	<a id="submit" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">申报</a>  
 	    	<a id="reset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'">重置</a>  
 	    </div>      
 	</form> 
