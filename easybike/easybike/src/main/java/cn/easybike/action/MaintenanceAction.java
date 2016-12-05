@@ -2,6 +2,7 @@ package cn.easybike.action;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -81,6 +82,7 @@ public class MaintenanceAction extends BaseAction<Maintenance> {
 				m.setIsRepairable(false);
 				if(bike!=null){
 					bike.setStatus((byte)3);
+					bike.setEndDate(LocalDate.now());
 					bike.setStation(null);
 					bikeService.update(bike);
 				}
