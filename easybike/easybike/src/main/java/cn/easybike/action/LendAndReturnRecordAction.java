@@ -77,8 +77,13 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonName());
 			jo.put("lendDateTime", lendAndReturnRecord.getReturnDateTime().toString());
 			jo.put("isHasReturned", lendAndReturnRecord.getIsHasReturned());
-			jo.put("returnPerson", lendAndReturnRecord.getReturnPerson().getPersonName());
-			jo.put("returnDateTime", lendAndReturnRecord.getReturnDateTime().toString());
+			if(lendAndReturnRecord.getReturnPerson()!=null){
+				jo.put("returnPerson", lendAndReturnRecord.getReturnPerson().getPersonName());
+			}
+			if(lendAndReturnRecord.getReturnDateTime()!=null){
+				jo.put("returnDateTime", lendAndReturnRecord.getReturnDateTime().toString());
+			}
+			
 			array.add(jo);
 		}
 		jsonObject.put("rows", array);
@@ -97,9 +102,16 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 			jo.put("studentId", lendAndReturnRecord.getStudentId());
 			jo.put("studentName", lendAndReturnRecord.getStudentName());
 			jo.put("phoneNumber", lendAndReturnRecord.getPhoneNumber());
-			jo.put("lendDateTime", lendAndReturnRecord.getReturnDateTime().toString());
-			jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonName());
-			jo.put("returnDateTime", lendAndReturnRecord.getReturnDateTime().toString());
+			if(lendAndReturnRecord.getReturnDateTime()!=null){
+				jo.put("lendDateTime", lendAndReturnRecord.getReturnDateTime().toString());
+			}
+			if(lendAndReturnRecord.getLendPerson()!=null){
+				jo.put("lendPerson", lendAndReturnRecord.getLendPerson().getPersonName());
+			}
+			if(lendAndReturnRecord.getReturnDateTime()!=null){
+				jo.put("returnDateTime", lendAndReturnRecord.getReturnDateTime().toString());
+			}
+			
 			array.add(jo);
 		}
 		jsonObject.put("rows", array);
@@ -115,8 +127,11 @@ public class LendAndReturnRecordAction extends BaseAction<LendAndReturnRecord> {
 		for (LendAndReturnRecord lendAndReturnRecord : lendAndReturnRecordService.queryByPage(hql, page, rows)) {
 			JSONObject jo = new JSONObject();
 			jo.put("recordSn", lendAndReturnRecord.getRecordSn());
-			jo.put("lendStationSn", lendAndReturnRecord.getLendStation().getStationSn());
-			jo.put("lendStationName", lendAndReturnRecord.getLendStation().getStationName());
+			if(lendAndReturnRecord.getLendStation()!=null){
+				jo.put("lendStationSn", lendAndReturnRecord.getLendStation().getStationSn());
+				jo.put("lendStationName", lendAndReturnRecord.getLendStation().getStationName());
+			}
+			
 			jo.put("bikeSn", lendAndReturnRecord.getBike().getBikeSn());
 			jo.put("studentId", lendAndReturnRecord.getStudentId());
 			jo.put("studentName", lendAndReturnRecord.getStudentName());
